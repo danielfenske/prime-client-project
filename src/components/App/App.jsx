@@ -49,10 +49,6 @@ function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Button variant='contained'>Test</Button>
-        <Button variant='contained' color='secondary'>
-          Test
-        </Button>
         <Router>
           <div id='app-container'>
             <div>
