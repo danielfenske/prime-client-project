@@ -34,7 +34,12 @@ function Nav() {
         )}
 
         {/* If a user is logged in, show the logout button */}
-        {user.id && <LogOutButton />}
+        {user.id && (
+          <div>
+            <span className='username'>{user.username}</span>
+            <LogOutButton />
+          </div>
+        )}
       </div>
     </div>
   );
