@@ -64,4 +64,6 @@ p, h1, h2 ,h3, h4, h5, h6 {
 
   /* border puts a border around the content */
   border: 2px solid var(--grey-light);
+
+  border-radius: var(--border);
 }
