@@ -1,5 +1,11 @@
 footer {
-  margin-top: 80px;
-  padding: 20px;
-  text-align: center;
+  padding: var(--padding);
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap);
+
+  color: var(--grey-dark);
+  background-color: var(--grey-light);
 }
