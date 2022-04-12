@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react';
 import './LargeTabs.css';
 
+// mui imports
+import { Button } from '@mui/material';
+
 // tabLabels and tabContents should have corresponding indexes
 function LargeTabs({ tabLabels, tabContents }) {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -27,15 +30,18 @@ function LargeTabs({ tabLabels, tabContents }) {
           {tabLabels.map((tabLabel, index) => {
             // tabs set the selected tab on click
             return (
-              <div
+              <Button
                 key={index}
-                className={index == selectedTab ? 'tab selected' : 'tab'}
+                className={index === selectedTab ? 'tab selected' : 'tab'}
                 onClick={() => {
                   setTab(index);
                 }}
+                style={{
+                  color: index === selectedTab ? '#fff' : '#333',
+                }}
               >
                 {tabLabel}
-              </div>
+              </Button>
             );
           })}
         </div>
