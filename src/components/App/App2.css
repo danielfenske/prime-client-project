@@ -11,6 +11,8 @@ body {
 :root {
   --black: #333;
   --white: white;
+  --white-transparent: #ffffff3d;
+  --very-light-grey: #eee;
   --orange: #D0441C;
   --orange-light: #E87655;
   --grey-light: #DAD5D3;
