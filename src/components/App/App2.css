@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Heebo', sans-serif;
+  color: var(--black);
+}
+
+/* some of these colors are also written in the mui theme */
+
+:root {
+  --black: #333;
+  --white: white;
+  --orange: #D0441C;
+  --orange-light: #E87655;
+  --grey-light: #DAD5D3;
+  --grey: #8d8886;
+  --grey-dark: #605D5C;
+  --shadow: #03002941;
+
+  /* the padding to be used in the app */
+  --padding: 10px;
+  --padding-large: 20px;
+
+  /* border */
+  --border: 5px;
+
+  /* margin */
+  --margin-small: 5px;
+  --margin: 10px;
+  --margin-large: 20px;
+
+  /* gap */
+  --gap: 10px;
+}
+
+p, h1, h2 ,h3, h4, h5, h6 {
+  margin: var(--margin-small) 0px;
+}
+
+#app-container {
+  display: grid;
+
+  /* the header and footer take up the space that they need 
+  and the body of the app fills up the rest of the view */
+  grid-template-rows: max-content 1fr max-content;
+
+  /* App is at least as tall as the view height */
+  min-height: 100vh;
+}
