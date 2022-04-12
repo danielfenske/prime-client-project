@@ -5,12 +5,12 @@
 -- Otherwise you will have errors!
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL,
-    "first_name" VARCHAR(80) NOT NULL,
-    "last_name" VARCHAR(100) NOT NULL,
-    "access_level" INT NOT NULL,
-    "disabled" BOOLEAN NOT NULL
+    "username" VARCHAR (80) --UNIQUE NOT NULL,
+    "password" VARCHAR (1000)-- NOT NULL,
+    "first_name" VARCHAR(80) --NOT NULL,
+    "last_name" VARCHAR(100) --NOT NULL,
+    "access_level" INT --NOT NULL,
+    "disabled" BOOLEAN --NOT NULL
 );
  INSERT INTO "user" ("username", "password", "first_name", "last_name", "access_level", "disabled")
  VALUES('mark', 'passoword', 'mark', 'terry', 1, 'false');
