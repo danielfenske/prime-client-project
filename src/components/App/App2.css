@@ -50,3 +50,13 @@ p, h1, h2 ,h3, h4, h5, h6 {
   /* App is at least as tall as the view height */
   min-height: 100vh;
 }
+
+.content-holder {
+  width: calc(100% - var(--margin-large) * 2 - var(--padding) * 2);
+  min-height: calc(100% - var(--margin-large) * 2 - var(--padding) * 2);
+  margin: var(--margin-large) auto;
+
+  border: 2px solid var(--grey-light);
+
+  padding: var(--padding);
+}
