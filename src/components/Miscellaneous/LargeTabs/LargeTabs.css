@@ -1,0 +1,7 @@
+.tab-content-container {
+  transition: all .2s;
+}
+
+.tab-content-container.hidden {
+  opacity: 0;
+}

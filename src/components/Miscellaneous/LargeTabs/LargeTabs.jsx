@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import './LargeTabs.css';
 
 // tabLabels and tabContents should have corresponding indexes
 function LargeTabs({ tabLabels, tabContents }) {
