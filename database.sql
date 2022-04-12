@@ -135,6 +135,7 @@ CREATE TABLE "item" (
 	"description" VARCHAR (200),
 	"price_per_price_unit" DECIMAL (9,2),
 	"unit_type_id" INT,
+	"unit_weight" DECIMAL (5, 2), -- unit weight is the relationship between the mesure_unit and price_unit
 	"disabled" BOOLEAN NOT NULL
 );
 
@@ -147,9 +148,12 @@ CREATE TABLE "item_heading"(
 	"item_id" INT REFERENCES "item",
 	"order" INT,
 	"item_price" DECIMAL (5,2),
-	"qty_price_unit" INT,
-	"qty_measure_unit" DECIMAL (5,2),
-	"total_adj_price" DECIMAL (5,2)
+	"price_unit" DECIMAL (5, 2),
+	"single_unit_price" DECIMAL (5, 2),
+	"measure_unit" DECIMAL (5,2),
+	"rounded_meaure_unit" DECIMAL (5, 2),
+	"qty" INT,
+	"total_item_price" DECIMAL (5,2)
 	); 
 	
 --INSERT INTO "item_heading" ("heading_id", "item_id", "order","item_price", "qty_price_unit", "qty_measure_unit", "total_adj_price")
@@ -159,7 +163,7 @@ CREATE TABLE "item_heading"(
 
 CREATE TABLE "partner_pricing"(
 	"id" SERIAL PRIMARY KEY,
-	"price" DECIMAL (5,2),
+	"price" DECIMAL (5,2), -- same type of data as price_per_price_unit from the "item" table
 	"item_id" INT REFERENCES "item",
 	"partner_id" INT REFERENCES "partner",
 	"disabled" BOOLEAN NOT NULL
