@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 // import tab
 import LargeTabs from '../Miscellaneous/LargeTabs/LargeTabs';
+import SmallTabs from '../Miscellaneous/SmallTabs/SmallTabs';
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
@@ -11,7 +12,7 @@ function UserPage() {
   return (
     <>
       <LargeTabs
-        tabLabels={['User', 'Misc']}
+        tabLabels={['User', 'Misc', 'Small Tabs']}
         tabContents={[
           <div>
             <h2>Welcome, {user.username}!</h2>
@@ -47,6 +48,10 @@ function UserPage() {
             <h1>It is an important page</h1>
             <p>I want to test what happens when there is a lot of content</p>
           </div>,
+          <SmallTabs
+            tabLabels={['Test', 'Second Test Label']}
+            tabContents={[<div>Content 1</div>, <div>Content 2</div>]}
+          />,
         ]}
       />
     </>
