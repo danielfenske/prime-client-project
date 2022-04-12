@@ -5,13 +5,14 @@
 -- Otherwise you will have errors!
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) --UNIQUE NOT NULL,
-    "password" VARCHAR (1000)-- NOT NULL,
-    "first_name" VARCHAR(80) --NOT NULL,
-    "last_name" VARCHAR(100) --NOT NULL,
-    "access_level" INT --NOT NULL,
-    "disabled" BOOLEAN --NOT NULL
-);
+    "username" VARCHAR (80),
+    "password" VARCHAR (1000),
+    "first_name" VARCHAR(80) ,
+    "last_name" VARCHAR(100) ,
+    "access_level" INT ,
+    "disabled" BOOLEAN 
+); -- will make almost all fields null/required later
+
  INSERT INTO "user" ("username", "password", "first_name", "last_name", "access_level", "disabled")
  VALUES('mark', 'passoword', 'mark', 'terry', 1, 'false');
 
