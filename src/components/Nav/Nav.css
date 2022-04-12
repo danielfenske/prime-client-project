@@ -1,8 +1,14 @@
 .nav {
   /* flex box layout */
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
+  align-items: center; */
+
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
   align-items: center;
+
+  height: min-content;
 
   padding: var(--padding-large);
 
@@ -42,4 +48,41 @@
 
 .navLink:hover {
   background-color: var(--grey);
+}
+
+#home-button {
+  color: var(--white);
+}
+
+#home-button:hover {
+  background-color: var(--white-transparent);
+}
+
+.app-title {
+  color: var(--white);
+}
+
+.left-nav {
+  text-align: left;
+}
+
+.right-nav {
+  text-align: right;
+}
+
+#login-button {
+  color: var(--white);
+}
+
+#login-button a {
+  color: var(--white);
+}
+
+#login-button:hover {
+  background-color: var(--white-transparent);
+}
+
+.username {
+  color: var(--grey);
+  margin-right: var(--margin);
 }
