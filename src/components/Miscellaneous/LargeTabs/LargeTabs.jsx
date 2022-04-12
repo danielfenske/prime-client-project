@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './LargeTabs.css';
 
 // tabLabels and tabContents should have corresponding indexes
 function LargeTabs({ tabLabels, tabContents }) {
   const [selectedTab, setSelectedTab] = useState(0);
+
   const tabContentContainer = useRef();
 
   const setTab = (index) => {
@@ -19,11 +20,16 @@ function LargeTabs({ tabLabels, tabContents }) {
     <>
       <div className='tab-container'>
         <div className='tab-label-container'>
+          <div
+            className='tab-background'
+            style={{ marginTop: selectedTab * 50 + 'px' }}
+          ></div>
           {tabLabels.map((tabLabel, index) => {
             // tabs set the selected tab on click
             return (
               <div
-                className='tab'
+                key={index}
+                className={index == selectedTab ? 'tab selected' : 'tab'}
                 onClick={() => {
                   setTab(index);
                 }}

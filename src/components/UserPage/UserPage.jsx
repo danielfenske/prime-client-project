@@ -9,7 +9,7 @@ function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
   return (
-    <div className='container'>
+    <>
       <LargeTabs
         tabLabels={['User', 'Misc']}
         tabContents={[
@@ -20,10 +20,36 @@ function UserPage() {
           </div>,
           <div>
             <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
+            <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
+            <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
+            <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
+            <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
+            <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
+            <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
+            <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
+            <h1>This is Misc</h1>
+            <h1>It is an important page</h1>
+            <p>I want to test what happens when there is a lot of content</p>
           </div>,
         ]}
       />
-    </div>
+    </>
   );
 }
 

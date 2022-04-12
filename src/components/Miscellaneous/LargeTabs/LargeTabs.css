@@ -1,7 +1,62 @@
+.tab-container {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+
+  min-height: 100%;
+}
+
 .tab-content-container {
+  display: grid;
+  padding: var(--padding);
   transition: all .2s;
 }
 
 .tab-content-container.hidden {
   opacity: 0;
+}
+
+.tab-label-container {
+  position: relative;
+
+  border-right: 2px solid var(--grey-light);
+
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  border-radius: var(--border);
+
+  width: 100px;
+  height: 50px;
+
+  transition: background-color .2s, color .2s;
+}
+
+.tab:hover {
+  cursor: pointer;
+  background-color: var(--black-transparent);
+}
+
+.tab.selected {
+  color: var(--white);
+}
+
+.tab-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background-color: var(--orange);
+  border-radius: var(--border);
+  
+  width: 100px;
+  height: 50px;
+
+  z-index: -10;
+
+  transition: margin-top .2s;
 }

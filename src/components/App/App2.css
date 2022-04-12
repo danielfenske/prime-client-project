@@ -10,6 +10,7 @@ body {
 
 :root {
   --black: #333;
+  --black-transparent: #3333333d;
   --white: white;
   --white-transparent: #ffffff3d;
   --very-light-grey: #eee;
@@ -52,6 +53,9 @@ p, h1, h2 ,h3, h4, h5, h6 {
 }
 
 .content-holder {
+  /* grid display so the children can be 100% of its height */
+  display: grid;
+
   /* width and height are both:
     100% the parent element - the margin * 2 - the padding * 2
   */
@@ -60,7 +64,7 @@ p, h1, h2 ,h3, h4, h5, h6 {
 
   /* margin and padding are set to the margin and padding variables */
   margin: var(--margin-large) auto;
-  padding: var(--padding);
+  /* padding: var(--padding); */
 
   /* border puts a border around the content */
   border: 2px solid var(--grey-light);
