@@ -1,0 +1,35 @@
+.small-tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+
+  border-radius: var(--border);
+  padding: 0px var(--padding);
+
+  /* padding-right: 10px; */
+
+  /* width: 200px; */
+  height: 40px;
+}
+
+.small-tab.selected {
+  color: var(--white);
+}
+
+.small-tab-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background-color: var(--orange-light);
+  /* border-radius: var(--border); */
+  border-right: 10px solid var(--orange);
+  
+  width: calc(100% - 10px);
+  height: 40px;
+
+  z-index: -10;
+
+  transition: margin-top .2s;
+}
