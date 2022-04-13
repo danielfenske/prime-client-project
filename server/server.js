@@ -9,7 +9,7 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
-// const partnerRouter = require('./routes/partner.router.js');
+const partnerRouter = require('./routes/partner.router.js');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
-// app.use('/api/partner', partnerRouter);
+app.use('/api/partner', partnerRouter);
 
 // Serve static files
 app.use(express.static('build'));
