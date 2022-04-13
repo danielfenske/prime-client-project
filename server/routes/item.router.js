@@ -1,18 +1,30 @@
 const express = require('express');
-const { Connection } = require('pg');
+// const { Connection } = require('pg');
 const pool = require('../modules/pool');
 const router = express.Router();
 
 /**
  * GET route template
  */
-router.get('/', (req, res) => {
-    // GET route code here
+router.get('/:item_code', (req, res) => {
+    console.log('in item router GET request');
+    console.log('req.params is', req.params);
+    
+    // sqlText = `SELECT * FROM "item" WHERE "item_code" = $1;`;
+
+    // pool.query(sqlText, [req.params.id])
+    // .then((result) => {
+    //     console.log('result.rows is', result.rows);
+    //     res.send(result.rows);
+    // }).catch((error) => {
+    //     console.log('error in item router GETting an item', error);
+    //     res.sendStatus(500)
+    // })
 });
 
 // create a new item
-router.post('/', (req, res) => {
-    console.log('in item POST router');
+router.post('/', async (req, res) => {
+    console.log('in item router POST request');
     console.log('req.body is', req.body);
     const connection = await pool.connect();
 
@@ -50,14 +62,7 @@ router.post('/', (req, res) => {
         res.sendStatus(500);
     } finally {
         connection.release();
-    } 
-
-  
-
-
-
-
-         
+    }      
   
 });
 
