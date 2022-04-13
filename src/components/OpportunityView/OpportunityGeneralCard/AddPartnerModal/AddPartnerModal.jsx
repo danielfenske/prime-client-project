@@ -76,12 +76,12 @@ function AddPartnerModal() {
 
     return (
         <>
-            {/* <Button onClick={handleOpen}>Add Account</Button> */}
+            <Button onClick={handleOpen}>Add Account</Button>
             <div className='fab-account'>
-                <Fab onClick={handleOpen} variant="extended" size="medium" color="primary">
+                {/* <Fab onClick={handleOpen} variant="extended" size="medium" color="primary">
                     < AddCircleOutlineOutlinedIcon sx={{ ml: 1 }} />
                     Add Account
-                </Fab>
+                </Fab> */}
             </div>
             <Modal
                 aria-labelledby="modal-modal-title"

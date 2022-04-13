@@ -27,5 +27,21 @@ router.post('/', (req, res) => {
     }
 });
 
+router.get('/', (req, res) => {
+    if (req.isAuthenticated()) {
+      const queryText = `SELECT * FROM "partner";`;
+      pool
+        .query(queryText)
+        .then((result) => {
+          res.send(result.rows)
+        })
+        .catch((error) => {
+          console.log('rut ro scoob', error);
+        })
+    } else {
+      res.sendStatus(403);
+    }
+  });
+
 
 module.exports = router;
