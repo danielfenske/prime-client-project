@@ -69,7 +69,9 @@ function UserCard({ user }) {
             first_name !== firstInput ||
             last_name !== lastInput ||
             access_level !== accessInput) && (
-            <Button variant='contained'>Save Changes</Button>
+            <Button variant='contained' color='secondary'>
+              Save
+            </Button>
           )}
           <IconButton>
             <DeleteIcon />
