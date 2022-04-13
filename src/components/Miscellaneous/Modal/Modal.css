@@ -4,6 +4,11 @@
   border-radius: var(--border);
 
   padding: var(--padding);
-  
+
   width: 50%;
+
+}
+
+.modal-background {
+  z-index: 100;
 }
