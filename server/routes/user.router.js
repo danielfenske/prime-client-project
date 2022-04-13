@@ -93,6 +93,21 @@ router.put('/update/password', async (req, res) => {
   }
 })
 
+router.put('/update', async (req, res) => {
+  if (req.isAuthenticated() && req.user.access_level > 2) {
+    try {
+      console.log(req.body);
+
+      res.sendStatus(201)
+    } catch (err) {
+      console.error('Error updating user', err)
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(403);
+  }
+})
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful
