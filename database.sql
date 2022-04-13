@@ -100,10 +100,11 @@ CREATE TABLE "heading" (
 	"message" VARCHAR(250),
 	"proposal_id" INT REFERENCES "proposal",
 	"surcharge" DECIMAL (5, 2),
-	"order" INT
+	"order" INT,
+    "taxable" BOOLEAN
 );
 
-INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order")
+INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
 VALUES ('frank', 'exterior staircase railing', 7, 3.33, 4 );
 
 SELECT * FROM "heading";
@@ -115,16 +116,16 @@ CREATE TABLE "unit_type" (
 	"pricing_unit" VARCHAR(10)
 );
 
---INSERT INTO "unit_type" ("measurement_unit", "pricing_unit")
---VALUES ('EA', 'EA'),
---('FT', 'FT'),
---('FT','LBS'),
---('FT', 'CWT'),
---('LBS', 'LBS'),
---('LBS','CWT'),
---('SQFT', 'SQFT'),
---('SQFT', 'LBS'),
---('SQFT', 'CWT');
+INSERT INTO "unit_type" ("measurement_unit", "pricing_unit")
+VALUES ('EA', 'EA'),
+('FT', 'FT'),
+('FT','LBS'),
+('FT', 'CWT'),
+('LBS', 'LBS'),
+('LBS','CWT'),
+('SQFT', 'SQFT'),
+('SQFT', 'LBS'),
+('SQFT', 'CWT');
 
 
 CREATE TABLE "item" (

@@ -1,24 +1,23 @@
 const express = require('express');
-// const { Connection } = require('pg');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-// fetch an item by item_code
 
-router.get('/:item_code', (req, res) => {
+//fetch all items
+router.get('/', (req, res) => {
     console.log('in item router GET request');
-    console.log('req.params is', req.params.item_code);
+
 
     if (req.isAuthenticated()) {
 
-        sqlText = `SELECT * FROM "item" WHERE "item_code" = $1;`;
+        const sqlText = `SELECT * FROM "item";`;
 
-        pool.query(sqlText, [req.params.item_code])
+        pool.query(sqlText)
         .then((result) => {
             console.log('result.rows is', result.rows);
             res.send(result.rows);
         }).catch((error) => {
-            console.log('error in item router GETting an item', error);
+            console.log('error in item router GETting all items', error);
             res.sendStatus(500)
         })
     } else {
