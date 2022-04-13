@@ -116,9 +116,8 @@ CREATE TABLE "unit_type" (
 
 INSERT INTO "unit_type" ("measurement_unit", "pricing_unit")
 VALUES ('EA', 'EA'),
-('FT','LBS'),
 ('FT', 'FT'),
-('EA', 'EA'),
+('FT','LBS'),
 ('FT', 'CWT'),
 ('LBS', 'LBS'),
 ('LBS','CWT'),
