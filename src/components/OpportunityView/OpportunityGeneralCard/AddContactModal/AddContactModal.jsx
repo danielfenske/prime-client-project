@@ -35,10 +35,10 @@ function AddContactModal() {
             <Modal open={open}>
                 <h1>Add New Contact</h1>
                 <form onSubmit={handleSubmit}>
-                    <TextField id="outlined-basic" label="Name" variant="outlined" onChange={(e) => setName(event.target.value)} />
-                    <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => setEmail(event.target.value)} />
-                    <TextField id="outlined-basic" label="Phone" variant="outlined" onChange={(e) => setPhone(event.target.value)} />
-                    <TextField id="outlined-basic" label="Work Phone" variant="outlined" onChange={(e) => setWorkPhone(event.target.value)} />
+                    <TextField id="outlined-basic" label="Name" variant="outlined" onChange={(e) => setName(e.target.value)} />
+                    <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => setEmail(e.target.value)} />
+                    <TextField id="outlined-basic" label="Phone" variant="outlined" onChange={(e) => setPhone(e.target.value)} />
+                    <TextField id="outlined-basic" label="Work Phone" variant="outlined" onChange={(e) => setWorkPhone(e.target.value)} />
                     <button type="submit">Add</button>
                 </form>
 
