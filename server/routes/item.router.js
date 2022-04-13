@@ -3,23 +3,27 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-/**
- * GET route template
- */
+// fetch an item by item_code
+
 router.get('/:item_code', (req, res) => {
     console.log('in item router GET request');
-    console.log('req.params is', req.params);
+    console.log('req.params is', req.params.item_code);
 
-    // sqlText = `SELECT * FROM "item" WHERE "item_code" = $1;`;
+    if (req.isAuthenticated()) {
 
-    // pool.query(sqlText, [req.params.id])
-    // .then((result) => {
-    //     console.log('result.rows is', result.rows);
-    //     res.send(result.rows);
-    // }).catch((error) => {
-    //     console.log('error in item router GETting an item', error);
-    //     res.sendStatus(500)
-    // })
+        sqlText = `SELECT * FROM "item" WHERE "item_code" = $1;`;
+
+        pool.query(sqlText, [req.params.item_code])
+        .then((result) => {
+            console.log('result.rows is', result.rows);
+            res.send(result.rows);
+        }).catch((error) => {
+            console.log('error in item router GETting an item', error);
+            res.sendStatus(500)
+        })
+    } else {
+        res.sendStatus(403)
+    }
 });
 
 // create a new item
@@ -27,7 +31,7 @@ router.post('/', async (req, res) => {
     console.log('in item router POST request');
     console.log('req.body is', req.body);
     const connection = await pool.connect();
-    
+
     if (req.isAuthenticated()) {
         try {
             await connection.query('BEGIN;');
