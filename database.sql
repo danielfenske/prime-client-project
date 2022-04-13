@@ -117,9 +117,8 @@ CREATE TABLE "unit_type" (
 
 --INSERT INTO "unit_type" ("measurement_unit", "pricing_unit")
 --VALUES ('EA', 'EA'),
---('FT','LBS'),
 --('FT', 'FT'),
---('EA', 'EA'),
+--('FT','LBS'),
 --('FT', 'CWT'),
 --('LBS', 'LBS'),
 --('LBS','CWT'),
@@ -136,7 +135,7 @@ CREATE TABLE "item" (
 	"price_per_price_unit" DECIMAL (9,2),
 	"unit_type_id" INT,
 	"unit_weight" DECIMAL (5, 2), -- unit weight is the relationship between the mesure_unit and price_unit
-	"disabled" BOOLEAN NOT NULL
+	"disabled" BOOLEAN NOT NULL DEFAULT FALSE 
 );
 
 --INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id", "disabled")
