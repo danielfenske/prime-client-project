@@ -5,16 +5,26 @@ import './Nav.css';
 import { useSelector } from 'react-redux';
 import { Button } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Nav() {
   const user = useSelector((store) => store.user);
+  const history = useHistory();
+
+  const goBackHome = () => {
+    history.push('/');
+  };
 
   return (
     <div className='nav'>
       {/* this is used to make sure that the logo is centered always */}
       <div className='left-nav'>
         {user.id && (
-          <Button id='home-button' startIcon={<HomeIcon />}>
+          <Button
+            id='home-button'
+            startIcon={<HomeIcon />}
+            onClick={goBackHome}
+          >
             Opportunities
           </Button>
         )}
