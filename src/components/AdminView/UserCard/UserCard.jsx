@@ -1,4 +1,5 @@
-import { TextField, Select, MenuItem, Autocomplete } from '@mui/material';
+import { TextField, Select, MenuItem, Button, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 
 function UserCard({ user }) {
@@ -24,42 +25,56 @@ function UserCard({ user }) {
       <div className='userCard'>
         <p>User Id: {id}</p>
 
-        <TextField
-          label='Username'
-          value={usernameInput}
-          onChange={(e) => setUsernameInput(e.target.value)}
-          size='small'
-        />
+        <div>
+          <TextField
+            label='Username'
+            value={usernameInput}
+            onChange={(e) => setUsernameInput(e.target.value)}
+            size='small'
+          />
 
-        <TextField
-          label='First Name'
-          value={firstInput}
-          onChange={(e) => setFirstInput(e.target.value)}
-          size='small'
-        />
+          <TextField
+            label='First Name'
+            value={firstInput}
+            onChange={(e) => setFirstInput(e.target.value)}
+            size='small'
+          />
 
-        <TextField
-          label='Last Name'
-          value={lastInput}
-          onChange={(e) => setLastInput(e.target.value)}
-          size='small'
-        />
+          <TextField
+            label='Last Name'
+            value={lastInput}
+            onChange={(e) => setLastInput(e.target.value)}
+            size='small'
+          />
 
-        <Select
-          value={accessInput}
-          onChange={(e) => setAccessInput(e.target.value)}
-          size='small'
-        >
-          {access_levels.map((lvl, index) => {
-            if (index !== 0) {
-              return (
-                <MenuItem key={index} value={index}>
-                  {lvl}
-                </MenuItem>
-              );
-            }
-          })}
-        </Select>
+          <Select
+            value={accessInput}
+            onChange={(e) => setAccessInput(e.target.value)}
+            size='small'
+          >
+            {access_levels.map((lvl, index) => {
+              if (index !== 0) {
+                return (
+                  <MenuItem key={index} value={index}>
+                    {lvl}
+                  </MenuItem>
+                );
+              }
+            })}
+          </Select>
+        </div>
+
+        <div className='card-section-3'>
+          {(username !== usernameInput ||
+            first_name !== firstInput ||
+            last_name !== lastInput ||
+            access_level !== accessInput) && (
+            <Button variant='contained'>Save Changes</Button>
+          )}
+          <IconButton>
+            <DeleteIcon />
+          </IconButton>
+        </div>
       </div>
     </>
   );
