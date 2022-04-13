@@ -98,9 +98,9 @@ router.put('/update', async (req, res) => {
     try {
       console.log(req.body);
 
-      res.sendStatus(201)
+      res.sendStatus(201);
     } catch (err) {
-      console.error('Error updating user', err)
+      console.error('Error updating user', err);
       res.sendStatus(500);
     }
   } else {
