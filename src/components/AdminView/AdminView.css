@@ -1,0 +1,11 @@
+.admin-container {
+  padding: var(--padding-large);
+}
+
+.userCard {
+  margin: var(--margin-large) 0px;
+  padding: var(--padding);
+
+  border-radius: var(--border);
+  border: 2px solid var(--grey-light);
+}
