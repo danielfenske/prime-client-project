@@ -13,6 +13,7 @@ function AdminView() {
 
   const [newUsername, setNewUsername] = useState('');
 
+  // used for opening the new user modal
   const [open, setOpen] = useState(false);
   const openNewUserModal = () => {
     setOpen(true);
@@ -20,8 +21,9 @@ function AdminView() {
 
   const addNewUser = (e) => {
     e.preventDefault();
-    console.log('In Add New User');
+    // console.log('In Add New User');
 
+    // use built in register route to create a new User
     dispatch({
       type: 'REGISTER',
       payload: {
@@ -54,6 +56,8 @@ function AdminView() {
           })}
         </div>
       </div>
+
+      {/* modal is for adding a new user */}
       <Modal open={open}>
         <h1>Add User</h1>
         <form onSubmit={addNewUser}>
