@@ -14,18 +14,18 @@ router.post('/', (req, res) => {
         let city = req.body.city;
         let state = req.body.state;
         let zip = req.body.zip;
-        let disabled = req.body.disabled; // boolean of whether or not the partner is active still or not
+        let disabled = req.body.disabled;// boolean of whether or not the partner is active still or not
         
-        console.log(name, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled);
-        const queryText = ` INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "disabled")
-                            VALUES($1, $2, $3, $4, $5, $6);`;
-        pool
-            .query(queryText, [type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled])
-            .then(() => res.sendStatus(201))
-            .catch((error) => {
-                console.log('Item Posted Failed: ', error);
-                res.sendStatus(500);
-            })
+        console.log(name, type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled);
+        // const queryText = `INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "phone_number", "address_line_1", "city", "state", "zip", "disabled")
+        //                     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
+        // pool
+        //     .query(queryText, [name, type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled])
+        //     .then(() => res.sendStatus(201))
+        //     .catch((error) => {
+        //         console.log('Item Posted Failed: ', error);
+        //         res.sendStatus(500);
+        //     })
     } else {
         res.sendStatus(403)
     }
@@ -65,8 +65,8 @@ router.put('/:id', (req, res) => {
         let disabled = req.body.disabled;
   
       const idToUpdate = req.params.id;
-      const sqlText = `UPDATE "accounts" SET "username" = $1, "password" = $2, "notes" = $3, "account_description" = $4 , "url" = $5, "folder_id" = $6 WHERE "id" = $7;`;
-      pool.query(sqlText, [username, password, notes, accountDescription, url, folder, idToUpdate])
+      const sqlText = `UPDATE "partner" SET "name" = $1, "type" = $2, "partner_code" = $3, "partner_discount" = $4 , "rounding_type" = $5, "phone_number" = $6, "address_line_1" = $7, "city" = $8, "state" = $9, "zip" = $10, "disabled" = $11 WHERE "id" = $12;`;
+      pool.query(sqlText, [name, type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled, idToUpdate])
         .then((result) => {
           res.sendStatus(200);
         })
