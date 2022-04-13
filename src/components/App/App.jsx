@@ -20,6 +20,10 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Test from '../Test/Test';
+
+import AdminProtectedRoute from '../ProtectedRoute/AdminProtectedRoute';
+import AdminView from '../AdminView/AdminView';
 
 // import './App.css';
 import './App2.css';
@@ -61,6 +65,12 @@ function App() {
                   {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
                   <Redirect exact from='/' to='/home' />
 
+                  {/* TEST ROUTE ------------------------------------------------------------------------ */}
+                  <Route exact path='/test'>
+                    <Test />
+                  </Route>
+                  {/* TEST ROUTE ------------------------------------------------------------------------ */}
+
                   {/* Visiting localhost:3000/about will show the about page. */}
                   <Route
                     // shows AboutPage at all times (logged in or not)
@@ -69,6 +79,11 @@ function App() {
                   >
                     <AboutPage />
                   </Route>
+
+                  {/* The admin protected route is only shown if the user has an admin level above 2 */}
+                  <AdminProtectedRoute exact path='/admin'>
+                    <AdminView />
+                  </AdminProtectedRoute>
 
                   {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
