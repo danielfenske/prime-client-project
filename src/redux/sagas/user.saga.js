@@ -24,6 +24,14 @@ function* fetchUser() {
   }
 }
 
+function* fetchAllUsers() {
+  try {
+
+  } catch (err) {
+    console.error('Get all users function failed', err);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
 }

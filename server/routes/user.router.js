@@ -14,6 +14,34 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
+// gets all the users from the database (not including the admins)
+router.get('/all', rejectUnauthenticated, async (req, res) => {
+  if (req.user.access_level > 2) {
+    try {
+      const sqlText = `
+        SELECT
+          "id",
+          "username",
+          "first_name",
+          "last_name",
+          "access_level"
+        FROM "user" WHERE "access_level" != 3 AND "disabled" != true;
+      `;
+
+      const response = await pool.query(sqlText);
+
+      res.send(response.rows);
+    } catch (err) {
+      // send internal server error to client
+      console.error('Error in /api/user/all get', err);
+      res.sendStatus(500);
+    }
+  } else {
+    // send unauthenticated to client
+    res.sendStatus(403);
+  }
+})
+
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
