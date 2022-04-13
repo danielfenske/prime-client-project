@@ -1,0 +1,23 @@
+.admin-container {
+  padding: var(--padding-large);
+}
+
+.userCard {
+  margin: var(--margin-large) 0px;
+  padding: var(--padding);
+
+  border-radius: var(--border);
+  border: 2px solid var(--grey-light);
+
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  align-items: center;
+}
+
+.card-section-3 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: var(--margin);
+}

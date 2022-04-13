@@ -5,16 +5,15 @@
 -- Otherwise you will have errors!
 CREATE TABLE "user" (
     "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80),
-    "password" VARCHAR (1000),
+    "username" VARCHAR (80) UNIQUE ,
+    "password" VARCHAR (1000) ,
     "first_name" VARCHAR(80) ,
     "last_name" VARCHAR(100) ,
-    "access_level" INT ,
-    "disabled" BOOLEAN 
+    "access_level" INT DEFAULT 1,
+    "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 ); -- will make almost all fields null/required later
-
  INSERT INTO "user" ("username", "password", "first_name", "last_name", "access_level", "disabled")
- VALUES('mark', 'passoword', 'mark', 'terry', 1, 'false');
+ VALUES('mark', 'password', 'mark', 'terry', 1, 'false');
 
 CREATE TABLE "contact" (
     "id" SERIAL PRIMARY KEY,
@@ -22,10 +21,10 @@ CREATE TABLE "contact" (
     "phone" VARCHAR(80),
     "work_phone" VARCHAR(80),
     "email" VARCHAR(80),
-    "disabled" BOOLEAN NOT NULL
+    "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-DROP TABLE "contact";
+DROP TABLE "user";
 
  INSERT INTO "contact" ("name", "phone", "work_phone", "email", "disabled")
  VALUES('mark', '6515555555', '6515555555', 'fake@gmail.com', 'false');
@@ -42,7 +41,7 @@ CREATE TABLE "partner" (
     "city" VARCHAR(80),
     "state" VARCHAR(2),
     "zip" INT,
-    "disabled" BOOLEAN NOT NULL
+    "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
  INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "disabled")
  VALUES('Brookshire Construction', 'builder', 'BRK', '5.23', '3', false );
@@ -65,7 +64,7 @@ CREATE TABLE "opportunity" (
     "state" VARCHAR(2),
     "zip" INT,
     "tax_rate" DECIMAL(5, 2),
-    "disabled" BOOLEAN NOT NULL
+    "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
  INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
  VALUES('housing development', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', 'building', 'palm springs', 'building', '123 main street', 'saint paul', 'MN', 55119, 7.25, false);
@@ -89,10 +88,10 @@ CREATE TABLE "proposal" (
     "field_weld_charge" DECIMAL (5, 2),
     "field_weld_message" VARCHAR(250),
     "description" VARCHAR(250),
-    "disabled" BOOLEAN NOT NULL
+    "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
  INSERT INTO "proposal" ("date", "proposal_code", "opportunity_id", "house_type", "plan_identifier", "plan_date", "building_code", "partner_discount", "surcharge", "surcharge_description", "method", "method_message", "delivery_charge", "field_weld_charge", "field_weld_message", "description", "disabled")
- VALUES('2004-10-19 10:23:54+02', 'BRK', 2, 'Rambler', 'yayay', '2004-10-19 10:23:54+02', 'sdfsdfs', 3.33, 13.33, '2022 up-charge', 2, 'method message', 333.13, 23.13, 'Welded railing together', 'small house', false);
+ VALUES('2004-10-19 10:23:54+02', 'BRK', 1, 'Rambler', 'yayay', '2004-10-19 10:23:54+02', 'sdfsdfs', 3.33, 13.33, '2022 up-charge', 2, 'method message', 333.13, 23.13, 'Welded railing together', 'small house', false);
 
 CREATE TABLE "heading" (
 	"id" SERIAL PRIMARY KEY,
@@ -104,8 +103,10 @@ CREATE TABLE "heading" (
     "taxable" BOOLEAN
 );
 
+
 INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
 VALUES ('frank', 'exterior staircase railing', 7, 3.33, 4 );
+
 
 SELECT * FROM "heading";
 
@@ -137,10 +138,11 @@ CREATE TABLE "item" (
 	"unit_type_id" INT,
 	"unit_weight" DECIMAL (5, 2), -- unit weight is the relationship between the mesure_unit and price_unit
 	"disabled" BOOLEAN NOT NULL DEFAULT FALSE 
+
 );
 
---INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id", "disabled")
---VALUES ('W2765', 'Steel Rod', '10ft round steel rod', 3.33, 3, FAlSE);
+INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id", "disabled")
+VALUES ('W2765', 'Steel Rod', '10ft round steel rod', 3.33, 3, FAlSE);
 
 CREATE TABLE "item_heading"(
 	"id" SERIAL PRIMARY KEY,
@@ -155,21 +157,24 @@ CREATE TABLE "item_heading"(
 	"total_item_price" DECIMAL (5,2)
 	); 
 	
---INSERT INTO "item_heading" ("heading_id", "item_id", "order","item_price", "qty_price_unit", "qty_measure_unit", "total_adj_price")
---VALUES (3, 1, 1, 3.33, 35.90, 13.33, 53.23);
---
+INSERT INTO "item_heading" ("heading_id", "item_id", "order","item_price", "qty_price_unit", "qty_measure_unit", "total_adj_price")
+VALUES (2, 1, 1, 3.33, 35.90, 13.33, 53.23);
+
 --SELECT * FROM "item_heading";
 
 CREATE TABLE "partner_pricing"(
 	"id" SERIAL PRIMARY KEY,
-	"price" DECIMAL (5,2), -- same type of data as price_per_price_unit from the "item" table
+	"price" DECIMAL (5,2),
 	"item_id" INT REFERENCES "item",
 	"partner_id" INT REFERENCES "partner",
-	"disabled" BOOLEAN NOT NULL
+	"disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 INSERT INTO "partner_pricing"("price", "item_id", "partner_id", "disabled")
 VALUES(3.33, 1, 1, TRUE);
+
+
+
 
 
 
