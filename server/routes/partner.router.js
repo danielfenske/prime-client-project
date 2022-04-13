@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/post', (req, res) => {
     if (req.isAuthenticated()) {
         let name = req.body.name; // name of partner
         let type = req.body.type; 
@@ -17,15 +17,15 @@ router.post('/', (req, res) => {
         let disabled = req.body.disabled;// boolean of whether or not the partner is active still or not
         
         console.log(name, type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled);
-        // const queryText = `INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "phone_number", "address_line_1", "city", "state", "zip", "disabled")
-        //                     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
-        // pool
-        //     .query(queryText, [name, type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled])
-        //     .then(() => res.sendStatus(201))
-        //     .catch((error) => {
-        //         console.log('Item Posted Failed: ', error);
-        //         res.sendStatus(500);
-        //     })
+        const queryText = `INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "phone_number", "address_line_1", "city", "state", "zip", "disabled")
+                            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);`;
+        pool
+            .query(queryText, [name, type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled])
+            .then(() => res.sendStatus(201))
+            .catch((error) => {
+                console.log('Item Posted Failed: ', error);
+                res.sendStatus(500);
+            })
     } else {
         res.sendStatus(403)
     }
