@@ -9,7 +9,7 @@ const {
 // get contacts
 router.get('/', (req, res) => {
 
-    let queryText = `SELECT * FROM "contact";`;
+    let queryText = `SELECT * FROM "contact" WHERE "disabled" = false;`;
 
     if (req.isAuthenticated()) {
         pool.query(queryText)
@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
     } else {
         res.sendStatus(403);
     }
-})
+});
 
 // post contact
 router.post('/', (req, res) => {
@@ -72,7 +72,7 @@ router.put('/:id', (req, res) => {
     } else {
         res.sendStatus(403);
     }
-})
+});
 
 router.delete('/:id', (req, res) => {
 

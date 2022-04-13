@@ -7,7 +7,8 @@ function* getContactList() {
       const contactResponse = yield axios.get(`/api/contact`);
 
     // sends list to be stored in redux state
-    yield put ({type: 'SET_CONTACT_LIST', payload: contactResponse});
+    yield put ({type: 'SET_CONTACT_LIST', payload: contactResponse.data});
+
   } catch (error) {
       console.log('Error GETTING contacts', error); 
   }
