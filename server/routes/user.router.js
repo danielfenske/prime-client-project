@@ -25,7 +25,7 @@ router.get('/all', rejectUnauthenticated, async (req, res) => {
           "first_name",
           "last_name",
           "access_level"
-        FROM "user" WHERE "access_level" != 3 AND "disabled" != true;
+        FROM "user" WHERE "access_level" < 3 AND "disabled" != true;
       `;
 
       const response = await pool.query(sqlText);
