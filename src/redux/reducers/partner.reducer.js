@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-const PartnerReducer = (state = [], action) => {
+const partnerReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_PARTNER_LIST': 
             return action.payload;
@@ -9,5 +9,5 @@ const PartnerReducer = (state = [], action) => {
     }
 }
 export default combineReducers({
-    PartnerReducer,
+    partnerReducer,
 })
