@@ -20,6 +20,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Test from '../Test/Test';
 
 import AdminProtectedRoute from '../ProtectedRoute/AdminProtectedRoute';
 import AdminView from '../AdminView/AdminView';
@@ -62,6 +63,12 @@ function App() {
                 <Switch>
                   {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
                   <Redirect exact from='/' to='/home' />
+
+                  {/* TEST ROUTE ------------------------------------------------------------------------ */}
+                  <Route exact path='/test'>
+                    <Test />
+                  </Route>
+                  {/* TEST ROUTE ------------------------------------------------------------------------ */}
 
                   {/* Visiting localhost:3000/about will show the about page. */}
                   <Route
