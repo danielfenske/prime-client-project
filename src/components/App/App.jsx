@@ -60,6 +60,12 @@ function App() {
                   {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
                   <Redirect exact from='/' to='/home' />
 
+                  {/* TEST ROUTE ------------------------------------------------------------------------ */}
+                  <Route exact path='/test'>
+                    {/* put components here to test */}
+                  </Route>
+                  {/* TEST ROUTE ------------------------------------------------------------------------ */}
+
                   {/* Visiting localhost:3000/about will show the about page. */}
                   <Route
                     // shows AboutPage at all times (logged in or not)
