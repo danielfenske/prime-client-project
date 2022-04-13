@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
             await connection.query('BEGIN;');
 
             const sqlText =
-                `INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id")
+            `INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id")
             VALUES ($1, $2, $3, $4, $5)
             RETURNING "id";`;
 

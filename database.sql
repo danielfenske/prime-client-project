@@ -147,7 +147,6 @@ CREATE TABLE "item_heading"(
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
 	"order" INT,
-	"item_price" DECIMAL (5,2),
 	"price_unit" DECIMAL (5, 2),
 	"single_unit_price" DECIMAL (5, 2),
 	"measure_unit" DECIMAL (5,2),
