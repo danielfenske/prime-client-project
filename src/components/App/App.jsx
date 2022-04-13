@@ -20,6 +20,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Test from '../Test/Test';
 
 // import './App.css';
 import './App2.css';
@@ -62,7 +63,7 @@ function App() {
 
                   {/* TEST ROUTE ------------------------------------------------------------------------ */}
                   <Route exact path='/test'>
-                    {/* put components here to test */}
+                    <Test />
                   </Route>
                   {/* TEST ROUTE ------------------------------------------------------------------------ */}
 
