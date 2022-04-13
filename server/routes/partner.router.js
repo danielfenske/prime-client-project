@@ -5,18 +5,22 @@ const router = express.Router();
 router.post('/', (req, res) => {
     if (req.isAuthenticated()) {
         let name = req.body.name; // name of partner
-        // let userId = Number(req.user.id);
-        let type = req.body.type; //no idea what this is
-        let partner_code = req.body.partner_code; // the code for the partner? 3 letters?
+        let type = req.body.type; 
+        let partner_code = req.body.partner_code; 
         let partner_discount = req.body.partner_discount; //the percent value for the partner?
-        let rounding_type = req.body.rounding_type; // ?????? why is this in this table? 
+        let rounding_type = req.body.rounding_type;
+        let phone_number = req.body.phone_number;
+        let address = req.body.address_line_1;
+        let city = req.body.city;
+        let state = req.body.state;
+        let zip = req.body.zip;
         let disabled = req.body.disabled; // boolean of whether or not the partner is active still or not
         
-        console.log(name, partner_code, partner_discount, rounding_type, disabled);
+        console.log(name, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled);
         const queryText = ` INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "disabled")
                             VALUES($1, $2, $3, $4, $5, $6);`;
         pool
-            .query(queryText, [type, partner_code, partner_discount, rounding_type, disabled])
+            .query(queryText, [type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled])
             .then(() => res.sendStatus(201))
             .catch((error) => {
                 console.log('Item Posted Failed: ', error);
@@ -42,6 +46,39 @@ router.get('/', (req, res) => {
       res.sendStatus(403);
     }
   });
-
+  
+// Update this single partner
+router.put('/:id', (req, res) => {
+    // console.log(req.params.id);
+    // console.log(req.body);
+    if (req.isAuthenticated()) {
+        let name = req.body.name; // name of partner
+        let type = req.body.type; 
+        let partner_code = req.body.partner_code; 
+        let partner_discount = req.body.partner_discount; //the percent value for the partner?
+        let rounding_type = req.body.rounding_type;
+        let phone_number = req.body.phone_number;
+        let address = req.body.address_line_1;
+        let city = req.body.city;
+        let state = req.body.state;
+        let zip = req.body.zip;
+        let disabled = req.body.disabled;
+  
+      const idToUpdate = req.params.id;
+      const sqlText = `UPDATE "accounts" SET "username" = $1, "password" = $2, "notes" = $3, "account_description" = $4 , "url" = $5, "folder_id" = $6 WHERE "id" = $7;`;
+      pool.query(sqlText, [username, password, notes, accountDescription, url, folder, idToUpdate])
+        .then((result) => {
+          res.sendStatus(200);
+        })
+        .catch((error) => {
+          console.log(`Error making database query ${sqlText}`, error);
+          res.sendStatus(500);
+        });
+  
+    } else {
+      res.sendStatus(403);
+    }
+  
+  });
 
 module.exports = router;
