@@ -33,7 +33,7 @@ router.post('/post', (req, res) => {
 
 router.get('/', (req, res) => {
     if (req.isAuthenticated()) {
-      const queryText = `SELECT * FROM "partner";`;
+      const queryText = `SELECT * FROM "partner" WHERE "disabled" = false;`;
       pool
         .query(queryText)
         .then((result) => {
