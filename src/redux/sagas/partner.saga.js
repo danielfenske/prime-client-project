@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
+// gets a list partners from the partners table in the database
 function* getPartnerRows() {    
     try {
         const partnerList= yield axios.get(`/api/partner`);
@@ -11,8 +12,10 @@ function* getPartnerRows() {
     }
   }
 
+
+
 function* partnerSaga() {
-    yield takeLatest('FETCH_PARTNER_LIST', getPartner);
+    yield takeLatest('FETCH_PARTNER_LIST', getPartnerRows);
     // yield takeLatest('POST_PARTNER', postPartner);
     // yield takeLatest('UPDATE_PARTNER', updatePartner);
   }
