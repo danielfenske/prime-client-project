@@ -2,6 +2,7 @@ import SmallTabs from '../../Miscellaneous/SmallTabs/SmallTabs';
 import HeadingCard from './HeadingCard/HeadingCard';
 
 function ProposalOrderCard() {
+  // **Placeholder data** should be replaced by data from the server ---------
   const placeHolderHeading = [
     {
       id: 1,
@@ -9,7 +10,15 @@ function ProposalOrderCard() {
       message: 'Interior Franken trim',
       proposal_id: 1,
       surcharge: 3.33,
-      order: 1,
+      order: 2,
+    },
+    {
+      id: 2,
+      name: 'Test',
+      message: '',
+      proposal_id: 1,
+      surcharge: 3.33,
+      order: 3,
     },
     {
       id: 2,
@@ -17,9 +26,10 @@ function ProposalOrderCard() {
       message: 'exterior Bobert staircase',
       proposal_id: 1,
       surcharge: 3.33,
-      order: 2,
+      order: 1,
     },
   ];
+  // **Placeholder data** should be replaced by data from the server ---------
 
   return (
     <>
@@ -29,8 +39,8 @@ function ProposalOrderCard() {
           .map((head) => head.name)}
         tabContents={placeHolderHeading
           .sort((a, b) => a.order - b.order)
-          .map((head) => (
-            <HeadingCard {...head} />
+          .map((head, index) => (
+            <HeadingCard key={index} {...head} />
           ))}
       />
     </>
