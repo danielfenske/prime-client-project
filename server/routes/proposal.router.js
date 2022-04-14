@@ -78,4 +78,44 @@ router.get('/:id', (req, res) => {
     }
 })
 
+// post new proposal
+router.post('/:id', (req, res) => {
+
+    let opportunity_id = req.params.id;
+
+    let queryText = `INSERT INTO "proposal" ("opportunity_id") VALUES ($1);`;
+
+    if (req.isAuthenticated()) {
+        pool.query(queryText, [opportunity_id])
+            .then((result) => {
+                res.sendStatus(201);
+            })
+            .catch((error) => {
+                res.sendStatus(500);
+            })
+    } else {
+        res.sendStatus(403);
+    }
+})
+
+// delete (disable) proposal
+router.delete('/:id', (req, res) => {
+
+    let opportunity_id = req.params.id;
+
+    let queryText = `DELETE FROM "proposal" WHERE "id" = $1`;
+
+    if (req.isAuthenticated()) {
+        pool.query(queryText, [opportunity_id])
+            .then((result) => {
+                res.sendStatus(200);
+            })
+            .catch((error) => {
+                res.sendStatus(500);
+            })
+    } else {
+        res.sendStatus(403);
+    }
+})
+
 module.exports = router;
