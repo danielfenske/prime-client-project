@@ -41,11 +41,7 @@ function HeadingCard(props) {
         <div>
           <h2>Items</h2>
           <button>Add Item</button>
-          <div className='item-container'>
-            {item_headingPlaceholder.map((item, index) => {
-              return <ItemCard key={index} {...item} />;
-            })}
-          </div>
+          <div className='item-container'></div>
         </div>
       </div>
     </>
@@ -53,26 +49,3 @@ function HeadingCard(props) {
 }
 
 export default HeadingCard;
-
-const item_headingPlaceholder = [
-  {
-    id: 1,
-    heading_id: 1,
-    item_id: 1,
-    order: 1,
-    item_price: 3.33,
-    qty_price_unit: 36,
-    qty_measure_unit: 13.33,
-    total_adj_price: 53.23,
-  },
-  {
-    id: 2,
-    heading_id: 1,
-    item_id: null,
-    order: null,
-    item_price: null,
-    qty_price_unit: null,
-    qty_measure_unit: null,
-    total_adj_price: null,
-  },
-];
