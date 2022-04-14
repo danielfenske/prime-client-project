@@ -32,18 +32,18 @@ function AddPartnerModal() {
    
 
     const handleSubmit = () => {
-        // console.log('hello');
-        dispatch({
-            type: 'POST_PARTNER',
-            payload: {
-                username,
-                password,
-                accountDescription,
-                notes,
-                url,
-                folder,
-            }
-        })
+        console.log('hello');
+        // dispatch({
+        //     type: 'POST_PARTNER',
+        //     payload: {
+        //         username,
+        //         password,
+        //         accountDescription,
+        //         notes,
+        //         url,
+        //         folder,
+        //     }
+        // })
         handleClose();
         setName('');
         setType('');
@@ -64,7 +64,7 @@ function AddPartnerModal() {
         bgcolor: 'background.paper',
         border: '2px solid #000',
         boxShadow: 24,
-        p: 6, //padding
+        p: 6, 
     };
 
 
@@ -92,25 +92,19 @@ function AddPartnerModal() {
                         <Typography id="modal-modal-title" variant="h6" component="h2"> Add Partner </Typography>
                         <TextField
                             sx={{ mt: 2 }}
-                            required
-                            id="outlined-required"
-                            label="Username"
+                            label="Name"
                             value={name}
                             onChange={(event) => setName(event.target.value)}
                         />
                         <TextField
-                            sx={{ mt: 2 }}
-                            required
-                            id="outlined-password-input"
-                            label="Password"
+                            sx={{ mt: 2 }} 
+                            label="Type"
                             value={type}
                             onChange={(event) => setType(event.target.value)}
                         />
                         <TextField
                             sx={{ mt: 2 }}
-                            required
-                            id="outlined-password-input"
-                            label="Account Description"
+                            label="Partner Code"
                             value={partner_code}
                             onChange={(event) => setPartner_code(event.target.value)}
                         />
