@@ -3,6 +3,8 @@ import ItemCard from '../ItemCard/ItemCard';
 
 function HeadingCard(props) {
   const [messageInput, setMessageInput] = useState(props.message);
+  const [nameInput, setNameInput] = useState(props.name);
+  const [surchargeInput, setSurchargeInput] = useState(0);
 
   return (
     <>
@@ -10,12 +12,36 @@ function HeadingCard(props) {
         <div>
           <h2>Heading Information</h2>
           <p>{JSON.stringify(props)}</p>
+
+          <input
+            type='text'
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+            placeholder='Header Name'
+          />
+
           <input
             type='text'
             value={messageInput}
             onChange={(e) => setMessageInput(e.target.value)}
             placeholder='Message'
           />
+
+          <label htmlFor='surcharge'>
+            $
+            <input
+              name='surcharge'
+              type='number'
+              value={surchargeInput}
+              onChange={(e) => setSurchargeInput(e.target.value)}
+              placeholder='Surcharge'
+            />
+          </label>
+        </div>
+        <div>
+          <h2>Items</h2>
+          <button>Add Item</button>
+          <div className='item-container'></div>
         </div>
       </div>
     </>
