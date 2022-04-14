@@ -16,13 +16,16 @@ router.get('/', (req, res) => {
     let queryText;
     let requestedProposals;
 
+    console.log('userId', userId);
+    console.log('access_level', access_level);
+
     if (req.isAuthenticated()) {
         if (access_level > 1) {
             queryText = `SELECT * FROM "proposal";`;
 
             pool.query(queryText)
                 .then((result) => {
-
+                    
                     requestedProposals = result.rows;
 
                     res.sendStatus(requestedProposals);
