@@ -5,7 +5,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 function* getItemList() {
     try {
         const itemResponse = yield axios.get(`/api/item`);
-        console.log('itemResponse is', itemResponse);
+        console.log('in itemSaga getItemList, itemResponse is', itemResponse);
         
 
     //send all items to be stored in the item reducer
@@ -17,10 +17,10 @@ function* getItemList() {
 
 //post a new item to DB
 function* postItem (action) {
-    const newItem = action.payload;
-
+    console.log('in itemSaga postItem, action.payload is', action.payload);
+    
     try {
-        yield axios.post(`/api/item`, newItem);
+        yield axios.post(`/api/item`, action.payload);
         yield put({type:'FETCH_ITEM_LIST'});
     } catch (error) {
         console.log('Error POSTing a new item', error);
@@ -32,7 +32,7 @@ function* postItem (action) {
 
 function* itemSaga() {
     yield takeLatest('FETCH_ITEM_LIST', getItemList);
-    yield takeLatest('POST_ITEM', postItem)
+    yield takeLatest('POST_ITEM', postItem);
   }
 
 export default itemSaga;

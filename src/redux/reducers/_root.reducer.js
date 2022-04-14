@@ -5,6 +5,8 @@ import user from './user.reducer';
 import allUsers from './admin.reducer';
 import contactReducer from './contact.reducer';
 import itemReducer from './item.reducer';
+import headingReducer from './heading.reducer';
+import headingItemReducer from './heading_item.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -18,6 +20,8 @@ const rootReducer = combineReducers({
   allUsers,
   contactReducer,
   itemReducer,
+  headingReducer,
+  headingItemReducer
 });
 
 export default rootReducer;
