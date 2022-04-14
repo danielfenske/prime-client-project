@@ -152,7 +152,7 @@ CREATE TABLE "item_heading"(
 	"price_unit" DECIMAL (5, 2),
 	"single_unit_price" DECIMAL (5, 2),
 	"measure_unit" DECIMAL (5,2),
-	"rounded_meaure_unit" DECIMAL (5, 2),
+	"rounded_measure_unit" DECIMAL (5, 2),
 	"qty" INT,
 	"total_item_price" DECIMAL (5,2)
 	); 

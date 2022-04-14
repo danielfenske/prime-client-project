@@ -5,7 +5,7 @@ const router = express.Router();
 
 //fetch all items
 router.get('/', (req, res) => {
-    console.log('in item router GET request');
+    console.log('in item router GET route');
 
 
     if (req.isAuthenticated()) {
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 
 // create a new item
 router.post('/', async (req, res) => {
-    console.log('in item router POST request');
+    console.log('in item router POST route');
     console.log('req.body is', req.body);
     const connection = await pool.connect();
 
@@ -49,14 +49,11 @@ router.post('/', async (req, res) => {
                 `UPDATE "item" 
         SET "unit_weight" = CASE WHEN "unit_type_id" = 1 OR "unit_type_id" = 2 OR "unit_type_id" = 5 OR "unit_type_id" = 7  THEN 1
                                  WHEN "unit_type_id" = 6 THEN 0.01
-                                 WHEN "unit_type_id" = 3 OR "unit_type_id" = 8 THEN $1
-                                 WHEN "unit_type_id" = 4 OR "unit_type_id" = 9 THEN $1*0.01
+                    
                              END
-        WHERE "id" = $2;`;
+        WHERE "id" = $1;`;
 
-            const valueArrayUnitWeight = [req.body.unit_weight, newItemId];
-
-            await connection.query(sqlTextUnitWeight, valueArrayUnitWeight);
+            await connection.query(sqlTextUnitWeight, [newItemId]);
 
             await connection.query('COMMIT;');
             res.sendStatus(200);

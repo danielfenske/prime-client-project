@@ -1,31 +1,62 @@
 // import components here:
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Modal from '../Miscellaneous/Modal/Modal';
 
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
 
+
 function Test() {
-  const [open, setOpen] = useState(false);
 
-  const [search, setSearch] = useState('');
+ const initialValues = {
+   item_code:"",
+   name:"",
+   description:"",
+   price_per_price_unit:"",
+   unit_type_id:""
+ }
 
-  const words = ['One', 'Two', 'Three', 'Threees'];
+ const [values, setValues] = useState(initialValues);
+
+ const dispatch = useDispatch();
+
+ const handleInputChange = (event) => {
+   const {name, value} = event.target;
+
+   setValues({
+     ...values,
+     [name]: value,
+   });
+ }
+
+const handleSubmit = (event) => {
+ event.preventDefault();
+ dispatch ({
+   type:'POST_ITEM',
+   payload: values
+ })
+}
+  // const [open, setOpen] = useState(false);
+
+  // const [search, setSearch] = useState('');
+
+  // const words = ['One', 'Two', 'Three', 'Threees'];
 
   return (
     <>
       {/* Place components here */}
-      <div>
+      {/* <div>
         <button
           onClick={() => {
             setOpen(true);
           }}
         >
           Open
-        </button>
+        </button> */}
 
         {/* input for filtering the list */}
-        <input
+        {/* <input
           type='text'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -52,7 +83,54 @@ function Test() {
         >
           Close
         </button>
-      </Modal>
+      </Modal> */}
+
+ <form onSubmit={handleSubmit}>
+   <input 
+    type="text"
+    placeholder="item code"
+    name="item_code"
+    value={values.item_code}
+    onChange={handleInputChange} />
+
+<input 
+    type="text"
+    placeholder="name"
+    name="name"
+    value={values.name}
+    onChange={handleInputChange} />
+
+<input 
+    type="text"
+    placeholder="description"
+    name="description"
+    value={values.description}
+    onChange={handleInputChange} />
+
+<input 
+    type="text"
+    placeholder="price_per_price_unit"
+    name="price_per_price_unit"
+    value={values.price_per_price_unit}
+    onChange={handleInputChange} />
+
+<input 
+    type="text"
+    placeholder="unit_type_id"
+    name="unit_type_id"
+    value={values.unit_type_id}
+    onChange={handleInputChange} />
+
+{/* <input 
+    type="text"
+    placeholder="unit_weight"
+    name="unit_weight"
+    value={values.unit_weight}
+    onChange={handleInputChange} /> */}
+
+<button type="submit">ADD</button>
+
+ </form>
 
       
     </>

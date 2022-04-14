@@ -4,7 +4,7 @@ const router = express.Router();
 
 // fetch all headings
 router.get('/', (req, res) => {
-    console.log('in heading router GET request');
+    console.log('in heading router GET route');
 
     if (req.isAuthenticated()) {
 
@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 
 // add a new heading
 router.post('/', (req, res) => {
-    console.log('in heading router POST request');
+    console.log('in heading router POST route');
     console.log('req.body is', req.body);
     if (req.isAuthenticated()) {
 
@@ -54,13 +54,10 @@ router.get('/item', (req, res) => {
 
 // add a new line item
 router.post('/:id/item', (req, res) => {
-    console.log('in heading/item router POST request');
+    console.log('in heading/item router POST route');
     console.log('req.body is', req.body);
-    const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
-        await connection.query('BEGIN;');
-
         const sqlText =
         `INSERT INTO "item_heading" ("heading_id")
         VALUES ($1)
@@ -68,18 +65,10 @@ router.post('/:id/item', (req, res) => {
 
         const valueArray = [req.params.id];
 
-        const newLineItem = await connection.query(sqlText, valueArray);
-        const newLineItemId = newLineItem.rows[0].id;
-
-        const sqlTextUpdate = 
-        `UPDATE "item_heading"
-         SET "item_id" = $1, "order" = $2, "measure_unit" = $3, "qty" = $4
-         WHERE id = $5;` 
-            
-        const valueArrayUpdate = []
         pool.query(sqlText, valueArray)
             .then((result) => {
-                res.sendStatus(201);
+                console.log('new item_heading id is', result.rows[0].id);
+                res.send(result.rows)
             }).catch((error) => {
                 console.log('error posting a new heading', error);
                 res.sendStatus(500);
@@ -87,6 +76,59 @@ router.post('/:id/item', (req, res) => {
     } else {
         res.sendStatus(403)
     }
+});
+
+// update a new line item
+router.put('/:id/item/:id', async (req, res) => {
+    console.log('in heading/item router PUT route');
+    console.log('req.body is', req.body);
+    const connection = await pool.connect();
+
+    if (req.isAuthenticated()) {
+        try{
+        await connection.query('BEGIN;');
+
+        const sqlText = 
+        `UPDATE "item_heading"
+         SET "item_id" = $1, "order" = $2, "measure_unit" = $3, "qty" = $4
+         WHERE "id" = $5;`;
+
+        const valueArray = [req.body.item_id, req.body.order, req.body.measure_unit, req.body.qty, req.body.id];
+        
+        await connection.query(sqlText, valueArray);
+
+        const sqlTextRounding = 
+        `UPDATE "item_heading"
+        SET "rounded_measure_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measure_unit"
+                                         WHEN "partner"."rounding_type" = 2 THEN CEILING("measure_unit")
+                                         WHEN "partner"."rounding_type" = 3 THEN CEILING("measure_unit"/5.0)*5
+                                            END
+        FROM "heading",
+             "proposal",
+             "opportunity",
+             "partner"
+        WHERE "heading"."id" = "item_heading"."heading_id"
+          AND "proposal"."id" = "heading"."proposal_id"
+          AND "opportunity"."id" = "proposal"."opportunity_id"
+          AND "partner"."id" = "opportunity"."partner_id"
+          AND "item_heading"."id" = $1;`;
+
+        const valueArrayRounding = [req.body.id];
+
+        await connection.query(sqlTextRounding, valueArrayRounding);
+        
+        await connection.query('COMMIT;');
+        res.sendStatus(200);
+    } catch (error) {
+        await connection.query('ROLLBACK;');
+        console.log('Transaction Error', error);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+} else {
+    res.sendStatus(403)
+}
 });
 
 
