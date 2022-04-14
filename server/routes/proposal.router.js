@@ -18,12 +18,12 @@ router.get('/', (req, res) => {
 
     if (req.isAuthenticated()) {
         if (access_level > 1) {
-            queryText = `SELECT * FROM "proposal"`
+            queryText = `SELECT * FROM "proposal";`;
 
             pool.query(queryText)
                 .then((result) => {
 
-                    let requestedProposals = result.rows;
+                    requestedProposals = result.rows;
 
                     res.sendStatus(requestedProposals);
                 })
@@ -33,34 +33,16 @@ router.get('/', (req, res) => {
 
         } else {
             queryText = `
-            SELECT 
-            "proposal"."id", 
-            "proposal"."date",
-            "proposal"."proposal_code",
-            "proposal"."opportunity_id",
-            "proposal"."house_type",
-            "proposal"."plan_identifier",
-            "proposal"."plan_date",
-            "proposal"."building_code",
-            "proposal"."partner_discount",
-            "proposal"."surcharge",
-            "proposal"."surcharge_description",
-            "proposal"."method",
-            "proposal"."method_message",
-            "proposal"."delivery_charge",
-            "proposal"."field_weld_charge",
-            "proposal"."field_weld_message",
-            "proposal"."description",
-            "proposal"."disabled"
+            SELECT "proposal".*
             
             FROM "opportunity"
             JOIN "proposal" ON "proposal"."opportunity_id" = "opportunity"."id"
-            WHERE "opportunity_id" = 1 AND "opportunity"."user_id" = $1;`
+            WHERE "opportunity"."user_id" = $1;`;
 
             pool.query(queryText, [userId])
                 .then((result) => {
 
-                    let requestedProposals = result.rows;
+                    requestedProposals = result.rows;
 
                     res.sendStatus(requestedProposals);
                 })
