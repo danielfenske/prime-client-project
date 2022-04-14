@@ -1,30 +1,27 @@
 import React from 'react';
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useState } from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-// import swal from 'sweetalert';
+import Modal from '../Miscellaneous/Modal/Modal';
 
 import './AddAccountForm.css'
 
 function AddPartnerModal() {
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [accountDescription, setAccountDescription] = useState('');
-    const [notes, setNotes] = useState('');
-    const [url, setUrl]= useState('');
-    const [folder, setFolder] = useState('');
-
-
-    // const folders = useSelector((store) => store.folders.FoldersReducer)
+    const [name, setName] = useState('');
+    const [type, setType] = useState('');
+    const [partner_code, setPartner_code] = useState('');
+    const [rounding_type, setRounding_type] = useState('');
+    const [phone_number, setPhone_number ]= useState('');
+    const [address_line_1, setAddress_line_1] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [zip, setZip] = useState('');
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -32,18 +29,12 @@ function AddPartnerModal() {
 
     const dispatch = useDispatch();
 
-    const testing = (event) => {
-        console.log('clicked folder', event);
-        setFolder(event.target.value)
-    }
+   
 
     const handleSubmit = () => {
         // console.log('hello');
-        // swal("The Account has been updated!", {
-        //     icon: "success"
-        // });
         dispatch({
-            type: 'ADD_ACCOUNT_POST',
+            type: 'POST_PARTNER',
             payload: {
                 username,
                 password,
@@ -54,12 +45,15 @@ function AddPartnerModal() {
             }
         })
         handleClose();
-        setUsername('');
-        setPassword('');
-        setAccountDescription('');
-        setNotes('');
-        setUrl('');
-        setFolder('');
+        setName('');
+        setType('');
+        setPartner_code('');
+        setRounding_type('');
+        setPhone_number('');
+        setAddress_line_1('');
+        setCity('');
+        setState('');
+        setZip('');
     }
     const style = {
         position: 'absolute',
@@ -77,15 +71,8 @@ function AddPartnerModal() {
     return (
         <>
             <Button onClick={handleOpen}>Add Account</Button>
-            <div className='fab-account'>
-                {/* <Fab onClick={handleOpen} variant="extended" size="medium" color="primary">
-                    < AddCircleOutlineOutlinedIcon sx={{ ml: 1 }} />
-                    Add Account
-                </Fab> */}
-            </div>
             <Modal
                 aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
                 open={open}
                 onClose={handleClose}
             >
@@ -102,73 +89,76 @@ function AddPartnerModal() {
                         alignItems="center"
                         // width='70%'
                     >
-                        <Typography id="modal-modal-title" variant="h6" component="h2"> Add Account </Typography>
-                        {/* <p>folder local: {JSON.stringify(folder)}</p> */}
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}> Enter in the Account you would like to add below </Typography>
+                        <Typography id="modal-modal-title" variant="h6" component="h2"> Add Partner </Typography>
                         <TextField
                             sx={{ mt: 2 }}
                             required
                             id="outlined-required"
                             label="Username"
-                            value={username}
-                            onChange={(event) => setUsername(event.target.value)}
+                            value={name}
+                            onChange={(event) => setName(event.target.value)}
                         />
                         <TextField
                             sx={{ mt: 2 }}
                             required
                             id="outlined-password-input"
                             label="Password"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
+                            value={type}
+                            onChange={(event) => setType(event.target.value)}
                         />
                         <TextField
                             sx={{ mt: 2 }}
                             required
                             id="outlined-password-input"
                             label="Account Description"
-                            value={accountDescription}
-                            onChange={(event) => setAccountDescription(event.target.value)}
+                            value={partner_code}
+                            onChange={(event) => setPartner_code(event.target.value)}
+                        />
+                        <TextField // im confused as to what this is again, maybe i forgot
+                            sx={{ mt: 2 }}
+                            required
+                            label="Rounding Type"
+                            value={rounding_type}
+                            onChange={(event) => setRounding_type(event.target.value)}
+                        />
+                          <TextField
+                            sx={{ mt: 2 }}
+                            required
+                            label="Phone Number"
+                            value={phone_number}
+                            onChange={(event) => setPhone_number(event.target.value)}
+                        />
+                          <TextField
+                            sx={{ mt: 2 }}
+                            required
+                            label="Address"
+                            value={address_line_1}
+                            onChange={(event) => setAddress_line_1(event.target.value)}
                         />
                         <TextField
                             sx={{ mt: 2 }}
                             required
-                            label="Login Url"
-                            value={url}
-                            onChange={(event) => setUrl(event.target.value)}
+                            label="City"
+                            value={city}
+                            onChange={(event) => setCity(event.target.value)}
                         />
-                        <TextField
+                         <TextField // should we just make a dropdown with a list of 2 letter states? or?
                             sx={{ mt: 2 }}
                             required
-                            multiline={true}
-                            rows={4}
-                            id="outlined-password-input"
-                            label="Notes"
-                            value={notes}
-                            onChange={(event) => setNotes(event.target.value)}
+                            label="State"
+                            value={state}
+                            onChange={(event) => setState(event.target.value)}
                         />
-                        {/* <InputLabel id="folder-label">Folder</InputLabel>
-                    <Select
-                    labelId="folder-label"
-                    id="folders"
-                    // open={open}
-                    // onClose={handleClose}
-                    // onOpen={handleOpen}
-                    value={folder}
-                    label="folder"
-                    onChange={testing}
-                    >
-                    
-                    {folders.map((thisFolder, i) => (                        
-                        <MenuItem key={i} value={thisFolder.id}> <em>{thisFolder.folder_name}</em> </MenuItem>                        
-                        ))}
-                        
-                    </Select> */}
-
-
+                        <TextField 
+                            sx={{ mt: 2 }}
+                            required
+                            label="Zip Code"
+                            value={zip}
+                            onChange={(event) => setZip(event.target.value)}
+                        />
                         <Button onClick={handleSubmit} variant="outlined">Submit Account</Button>
                     </Grid>
                 </Box>
-
             </Modal>
         </>
     )

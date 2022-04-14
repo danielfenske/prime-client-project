@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-router.post('/post', (req, res) => {
+router.post('/', (req, res) => {
     if (req.isAuthenticated()) {
         let name = req.body.name; // name of partner
         let type = req.body.type;
@@ -64,7 +64,8 @@ router.put('/:id', (req, res) => {
         let zip = req.body.zip;
         let disabled = req.body.disabled;
 
-        const idToUpdate = req.params.id;
+        let idToUpdate = req.params.id;
+
         const sqlText = `UPDATE "partner" SET "name" = $1, "type" = $2, "partner_code" = $3, "partner_discount" = $4 , "rounding_type" = $5, "phone_number" = $6, "address_line_1" = $7, "city" = $8, "state" = $9, "zip" = $10, "disabled" = $11 WHERE "id" = $12;`;
         pool.query(sqlText, [name, type, partner_code, partner_discount, rounding_type, phone_number, address, city, state, zip, disabled, idToUpdate])
             .then((result) => {
@@ -74,7 +75,6 @@ router.put('/:id', (req, res) => {
                 console.log(`Error making database query ${sqlText}`, error);
                 res.sendStatus(500);
             });
-
     } else {
         res.sendStatus(403);
     }
@@ -84,7 +84,6 @@ router.delete('/:id', (req, res) => {
     if (req.isAuthenticated()) {
         let disabled = true;
         let id = req.params.id;
-
         let queryText = `UPDATE "partner" SET "disabled" = $1 WHERE "id" = $2;`;
         pool.query(queryText, [disabled, id])
             .then((result) => {
