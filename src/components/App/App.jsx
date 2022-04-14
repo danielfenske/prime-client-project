@@ -21,6 +21,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Test from '../Test/Test';
+import ProposalView from '../ProposalView/ProposalView';
 
 import AdminProtectedRoute from '../ProtectedRoute/AdminProtectedRoute';
 import AdminView from '../AdminView/AdminView';
@@ -48,7 +49,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-    dispatch({type: 'FETCH_CONTACT_LIST'});
+    dispatch({ type: 'FETCH_CONTACT_LIST' });
   }, [dispatch]);
 
   return (
@@ -104,6 +105,16 @@ function App() {
                   >
                     <InfoPage />
                   </ProtectedRoute>
+
+                  {/* Custom Routes ---------------------------------------------------------------------------------------------------- */}
+                  <ProtectedRoute
+                    // shows proposal view if the user is logged in
+                    exact
+                    path='/proposal'
+                  >
+                    <ProposalView />
+                  </ProtectedRoute>
+                  {/* Custom Routes ---------------------------------------------------------------------------------------------------- */}
 
                   <Route exact path='/login'>
                     {user.id ? (
