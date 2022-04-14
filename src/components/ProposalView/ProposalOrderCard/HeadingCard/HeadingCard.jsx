@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import ItemCard from '../ItemCard/ItemCard';
 
 function HeadingCard(props) {
+  const dispatch = useDispatch();
+
   const [messageInput, setMessageInput] = useState(props.message);
   const [nameInput, setNameInput] = useState(props.name);
   const [surchargeInput, setSurchargeInput] = useState(0);
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_ITEM_LIST' });
+  }, []);
 
   return (
     <>
@@ -41,7 +48,9 @@ function HeadingCard(props) {
         <div>
           <h2>Items</h2>
           <button>Add Item</button>
-          <div className='item-container'></div>
+          <div className='item-container'>
+            <ItemCard {...{ test: 'Testing' }} />
+          </div>
         </div>
       </div>
     </>
