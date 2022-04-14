@@ -49,6 +49,7 @@ function HeadingCard(props) {
           <h2>Items</h2>
           <button>Add Item</button>
           <div className='item-container'>
+            {/* this item is a test */}
             <ItemCard {...{ test: 'Testing' }} />
           </div>
         </div>
