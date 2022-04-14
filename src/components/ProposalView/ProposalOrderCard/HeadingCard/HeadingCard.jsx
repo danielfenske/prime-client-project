@@ -1,9 +1,13 @@
 import ItemCard from '../ItemCard/ItemCard';
 
-function HeadingCard({ name }) {
+function HeadingCard({ id, name, message, proposal_id, surcharge, order }) {
   return (
     <>
-      <div className='heading-card'></div>
+      <div className='heading-card'>
+        <div>
+          <p>{message}</p>
+        </div>
+      </div>
     </>
   );
 }
