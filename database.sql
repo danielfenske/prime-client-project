@@ -99,11 +99,14 @@ CREATE TABLE "heading" (
 	"message" VARCHAR(250),
 	"proposal_id" INT REFERENCES "proposal",
 	"surcharge" DECIMAL (5, 2),
-	"order" INT
+	"order" INT,
+    "taxable" BOOLEAN
 );
 
-INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order")
-VALUES ('frank', 'exterior staircase railing', 1, 3.33, 4 );
+
+INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
+VALUES ('frank', 'exterior staircase railing', 7, 3.33, 4 );
+
 
 SELECT * FROM "heading";
 
@@ -133,7 +136,9 @@ CREATE TABLE "item" (
 	"description" VARCHAR (200),
 	"price_per_price_unit" DECIMAL (9,2),
 	"unit_type_id" INT,
-	"disabled" BOOLEAN NOT NULL DEFAULT FALSE
+	"unit_weight" DECIMAL (5, 2), -- unit weight is the relationship between the mesure_unit and price_unit
+	"disabled" BOOLEAN NOT NULL DEFAULT FALSE 
+
 );
 
 INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id", "disabled")
@@ -144,10 +149,12 @@ CREATE TABLE "item_heading"(
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
 	"order" INT,
-	"item_price" DECIMAL (5,2),
-	"qty_price_unit" INT,
-	"qty_measure_unit" DECIMAL (5,2),
-	"total_adj_price" DECIMAL (5,2)
+	"price_unit" DECIMAL (5, 2),
+	"single_unit_price" DECIMAL (5, 2),
+	"measure_unit" DECIMAL (5,2),
+	"rounded_measure_unit" DECIMAL (5, 2),
+	"qty" INT,
+	"total_item_price" DECIMAL (5,2)
 	); 
 	
 INSERT INTO "item_heading" ("heading_id", "item_id", "order","item_price", "qty_price_unit", "qty_measure_unit", "total_adj_price")

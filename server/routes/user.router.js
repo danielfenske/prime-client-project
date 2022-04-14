@@ -52,8 +52,8 @@ router.post('/register', (req, res, next) => {
   console.log('password is', password);
   
 
-  const queryText = `INSERT INTO "user" (username, password)
-    VALUES ($1, $2) RETURNING id`;
+  const queryText = `INSERT INTO "user" (username, password, first_name, last_name)
+    VALUES ($1, $2, '', '') RETURNING id`;
   pool
     .query(queryText, [username, password])
     .then(() => res.sendStatus(201))

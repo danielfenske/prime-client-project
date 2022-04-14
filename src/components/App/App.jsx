@@ -48,6 +48,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
+    dispatch({type: 'FETCH_CONTACT_LIST'});
   }, [dispatch]);
 
   return (
