@@ -1,7 +1,7 @@
 // import components here:
 import { useState } from 'react';
 import Modal from '../Miscellaneous/Modal/Modal';
-
+import AddPartnerModal from '../OpportunityView/OpportunityGeneralCard/AddPartnerModal/AddPartnerModal';
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
 
@@ -42,8 +42,9 @@ function Test() {
             })}
         </ul>
       </div>
-
-      <Modal open={open}>
+        
+       <AddPartnerModal/> 
+      {/* <Modal open={open}>
         <h1>Hello World</h1>
         <button
           onClick={() => {
@@ -52,7 +53,7 @@ function Test() {
         >
           Close
         </button>
-      </Modal>
+      </Modal> */}
     </>
   );
 }

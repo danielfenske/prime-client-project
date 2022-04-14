@@ -12,12 +12,29 @@ function* getPartnerRows() {
     }
   }
 
+  function* postPartner(action) {
+    try {
+      yield axios.post(`api/partner`, action.payload);
+      yield put ({ type: 'FETCH_PARTNER_LIST' });
 
+    } catch (error) {
+      console.log('rut ro scoob', error);   
+    }
+  }
+
+  function* updatePartner(action) {
+    try {
+      yield axios.put(`api/contact/${action.payload.id}`, action.payload);
+      yield put({type: 'FETCH_PARTNER_LIST'});
+
+    } catch (error) {
+      console.log('rut ro scoob!', error);
+    }
+  }
 
 function* partnerSaga() {
     yield takeLatest('FETCH_PARTNER_LIST', getPartnerRows);
-    // yield takeLatest('POST_PARTNER', postPartner);
-    // yield takeLatest('UPDATE_PARTNER', updatePartner);
+    yield takeLatest('POST_PARTNER', postPartner);
+    yield takeLatest('UPDATE_PARTNER', updatePartner);
   }
-
 export default partnerSaga;
