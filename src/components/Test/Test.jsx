@@ -14,7 +14,8 @@ function Test() {
    name:"",
    description:"",
    price_per_price_unit:"",
-   unit_type_id:""
+   unit_type_id:"",
+   unit_weight:1
  }
 
  const [values, setValues] = useState(initialValues);
@@ -37,6 +38,22 @@ const handleSubmit = (event) => {
    payload: values
  })
 }
+
+const [unitInput, setUnitInput] = useState(0);
+const unit_types = [
+  {
+    measure: "FT",
+    pricing: "FT"
+  },
+  {
+    measure: "FT",
+    pricing: "LBS"
+  },
+  {
+    measure: "FT",
+    pricing: "CW"
+  }
+]
   // const [open, setOpen] = useState(false);
 
   // const [search, setSearch] = useState('');
@@ -114,19 +131,29 @@ const handleSubmit = (event) => {
     value={values.price_per_price_unit}
     onChange={handleInputChange} />
 
-<input 
+{/* <input 
     type="text"
     placeholder="unit_type_id"
     name="unit_type_id"
     value={values.unit_type_id}
-    onChange={handleInputChange} />
+    onChange={handleInputChange} /> */}
 
-{/* <input 
+    <select
+      value={unitInput}
+      onChange={(e) => setUnitInput(e.target.value)}
+    >
+      {unit_types.map((type, index) => {
+        return <option key={index} value={index}>{type.measure} {type.pricing}</option>
+      })}
+    </select>
+
+<input 
     type="text"
-    placeholder="unit_weight"
+    placeholder={unit_types[unitInput].pricing + ' per ' + unit_types[unitInput].measure}
     name="unit_weight"
     value={values.unit_weight}
-    onChange={handleInputChange} /> */}
+    onChange={handleInputChange} />
+
 
 <button type="submit">ADD</button>
 

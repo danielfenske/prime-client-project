@@ -32,41 +32,22 @@ router.post('/', async (req, res) => {
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
-        try {
-            await connection.query('BEGIN;');
-
+        
             const sqlText =
-            `INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id")
-            VALUES ($1, $2, $3, $4, $5)
-            RETURNING "id";`;
+            `INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id", "unit_weight")
+            VALUES ($1, $2, $3, $4, $5);`;
 
             const valueArray = [req.body.item_code, req.body.name, req.body.description, req.body.price_per_price_unit, req.body.unit_type_id];
-
-            const newItem = await connection.query(sqlText, valueArray);
-            const newItemId = newItem.rows[0].id;
-
-            const sqlTextUnitWeight =
-                `UPDATE "item" 
-        SET "unit_weight" = CASE WHEN "unit_type_id" = 1 OR "unit_type_id" = 2 OR "unit_type_id" = 5 OR "unit_type_id" = 7  THEN 1
-                                 WHEN "unit_type_id" = 6 THEN 0.01
-                    
-                             END
-        WHERE "id" = $1;`;
-
-            await connection.query(sqlTextUnitWeight, [newItemId]);
-
-            await connection.query('COMMIT;');
-            res.sendStatus(200);
-        } catch (error) {
-            await connection.query('ROLLBACK;');
-            console.log('Transaction Error', error);
-            res.sendStatus(500);
-        } finally {
-            connection.release();
-        }
+            pool.query(sqlText, valueArray)
+            .then((result) => {
+                res.sendStatus(200);
+            }).catch((error) => {
+                res.sendStatus(500);
+            })
     } else {
         res.sendStatus(403)
     }
 });
+
 
 module.exports = router;
