@@ -21,14 +21,13 @@ router.get('/', (req, res) => {
 
     if (req.isAuthenticated()) {
         if (access_level > 1) {
-            queryText = `SELECT * FROM "proposal";`;
+            queryText = `SELECT * FROM "proposal";`
 
             pool.query(queryText)
                 .then((result) => {
-                    
-                    requestedProposals = result.rows;
+                    let requestedProposals = result.rows;
 
-                    res.sendStatus(requestedProposals);
+                    res.send(requestedProposals);
                 })
                 .catch((error) => {
                     res.sendStatus(500);
@@ -44,10 +43,9 @@ router.get('/', (req, res) => {
 
             pool.query(queryText, [userId])
                 .then((result) => {
-
                     requestedProposals = result.rows;
 
-                    res.sendStatus(requestedProposals);
+                    res.send(requestedProposals);
                 })
                 .catch((error) => {
                     res.sendStatus(500);
