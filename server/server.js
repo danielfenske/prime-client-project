@@ -9,7 +9,7 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
-const { AppsSharp } = require('@mui/icons-material');
+const opportunityRouter = require('./routes/opportunity.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
-AppsSharp.use('api/oppotunities')
+app.use('/api/opportunity', opportunityRouter);
 
 // Serve static files
 app.use(express.static('build'));
