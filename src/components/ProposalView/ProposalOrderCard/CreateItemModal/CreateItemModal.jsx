@@ -17,7 +17,7 @@ function CreateItemModal(){
       dispatch({type: "FETCH_UNIT_TYPE_LIST"})
     },[])
 
-    const unitTypeList = store.unitTypeListReducer;
+    const unitTypeList = store.unitTypeReducer.unitTypeListReducer;
     
     const initialValues = {
         item_code:"",
@@ -25,7 +25,7 @@ function CreateItemModal(){
         description:"",
         price_per_price_unit:"",
         unit_type_id:"",
-        unit_weight:""
+        unit_weight:"1"
       }
      
     const [values, setValues] = useState(initialValues);

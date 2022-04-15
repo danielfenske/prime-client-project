@@ -3,10 +3,12 @@ import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import contactSaga from './contact.saga';
+import partnerSaga from './partner.saga';
 import itemSaga from './item.saga';
 import headingSaga from './heading.saga';
 import headingItemSaga from './heading_item.saga';
 import unitTypeSaga from './unit_type.saga';
+import proposalSaga from './proposal.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,9 +23,11 @@ export default function* rootSaga() {
     registrationSaga(),
     userSaga(),
     contactSaga(),
+    partnerSaga(),
     itemSaga(),
     headingSaga(),
     headingItemSaga(),
     unitTypeSaga(),
+    proposalSaga()
   ]);
 }
