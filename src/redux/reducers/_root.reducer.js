@@ -4,6 +4,7 @@ import user from './user.reducer';
 
 import allUsers from './admin.reducer';
 import contactReducer from './contact.reducer';
+import partnerReducer from './partner.reducer';
 import itemReducer from './item.reducer';
 import headingReducer from './heading.reducer';
 import headingItemReducer from './heading_item.reducer';
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   allUsers,
   contactReducer,
+  partnerReducer,
   itemReducer,
   headingReducer,
   headingItemReducer
