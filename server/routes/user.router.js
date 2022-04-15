@@ -48,9 +48,6 @@ router.get('/all', rejectUnauthenticated, async (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  console.log('username is', username);
-  console.log('password is', password);
-  
 
   const queryText = `INSERT INTO "user" (username, password, first_name, last_name)
     VALUES ($1, $2, '', '') RETURNING id`;
@@ -58,7 +55,7 @@ router.post('/register', (req, res, next) => {
     .query(queryText, [username, password])
     .then(() => res.sendStatus(201))
     .catch((err) => {
-      console.log('User registration failed: ');
+      console.log('User registration failed: ', err);
       res.sendStatus(500);
     });
 });
