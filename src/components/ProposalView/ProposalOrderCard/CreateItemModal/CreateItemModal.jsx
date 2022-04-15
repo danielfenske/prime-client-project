@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from '../../../Miscellaneous/Modal/Modal';
 import { useDispatch } from 'react-redux';
 import TextField from '@mui/material/TextField';
@@ -23,53 +23,9 @@ function CreateItemModal(){
      
     const [values, setValues] = useState(initialValues);
 
-    const unit_type = [
-        {
-          unit_type_id:1,
-          measuring: "EA",
-          pricing: "EA"
-        },
-        {
-          unit_type_id:1,
-          measuring: "FT",
-          pricing: "FT"
-        },
-        {
-          unit_type_id:1,
-          measuring: "FT",
-          pricing: "LBS"
-        },
-        {
-          unit_type_id:1,  
-          measuring: "FT",
-          pricing: "CWT"
-        },
-        {
-          unit_type_id:1,
-          measuring: "LBS",
-          pricing: "LBS"
-        },
-        {
-          unit_type_id:1,
-          measuring: "LBS",
-          pricing: "CWT"
-        },
-        {
-          unit_type_id:1,
-          measuring: "SQFT",
-          pricing: "SQFT"
-        },
-        {
-          unit_type_id:1,
-          measuring: "SQFT",
-          pricing: "LBS"
-        },
-        {
-          unit_type_id:1,
-          measuring: "SQFT",
-          pricing: "CWT"
-        }
-    ]
+    useEffect(() => {
+      dispatch({type: ""})
+    })
     const handleInputChange = (event) => {
         
         const {name, value} = event.target;

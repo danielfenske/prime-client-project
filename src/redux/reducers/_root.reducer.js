@@ -7,7 +7,7 @@ import itemReducer from './item.reducer';
 import headingReducer from './heading.reducer';
 import headingItemReducer from './heading_item.reducer';
 import unitTypeReducer from './unit_type.reducer';
-import unitTypeListReducer from '.unit_type_list.reducer';
+import unitTypeListReducer from './unit_type_list.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
