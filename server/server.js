@@ -14,7 +14,7 @@ const itemRouter = require('./routes/item.router');
 const headingRouter = require('./routes/heading.router');
 const contactRouter = require('./routes/contact.router');
 const opportunityRouter = require('./routes/opportunity.router');
-
+const proposalRouter = require('./routes/proposal.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -34,6 +34,7 @@ app.use('/api/item', itemRouter);
 app.use('/api/heading', headingRouter);
 app.use('/api/contact', contactRouter);
 app.use('/api/opportunity', opportunityRouter);
+app.use('/api/proposal', proposalRouter);
 
 // Serve static files
 app.use(express.static('build'));

@@ -5,10 +5,12 @@ import AddPartnerModal from '../OpportunityView/OpportunityGeneralCard/AddPartne
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
 
+import { useDispatch } from 'react-redux';
 
 function Test() {
+const dispatch = useDispatch();
 
- 
+
   const [open, setOpen] = useState(false);
 
   const [search, setSearch] = useState('');
@@ -58,7 +60,7 @@ function Test() {
           Close
         </button>
       </Modal>
-  
+
     </>
   );
 }

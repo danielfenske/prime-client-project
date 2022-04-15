@@ -24,8 +24,6 @@ CREATE TABLE "contact" (
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-DROP TABLE "user";
-
  INSERT INTO "contact" ("name", "phone", "work_phone", "email", "disabled")
  VALUES('mark', '6515555555', '6515555555', 'fake@gmail.com', 'false');
 
@@ -105,7 +103,7 @@ CREATE TABLE "heading" (
 
 
 INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
-VALUES ('frank', 'exterior staircase railing', 7, 3.33, 4 );
+VALUES ('frank', 'exterior staircase railing', 1, 3.33, 4, true );
 
 
 SELECT * FROM "heading";
@@ -149,16 +147,16 @@ CREATE TABLE "item_heading"(
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
 	"order" INT,
-	"price_unit" DECIMAL (5, 2),
-	"single_unit_price" DECIMAL (5, 2),
-	"measure_unit" DECIMAL (5,2),
-	"rounded_measure_unit" DECIMAL (5, 2),
+	"price_unit" DECIMAL,
+	"single_unit_price" DECIMAL (10, 2),
+	"measure_unit" DECIMAL,
+	"rounded_measure_unit" DECIMAL,
 	"qty" INT,
-	"total_item_price" DECIMAL (5,2)
+	"total_item_price" DECIMAL(10,2)
 	); 
 	
-INSERT INTO "item_heading" ("heading_id", "item_id", "order","item_price", "qty_price_unit", "qty_measure_unit", "total_adj_price")
-VALUES (2, 1, 1, 3.33, 35.90, 13.33, 53.23);
+INSERT INTO "item_heading" ("heading_id", "item_id", "order", "price_unit", "single_unit_price", "measure_unit", "rounded_measure_unit", "qty", "total_item_price")
+VALUES (1, 1, 1, 3.33, 35.90, 13.33, 53.23, 3, 2432.23);
 
 --SELECT * FROM "item_heading";
 
@@ -172,9 +170,3 @@ CREATE TABLE "partner_pricing"(
 
 INSERT INTO "partner_pricing"("price", "item_id", "partner_id", "disabled")
 VALUES(3.33, 1, 1, TRUE);
-
-
-
-
-
-
