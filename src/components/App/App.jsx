@@ -22,6 +22,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Test from '../Test/Test';
 import ProposalView from '../ProposalView/ProposalView';
+import OpportunityListView from '../OpportunityListView/OpportunityListView';
 
 import AdminProtectedRoute from '../ProtectedRoute/AdminProtectedRoute';
 import AdminView from '../AdminView/AdminView';
@@ -113,6 +114,10 @@ function App() {
                     path='/proposal'
                   >
                     <ProposalView />
+                  </ProtectedRoute>
+
+                  <ProtectedRoute exact path='/opportunities'>
+                    <OpportunityListView />
                   </ProtectedRoute>
                   {/* Custom Routes ---------------------------------------------------------------------------------------------------- */}
 
