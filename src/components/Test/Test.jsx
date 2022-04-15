@@ -1,6 +1,7 @@
 // import components here:
 import { useEffect, useState } from 'react';
 import Modal from '../Miscellaneous/Modal/Modal';
+import CreateItemModal from '../ProposalView/ProposalOrderCard/CreateItemModal/CreateItemModal';
 
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
@@ -9,26 +10,27 @@ import Modal from '../Miscellaneous/Modal/Modal';
 function Test() {
 
  
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  const [search, setSearch] = useState('');
+  // const [search, setSearch] = useState('');
 
-  const words = ['One', 'Two', 'Three', 'Threees'];
+  // const words = ['One', 'Two', 'Three', 'Threees'];
 
   return (
     <>
       {/* Place components here */}
-      <div>
+      <CreateItemModal />
+      {/* <div>
         <button
           onClick={() => {
             setOpen(true);
           }}
         >
           Open
-        </button>
+        </button> */}
 
         {/* input for filtering the list */}
-        <input
+        {/* <input
           type='text'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -56,7 +58,7 @@ function Test() {
           Close
         </button>
       </Modal>
-  
+   */}
     </>
   );
 }

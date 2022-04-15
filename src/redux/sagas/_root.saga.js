@@ -5,6 +5,7 @@ import userSaga from './user.saga';
 import contactSaga from './contact.saga';
 import itemSaga from './item.saga';
 import headingSaga from './heading.saga';
+import headingItemSaga from './heading_item.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     contactSaga(),
     itemSaga(),
     headingSaga(),
+    headingItemSaga(),
   ]);
 }

@@ -49,5 +49,25 @@ router.post('/', async (req, res) => {
     }
 });
 
+//fetch all unit_type
+router.get('/unit_type', (req, res) => {
+    console.log('in item/unit_type router GET route');
 
+
+    if (req.isAuthenticated()) {
+
+        const sqlText = `SELECT * FROM "unit_type";`;
+
+        pool.query(sqlText)
+        .then((result) => {
+            console.log('result.rows is', result.rows);
+            res.send(result.rows);
+        }).catch((error) => {
+            console.log('error in item router GETting all items', error);
+            res.sendStatus(500)
+        })
+    } else {
+        res.sendStatus(403)
+    }
+});
 module.exports = router;
