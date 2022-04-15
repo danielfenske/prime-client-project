@@ -1,7 +1,64 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 function ProposalGeneralCard() {
+  const dispatch = useDispatch();
+  const partners = useSelector((store) => store.partnerReducer.partnerReducer);
+
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_PARTNER_LIST',
+    });
+  }, []);
+
   return (
     <>
-      <h1>This is the Proposal General Information</h1>
+      <div>
+        <h2>This is the Proposal General Information</h2>
+      </div>
+      <div>
+        <h2>Partner Information</h2>
+        <PartnerCard partners={partners} />
+      </div>
+      <div>
+        <h2>Opportunity Type</h2>
+      </div>
+    </>
+  );
+}
+
+function PartnerCard({ partners }) {
+  const [partnerSelect, setPartnerSelect] = useState(-1);
+  const [partnerInfo, setPartnerInfo] = useState(null);
+
+  useEffect(() => {
+    console.log(partnerSelect);
+    if (partnerSelect === -1) {
+      setPartnerInfo(null);
+    } else {
+      setPartnerInfo(partners.filter((p) => p.id == partnerSelect)[0]);
+    }
+  }, [partnerSelect]);
+
+  return (
+    <>
+      <div>
+        <select
+          value={partnerSelect}
+          onChange={(e) => setPartnerSelect(e.target.value)}
+        >
+          <option value={-1}>none</option>
+          {partners.map((partner, index) => {
+            return (
+              <option key={index} value={partner.id}>
+                {partner.name}
+              </option>
+            );
+          })}
+        </select>
+
+        {partnerInfo && <span>{JSON.stringify(partnerInfo)}</span>}
+      </div>
     </>
   );
 }
