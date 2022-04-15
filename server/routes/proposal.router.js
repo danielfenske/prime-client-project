@@ -81,20 +81,25 @@ router.get('/:opportunityId/:proposalId', (req, res) => {
 })
 
 // post new proposal
-router.post('/:id', (req, res) => {
+router.post('/:id', async (req, res) => {
 
     let opportunity_id = req.params.id;
 
-    let queryText = `INSERT INTO "proposal" ("opportunity_id") VALUES ($1);`;
+    let queryText = `INSERT INTO "proposal" ("opportunity_id") VALUES ($1) RETURNING id;`;
 
     if (req.isAuthenticated()) {
-        pool.query(queryText, [opportunity_id])
-            .then((result) => {
-                res.sendStatus(201);
-            })
-            .catch((error) => {
-                res.sendStatus(500);
-            })
+
+        try {
+            const result = await pool.query(queryText, [opportunity_id])
+
+            const proposalId = result.rows[0].id;
+    
+            res.send({proposalId: proposalId});
+
+        } catch (error) {
+            re.sendStatus(500);
+        }
+
     } else {
         res.sendStatus(403);
     }
@@ -141,17 +146,18 @@ router.put('/:id', (req, res) => {
     WHERE "id" = $16;`;
 
     if (req.isAuthenticated()) {
-        pool.query(queryText, 
-            [date, proposal_code, house_type, plan_identifier, plan_date, 
-                building_code, partner_discount, surcharge, surcharge_description, 
-            method, method_message, delivery_charge, field_weld_charge, 
-            field_weld_message, description, proposalId])
-        .then((result) => {
-            res.sendStatus(200);
-        })
-        .catch((error) => {
-            res.sendStatus(500);
-        })
+        pool.query(queryText,
+                [date, proposal_code, house_type, plan_identifier, plan_date,
+                    building_code, partner_discount, surcharge, surcharge_description,
+                    method, method_message, delivery_charge, field_weld_charge,
+                    field_weld_message, description, proposalId
+                ])
+            .then((result) => {
+                res.sendStatus(200);
+            })
+            .catch((error) => {
+                res.sendStatus(500);
+            })
     } else {
         res.sendStatus(403);
     }
@@ -161,12 +167,13 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
 
     let disabled = true;
-    let opportunity_id = req.params.id;
+    let id = req.params.id;
 
     let queryText = `UPDATE "proposal" SET "disabled" = $1 WHERE "id" = $2;`;
 
     if (req.isAuthenticated()) {
-        pool.query(queryText, [disabled, opportunity_id])
+        
+        pool.query(queryText, [disabled, id])
             .then((result) => {
                 res.sendStatus(200);
             })
