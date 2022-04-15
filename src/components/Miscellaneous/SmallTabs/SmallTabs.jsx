@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './SmallTabs.css';
 
 // mui imports
@@ -49,7 +49,18 @@ function SmallTabs({ tabLabels, tabContents }) {
           })}
         </div>
         <div ref={tabContentContainer} className='tab-content-container'>
-          {tabContents[selectedTab]}
+          {tabContents.map((tab, index) => {
+            return (
+              <span
+                key={index}
+                style={{
+                  display: index === selectedTab ? 'grid' : 'none',
+                }}
+              >
+                {tab}
+              </span>
+            );
+          })}
         </div>
       </div>
     </>
