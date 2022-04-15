@@ -68,7 +68,7 @@ router.get('/:opportunityId/:proposalId', (req, res) => {
     if (req.isAuthenticated()) {
         pool.query(queryText, [opportunity_id, id])
             .then((result) => {
-                let requestedProposal = result.rows;
+                let requestedProposal = result.rows[0];
 
                 res.send(requestedProposal);
             })
