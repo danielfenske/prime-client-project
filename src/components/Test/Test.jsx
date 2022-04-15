@@ -19,18 +19,18 @@ function Test() {
   return (
     <>
       {/* Place components here */}
-      <CreateItemModal />
-      {/* <div>
+      
+      <div>
         <button
           onClick={() => {
             setOpen(true);
           }}
         >
           Open
-        </button> */}
+        </button>
 
         {/* input for filtering the list */}
-        {/* <input
+        <input
           type='text'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -58,7 +58,7 @@ function Test() {
           Close
         </button>
       </Modal>
-   */}
+  
     </>
   );
 }
