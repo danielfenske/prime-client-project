@@ -1,7 +1,7 @@
 // import components here:
 import { useEffect, useState } from 'react';
 import Modal from '../Miscellaneous/Modal/Modal';
-import AddPartnerModal from '../OpportunityView/OpportunityGeneralCard/AddPartnerModal/AddPartnerModal';
+import OpportunityProposalListCard from '../OpportunityView/OpportunityProposalListCard/OpportunityProposalListCard';
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
 
@@ -20,7 +20,7 @@ const dispatch = useDispatch();
   return (
     <>
       {/* Place components here */}
-      <AddPartnerModal/> 
+      <OpportunityProposalListCard/> 
       <div>
         <button
           onClick={() => {
