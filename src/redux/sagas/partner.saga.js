@@ -13,6 +13,7 @@ function* getPartnerRows() {
   }
 
   function* postPartner(action) {
+      console.log(action.payload);
     try {
       yield axios.post(`api/partner`, action.payload);
       yield put ({ type: 'FETCH_PARTNER_LIST' });

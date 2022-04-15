@@ -15,6 +15,7 @@ function Test() {
   return (
     <>
       {/* Place components here */}
+      <AddPartnerModal/> 
       <div>
         <button
           onClick={() => {
@@ -43,17 +44,17 @@ function Test() {
         </ul>
       </div>
         
-       <AddPartnerModal/> 
-      {/* <Modal open={open}>
+       
+      <Modal open={open}>
         <h1>Hello World</h1>
         <button
           onClick={() => {
             setOpen(false);
           }}
-        >
+          >
           Close
         </button>
-      </Modal> */}
+      </Modal>
     </>
   );
 }
