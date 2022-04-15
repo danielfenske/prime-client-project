@@ -2,8 +2,6 @@
 import { useEffect, useState } from 'react';
 import Modal from '../Miscellaneous/Modal/Modal';
 
-
-
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
 
@@ -22,8 +20,6 @@ const dispatch = useDispatch();
   return (
     <>
       {/* Place components here */}
- 
-      <CreateItemModal />
       <div>
         <button
           onClick={() => {
