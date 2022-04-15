@@ -10,6 +10,7 @@ const {
 // get all proposals
 router.get('/', (req, res) => {
 
+    let disabled = false;
     let userId = req.user.id;
     let access_level = req.user.access_level;
 
@@ -21,9 +22,9 @@ router.get('/', (req, res) => {
 
     if (req.isAuthenticated()) {
         if (access_level > 1) {
-            queryText = `SELECT * FROM "proposal";`
+            queryText = `SELECT * FROM "proposal" WHERE "disabled" = $1;`
 
-            pool.query(queryText)
+            pool.query(queryText, [disabled])
                 .then((result) => {
                     let requestedProposals = result.rows;
 
@@ -39,9 +40,9 @@ router.get('/', (req, res) => {
             
             FROM "opportunity"
             JOIN "proposal" ON "proposal"."opportunity_id" = "opportunity"."id"
-            WHERE "opportunity"."user_id" = $1;`;
+            WHERE "opportunity"."user_id" = $1 AND "proposal"."disabled" = $2;`;
 
-            pool.query(queryText, [userId])
+            pool.query(queryText, [userId, disabled])
                 .then((result) => {
                     requestedProposals = result.rows;
 
@@ -98,15 +99,73 @@ router.post('/:id', (req, res) => {
     }
 })
 
+// update general info for proposal
+router.put('/:id', (req, res) => {
+
+    let proposalId = req.params.id;
+
+    let date = req.body.date;
+    let proposal_code = req.body.proposal_code;
+    let house_type = req.body.house_type;
+    let plan_identifier = req.body.plan_identifier;
+    let plan_date = req.body.plan_date;
+    let building_code = req.body.building_code;
+    let partner_discount = req.body.partner_discount;
+    let surcharge = req.body.surcharge;
+    let surcharge_description = req.body.surcharge_description;
+    let method = req.body.method;
+    let method_message = req.body.method_message;
+    let delivery_charge = req.body.delivery_charge;
+    let field_weld_charge = req.body.field_weld_charge;
+    let field_weld_message = req.body.field_weld_message;
+    let description = req.body.description;
+
+    let queryText = `UPDATE "proposal" SET 
+    "date" = $1,
+    proposal_code = $2,
+    house_type = $3,
+    plan_identifier = $4,
+    plan_date = $5, 
+    building_code = $6,
+    partner_discount = $7,
+    surcharge = $8,
+    surcharge_description = $9,
+    method = $10,
+    method_message = $11,
+    delivery_charge = $12,
+    field_weld_charge = $13,
+    field_weld_message = $14,
+    description = $15 
+    
+    WHERE "id" = $16;`;
+
+    if (req.isAuthenticated()) {
+        pool.query(queryText, 
+            [date, proposal_code, house_type, plan_identifier, plan_date, 
+                building_code, partner_discount, surcharge, surcharge_description, 
+            method, method_message, delivery_charge, field_weld_charge, 
+            field_weld_message, description, proposalId])
+        .then((result) => {
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            res.sendStatus(500);
+        })
+    } else {
+        res.sendStatus(403);
+    }
+})
+
 // delete (disable) proposal
 router.delete('/:id', (req, res) => {
 
+    let disabled = true;
     let opportunity_id = req.params.id;
 
-    let queryText = `DELETE FROM "proposal" WHERE "id" = $1`;
+    let queryText = `UPDATE "proposal" SET "disabled" = $1 WHERE "id" = $2;`;
 
     if (req.isAuthenticated()) {
-        pool.query(queryText, [opportunity_id])
+        pool.query(queryText, [disabled, opportunity_id])
             .then((result) => {
                 res.sendStatus(200);
             })
