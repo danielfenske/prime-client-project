@@ -25,7 +25,7 @@ function CreateItemModal(){
         description:"",
         price_per_price_unit:"",
         unit_type_id:"",
-        unit_weight:"1"
+        unit_weight:""
       }
      
     const [values, setValues] = useState(initialValues);
@@ -62,7 +62,7 @@ function CreateItemModal(){
         payload: values
       })
      }
-    console.log(unitTypeList);
+    console.log('unitTypeList is', unitTypeList);
     console.log('unitInput is', unitInput);
     console.log('values', values);
     return(
@@ -83,6 +83,7 @@ function CreateItemModal(){
                      )}
                     </Select><br></br>
             </FormControl><br></br>
+            
             <TextField id="outlined-basic" label={`${unitTypeList[unitInput]?.pricing_unit} per ${unitTypeList[unitInput]?.measurement_unit}`}   variant="outlined" value={values.unit_weight} onChange={(e) => handleInputChange("unit_weight", e)} />
            
             <TextField id="outlined-basic" label={`price per ${unitTypeList[unitInput]?.pricing_unit}`}variant="outlined" value={values.price_per_price_unit} onChange={(e) => handleInputChange("price_per_price_unit", e)} />
