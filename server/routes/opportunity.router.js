@@ -46,7 +46,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     // unique opportunity id
     const opportunityId = req.params.id;
-    const sqlText = `SELECT * FROM "opportunity" WHERE "opportunity_code" = $1;`
+    const sqlText = `SELECT * FROM "opportunity" WHERE "id" = $1;`
 
     pool.query(sqlText, [opportunityId])
         .then((result) => {
@@ -95,7 +95,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
     "zip" = $10, 
     "tax_rate" = $11,
     "disabled" = $12
-    WHERE "opportunity_code" = $13;`;
+    WHERE "id" = $13;`;
 
     pool.query(sqlText, [req.body.name, req.body.status, req.body.dueDate, req.body.type, req.body.communityName, req.body.developmentType, req.body.address, req.body.city, req.body.state, req.body.zip, req.body.taxRate, req.body.disabled, opportunityCode])
         .then(() => {
@@ -113,7 +113,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
     const opportunityId = req.params.id;
     const sqlText = `UPDATE "opportunity"
     SET "disabled" = true
-    WHERE "opportunity_code" = $1;`;
+    WHERE "id" = $1;`;
 
     pool.query(sqlText, [opportunityId])
         .then(() => {

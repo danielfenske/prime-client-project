@@ -7,6 +7,7 @@ import partnerSaga from './partner.saga';
 import itemSaga from './item.saga';
 import headingSaga from './heading.saga';
 import proposalSaga from './proposal.saga';
+import opportunitySaga from './opportunity.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -24,6 +25,7 @@ export default function* rootSaga() {
     partnerSaga(),
     itemSaga(),
     headingSaga(),
-    proposalSaga()
+    proposalSaga(),
+    opportunitySaga(),
   ]);
 }
