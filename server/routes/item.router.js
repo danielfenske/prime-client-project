@@ -35,9 +35,9 @@ router.post('/', async (req, res) => {
         
             const sqlText =
             `INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id", "unit_weight")
-            VALUES ($1, $2, $3, $4, $5);`;
+            VALUES ($1, $2, $3, $4, $5, $6);`;
 
-            const valueArray = [req.body.item_code, req.body.name, req.body.description, req.body.price_per_price_unit, req.body.unit_type_id];
+            const valueArray = [req.body.item_code, req.body.name, req.body.description, req.body.price_per_price_unit, req.body.unit_type_id, req.body.unit_weight];
             pool.query(sqlText, valueArray)
             .then((result) => {
                 res.sendStatus(200);
