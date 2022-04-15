@@ -9,6 +9,7 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
+const partnerRouter = require('./routes/partner.router.js');
 const itemRouter = require('./routes/item.router');
 const headingRouter = require('./routes/heading.router');
 const contactRouter = require('./routes/contact.router');
@@ -28,6 +29,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
+app.use('/api/partner', partnerRouter);
 app.use('/api/item', itemRouter);
 app.use('/api/heading', headingRouter);
 app.use('/api/contact', contactRouter);
