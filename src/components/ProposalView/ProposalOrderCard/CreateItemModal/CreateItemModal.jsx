@@ -24,8 +24,9 @@ function CreateItemModal(){
     const [values, setValues] = useState(initialValues);
 
     useEffect(() => {
-      dispatch({type: ""})
-    })
+      dispatch({type: "FETCH_UNIT_TYPE_LIST"})
+    },[])
+
     const handleInputChange = (event) => {
         
         const {name, value} = event.target;
@@ -55,7 +56,7 @@ function CreateItemModal(){
             <TextField id="outlined-basic" label="item code" variant="outlined" value={values.item_code} onChange={handleInputChange} />
             <TextField id="outlined-basic" label="name" variant="outlined" value={values.name} onChange={handleInputChange} />
             <TextField id="outlined-basic" label="description" variant="outlined" value={values.description} onChange={handleInputChange} />
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">units</InputLabel>
                     <Select
                      labelId="demo-simple-select-label"
@@ -64,7 +65,7 @@ function CreateItemModal(){
                         return <MenuItem key={index} value={index}>{type.measuring} {type.pricing}</MenuItem>}
                      )}
                     </Select><br></br>
-            </FormControl><br></br>
+            </FormControl><br></br> */}
 
            
            
