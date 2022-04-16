@@ -1,6 +1,8 @@
 // import components here:
 import { useEffect, useState } from 'react';
 import Modal from '../Miscellaneous/Modal/Modal';
+import HeadingCard from '../ProposalView/ProposalOrderCard/HeadingCard/HeadingCard';
+import CreateItemModal from '../ProposalView/ProposalOrderCard/CreateItemModal/CreateItemModal';
 
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
@@ -8,29 +10,31 @@ import Modal from '../Miscellaneous/Modal/Modal';
 import { useDispatch } from 'react-redux';
 
 function Test() {
-const dispatch = useDispatch();
+// const dispatch = useDispatch();
 
 
-  const [open, setOpen] = useState(false);
+//   const [open, setOpen] = useState(false);
 
-  const [search, setSearch] = useState('');
+//   const [search, setSearch] = useState('');
 
-  const words = ['One', 'Two', 'Three', 'Threees'];
+//   const words = ['One', 'Two', 'Three', 'Threees'];
 
   return (
     <>
       {/* Place components here */}
-      <div>
+      <CreateItemModal />
+      {/* <HeadingCard /> */}
+      {/* <div>
         <button
           onClick={() => {
             setOpen(true);
           }}
         >
           Open
-        </button>
+        </button> */}
 
         {/* input for filtering the list */}
-        <input
+        {/* <input
           type='text'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -58,7 +62,7 @@ const dispatch = useDispatch();
           >
           Close
         </button>
-      </Modal>
+      </Modal> */}
 
     </>
   );

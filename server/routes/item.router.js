@@ -26,10 +26,10 @@ router.get('/', (req, res) => {
 });
 
 // create a new item
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
     console.log('in item router POST route');
     console.log('req.body is', req.body);
-    const connection = await pool.connect();
+    
 
     if (req.isAuthenticated()) {
         

@@ -12,7 +12,15 @@ function ItemCard(props) {
             return <option key={index}>{item.item_code}</option>;
           })}
         </select>
-        {JSON.stringify(props)}
+        <input 
+         type = "text"
+         placeholder = "item name"
+         value = {item.item_name}
+         />
+
+
+
+        {/* {JSON.stringify(props)} */}
       </div>
     </>
   );
