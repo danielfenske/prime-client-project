@@ -108,6 +108,35 @@ router.get('/item', (req, res) => {
     }
 });
 
+//get all line items and related item information
+router.get('/item/item_code', (req, res) => {
+    console.log('in heading/item/item_code router GET route');
+
+    if(req.isAuthenticated()) {
+        const sqlText = 
+        `SELECT "item_heading"."id", "item_heading"."heading_id", "item_heading"."item_id", "item_heading"."order", "item_heading"."price_unit", "item_heading"."single_unit_price",
+         "item_heading"."measure_unit", "item_heading"."rounded_measure_unit", "item_heading"."qty", "item_heading"."total_item_price", "item"."item_code", "item"."name", "item"."description", 
+         "item"."price_per_price_unit", "unit_type"."measurement_unit", "unit_type"."pricing_unit"
+         FROM "item_heading"
+         JOIN "item"
+         ON "item_heading"."item_id" = "item"."id"
+         JOIN "unit_type"
+         ON "item"."unit_type_id" = "unit_type"."id"
+        `
+        pool.query(sqlText)
+        .then((result) => {
+            console.log('result.rows is', result.rows);
+            res.send(result.rows);
+        }).catch((error) => {
+            console.log('error in item_heading/item_code router GETting all data', error);
+            res.sendStatus(500)
+        })
+    } else {
+        res.sendStatus(403);
+    }
+    
+})
+
 // add a new line item (this will create an empty item card)
 router.post('/:id/item', (req, res) => {
     console.log('in heading/item router POST route');

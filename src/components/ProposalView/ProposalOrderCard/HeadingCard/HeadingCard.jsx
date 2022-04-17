@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ItemCard from '../ItemCard/ItemCard';
+import HeadingItemCard from '../HeadingItemCard/HeadingItemCard';
 
 function HeadingCard(props) {
   const dispatch = useDispatch();
@@ -12,21 +12,22 @@ function HeadingCard(props) {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
-    dispatch({ type: 'FETCH_HEADING_ITEM_LIST' });
+    // dispatch({ type: 'FETCH_HEADING_ITEM_LIST' });
+    dispatch({ type: 'FETCH_HEADING_ITEM_WITH_ITEM_CODE'});
   }, []);
 
-  const itemList = store.itemReducer;
-  const headingItemList = store.headingItemReducer;
+  const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
 
-  console.log('itemList is', itemList);
-  console.log('headingItemList is', headingItemList);
+
+  console.log('lineItemList is', lineItemList);
+
 
   return (
     <>
       <div className='heading-card'>
         <div>
           <h2>Heading Information</h2>
-          <p>{JSON.stringify(props)}</p>
+          {/* <p>{JSON.stringify(props)}</p> */}
 
           <input
             type='text'
@@ -58,8 +59,10 @@ function HeadingCard(props) {
           <button>Add Item</button>
           <div className='item-container'>
             {/* this item is a test */}
-            {headingItemList.map((IH, index) => {
-              return <ItemCard key={index}/>
+            {lineItemList.map((lineItem, index) => {
+              return <div key={index}>
+               <HeadingItemCard lineItem={lineItem} />
+              </div>
             })}
           
           </div>

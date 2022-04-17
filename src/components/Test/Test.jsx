@@ -22,8 +22,8 @@ function Test() {
   return (
     <>
       {/* Place components here */}
-      <CreateItemModal />
-      {/* <HeadingCard /> */}
+      {/* <CreateItemModal /> */}
+      <HeadingCard />
       {/* <div>
         <button
           onClick={() => {
