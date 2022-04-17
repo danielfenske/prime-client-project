@@ -1,24 +1,26 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-//fetch all heading_items(line items)
-function* getHeadingItemList() {
+// //fetch all heading_items(line items)
+// function* getHeadingItemList(action) {
+//     try {
+//         const headingItemResponse = yield axios.get(`/api/heading/${action.payload}/item`);
+//         console.log('in headingItemSaga getHeadingItemList, headingItemResponse is', headingItemResponse);
+
+
+//         //send all heading_items to be stored in the heading_item reducer
+//         yield put({ type: 'SET_HEADING_ITEM_LIST', payload: headingItemResponse.data })
+//     } catch (error) {
+//         console.log('Error GETTing heading_items', error);
+//     }
+// }
+
+//fetch all heading_items along with item code and related data per heading
+function* getHeadingItemWithItemCode(action) {
     try {
-        const headingItemResponse = yield axios.get(`/api/heading/item`);
-        console.log('in headingItemSaga getHeadingItemList, headingItemResponse is', headingItemResponse);
-
-
-        //send all heading_items to be stored in the heading_item reducer
-        yield put({ type: 'SET_HEADING_ITEM_LIST', payload: headingItemResponse.data })
-    } catch (error) {
-        console.log('Error GETTing heading_items', error);
-    }
-}
-
-//fetch all heading_items along with item code and related data
-function* getHeadingItemWithItemCode() {
-    try {
-        const response = yield axios.get('/api/heading/item/item_code');
+        console.log('in headingItemItemCodeList saga action.payload is', action.payload);
+        
+        const response = yield axios.get(`/api/heading/${action.payload}/item_with_item_code`);
         console.log('in headingItemItemCodeList saga response is', response);
 
         yield put({ type: 'SET_HEADING_ITEM_WITH_ITEM_CODE_LIST', payload: response.data })
@@ -33,7 +35,7 @@ function* postHeadingItem(action) {
 
     try {
         yield axios.post(`/api/heading/item`, action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEM_LIST' });
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
     } catch (error) {
         console.log('Error POSTing a new heading', error);
     }
@@ -45,7 +47,7 @@ function* updateHeadingItem(action) {
 
     try {
         yield axios.put(`/api/heading/item/${action.payload.id}`, action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEM_LIST' });
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
     } catch (error) {
         console.log('Error UPDATing a heading_item', error);
     }
@@ -57,7 +59,7 @@ function* deleteHeadingItem(action) {
 
     try {
         yield axios.put(`/api/heading/item/${action.payload.id}`);
-        yield put({ type: 'FETCH_HEADING_ITEM_LIST' });
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
     } catch (error) {
         console.log('Error DELETing a heading_item', error);
     }
@@ -67,11 +69,11 @@ function* deleteHeadingItem(action) {
 
 
 function* headingItemSaga() {
-    yield takeLatest('FETCH_HEADING_ITEM_LIST', getHeadingItemList);
+    // yield takeLatest('FETCH_HEADING_ITEM_LIST', getHeadingItemList);
     yield takeLatest('POST_HEADING_ITEM', postHeadingItem);
     yield takeLatest('UPDATE_HEADING_ITEM', updateHeadingItem);
     yield takeLatest('DELETE_HEADING_ITEM', deleteHeadingItem);
-    yield takeLatest('FETCH_HEADING_ITEM_WITH_ITEM_CODE', getHeadingItemWithItemCode);
+    yield takeLatest('FETCH_HEADING_ITEMS_WITH_ITEM_CODE', getHeadingItemWithItemCode);
 }
 
 export default headingItemSaga;

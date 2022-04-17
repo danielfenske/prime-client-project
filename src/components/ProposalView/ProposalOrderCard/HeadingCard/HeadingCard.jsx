@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {useParams} from 'react-router-dom';
 import HeadingItemCard from '../HeadingItemCard/HeadingItemCard';
 
 function HeadingCard(props) {
@@ -8,15 +9,21 @@ function HeadingCard(props) {
   const [messageInput, setMessageInput] = useState(props.message);
   const [nameInput, setNameInput] = useState(props.name);
   const [surchargeInput, setSurchargeInput] = useState(0);
+  const {id} =useParams();
   
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
     // dispatch({ type: 'FETCH_HEADING_ITEM_LIST' });
-    dispatch({ type: 'FETCH_HEADING_ITEM_WITH_ITEM_CODE'});
+    dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: 4});
   }, []);
 
   const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+
+  const addNewLineItem = () => {
+    console.log('in addNewLineItem');
+    dispatch({type:'POST_HEADING', payload: Number(id)})
+  }
 
 
   console.log('lineItemList is', lineItemList);
@@ -56,7 +63,7 @@ function HeadingCard(props) {
         </div>
         <div>
           <h2>Items</h2>
-          <button>Add Item</button>
+          <button onClick={addNewLineItem}>Add Item</button>
           <div className='item-container'>
             {/* this item is a test */}
             {lineItemList.map((lineItem, index) => {

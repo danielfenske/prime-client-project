@@ -90,12 +90,12 @@ router.delete('/:id', (req, res) => {
 });
 
 //get all line items
-router.get('/item', (req, res) => {
+router.get('/:id/item', (req, res) => {
     console.log('in heading/item router GET route');
 
     if(req.isAuthenticated()) {
-        const sqlText = `SELECT * FROM "item_heading";`
-        pool.query(sqlText)
+        const sqlText = `SELECT * FROM "item_heading" WHERE "item_heading"."heading_id" = $1;`
+        pool.query(sqlText, [req.params.id])
         .then((result) => {
             console.log('result.rows is', result.rows);
             res.send(result.rows);
@@ -109,8 +109,8 @@ router.get('/item', (req, res) => {
 });
 
 //get all line items and related item information
-router.get('/item/item_code', (req, res) => {
-    console.log('in heading/item/item_code router GET route');
+router.get('/:id/item_with_item_code', (req, res) => {
+    console.log('in heading/item_with_item_code router GET route, req.params is', req.params);
 
     if(req.isAuthenticated()) {
         const sqlText = 
@@ -122,8 +122,10 @@ router.get('/item/item_code', (req, res) => {
          ON "item_heading"."item_id" = "item"."id"
          JOIN "unit_type"
          ON "item"."unit_type_id" = "unit_type"."id"
-        `
-        pool.query(sqlText)
+         WHERE "item_heading"."heading_id" = $1;
+        `;
+        
+        pool.query(sqlText, [req.params.id])
         .then((result) => {
             console.log('result.rows is', result.rows);
             res.send(result.rows);

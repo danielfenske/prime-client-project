@@ -1,3 +1,4 @@
+
 import SmallTabs from '../../Miscellaneous/SmallTabs/SmallTabs';
 import HeadingCard from './HeadingCard/HeadingCard';
 
@@ -30,6 +31,8 @@ function ProposalOrderCard() {
     },
   ];
   // **Placeholder data** should be replaced by data from the server ---------
+
+
 
   return (
     <>
