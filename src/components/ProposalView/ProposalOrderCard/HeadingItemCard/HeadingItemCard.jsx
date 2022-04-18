@@ -18,22 +18,25 @@ function HeadingItemCard({ lineItem }) {
 
   const handleItemSelect = (e) => {
     console.log('in handleItemSelect');
-
-    setSelectedItem(e.target.value)
+    setSelectedItem(e.target.value);
   }
 
   // useEffect(() => {
   //   const thisItem = items.reduce((total, item) => {
   //     if (item.id === selectedItem) {
-  //       return item;
+  //       return {...item};
+  //     } else {
+  //       return {...total};
   //     }
-  //   })
+  //   }, {})
+  //   console.log('item', thisItem);
   // }, [selectedItem])
-
+  console.log('selectedItem is', selectedItem);
   return (
     <div className='heading-item-card'>
 
       <select value={selectedItem} onChange={handleItemSelect}>
+        <option value="create new">CREATE NEW</option>
         {items.map((item, index) => {
           return <option key={index} value={item.id}>{item.item_code}</option>;
         })}
