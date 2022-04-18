@@ -23,7 +23,7 @@ function ContactCard({ contacts }) {
   };
 
   useEffect(() => {
-    console.log(contactSelect);
+    // console.log(contactSelect);
     if (contactSelect === -1) {
       setContactInfo(null);
     } else {
@@ -43,6 +43,13 @@ function ContactCard({ contacts }) {
           renderInput={(params) => (
             <TextField {...params} label='Select Contact' size='small' />
           )}
+          renderOption={(props, option) => {
+            return (
+              <MenuItem {...props} value={option.id}>
+                {option.name}
+              </MenuItem>
+            );
+          }}
         />
         <div>
           {contactInfo && (
