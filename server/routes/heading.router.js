@@ -109,10 +109,11 @@ router.get('/:id/item', (req, res) => {
 });
 
 //get all line items and related item information
-router.get('/:id/item_with_item_code', (req, res) => {
-    console.log('in heading/item_with_item_code router GET route, req.params is', req.params);
+router.get('/item_with_item_code', (req, res) => {
+    console.log('in heading/item_with_item_code router GET route, req.params is');
 
     if(req.isAuthenticated()) {
+
         const sqlText = 
         `SELECT "item_heading"."id", "item_heading"."heading_id", "item_heading"."item_id", "item_heading"."order", "item_heading"."price_unit", "item_heading"."single_unit_price",
          "item_heading"."measure_unit", "item_heading"."rounded_measure_unit", "item_heading"."qty", "item_heading"."total_item_price", "item"."item_code", "item"."name", "item"."description", 
@@ -121,11 +122,9 @@ router.get('/:id/item_with_item_code', (req, res) => {
          JOIN "item"
          ON "item_heading"."item_id" = "item"."id"
          JOIN "unit_type"
-         ON "item"."unit_type_id" = "unit_type"."id"
-         WHERE "item_heading"."heading_id" = $1;
-        `;
+         ON "item"."unit_type_id" = "unit_type"."id"`;
 
-        pool.query(sqlText, [req.params.id])
+        pool.query(sqlText)
         .then((result) => {
             console.log('result.rows is', result.rows);
             res.send(result.rows);

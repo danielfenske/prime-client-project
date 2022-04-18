@@ -54,8 +54,6 @@ function ProposalOrderCard() {
           .sort((a, b) => a.order - b.order)
           .map((head, index) => {
             return <HeadingCard key={index} {...head} />
-            
-            
           })}
       />
     </>

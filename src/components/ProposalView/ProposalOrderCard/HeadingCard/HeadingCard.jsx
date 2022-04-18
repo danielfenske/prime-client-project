@@ -10,14 +10,16 @@ function HeadingCard(props) {
   const [nameInput, setNameInput] = useState(props.name);
   const [surchargeInput, setSurchargeInput] = useState(0);
   // const [itemId, setItemId] = useState('');
-  const {id} =useParams();
-  
+
+  console.log('props', props);
+ 
+  // console.log('props.id is', props.id);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
     //When params is set, use below code instead 
     //dispatch({type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: Number(id)})
-    dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: 4});
+    dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE'});
   }, []);
   const items = useSelector((store) => store.itemReducer);
   const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
@@ -27,7 +29,7 @@ function HeadingCard(props) {
   const addNewLineItem = () => {
     console.log('in addNewLineItem');
     // console.log('itemID is', itemId);
-    dispatch({type:'POST_HEADING_ITEM', payload: 4})
+    dispatch({type:'POST_HEADING_ITEM', payload: props.id})
   }
 
   
@@ -79,7 +81,7 @@ function HeadingCard(props) {
           <button onClick={addNewLineItem}>Add Item</button>
           <div className='item-container'>
             {/* this item is a test */}
-            {lineItemList.map((lineItem, index) => {
+            {lineItemList.filter(lineItem => props.id === lineItem.heading_id).map((lineItem, index) => {
               return <div key={index}>
                <HeadingItemCard lineItem={lineItem} />
               </div>
