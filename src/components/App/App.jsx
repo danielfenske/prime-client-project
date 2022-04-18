@@ -23,6 +23,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import Test from '../Test/Test';
 import ProposalView from '../ProposalView/ProposalView';
 import OpportunityListView from '../OpportunityListView/OpportunityListView';
+import OpportunityView from '../OpportunityView/OpportunityView';
 
 import AdminProtectedRoute from '../ProtectedRoute/AdminProtectedRoute';
 import AdminView from '../AdminView/AdminView';
@@ -119,6 +120,14 @@ function App() {
                     path='/proposal'
                   >
                     <ProposalView />
+                  </ProtectedRoute>
+
+                  <ProtectedRoute
+                    // the opportunity route shows a single opportunity
+                    exact
+                    path='/opportunity'
+                  >
+                    <OpportunityView />
                   </ProtectedRoute>
 
                   <ProtectedRoute exact path='/opportunities'>
