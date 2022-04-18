@@ -1,4 +1,7 @@
+import './OpportunityProposalListCard.css';
+
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@mui/material';
 
 // IMPORT CHILDREN COMPONENT
 import ProposalCard from './ProposalCard/ProposalCard';
@@ -18,15 +21,19 @@ function OpportunityProposalListCard() {
 
   return (
     <>
-      <div className='proposal-list-header'>
-        <h1>Proposals</h1>
-        <button onClick={postProposal}>Create New</button>
-      </div>
       <div>
-        {proposalList &&
-          proposalList.map((proposal, index) => {
-            return <ProposalCard key={index} proposal={proposal} />;
-          })}
+        <div className='proposal-list-header'>
+          <h1>Proposals</h1>
+          <Button onClick={postProposal} variant='contained' size='small'>
+            Create New
+          </Button>
+        </div>
+        <div>
+          {proposalList &&
+            proposalList.map((proposal, index) => {
+              return <ProposalCard key={index} proposal={proposal} />;
+            })}
+        </div>
       </div>
     </>
   );
