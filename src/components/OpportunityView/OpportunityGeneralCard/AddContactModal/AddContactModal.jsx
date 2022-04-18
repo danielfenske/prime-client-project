@@ -78,7 +78,7 @@ function AddContactModal({ open, setOpen }) {
             setOpen(false);
           }}
         >
-          Close
+          Cancel
         </button>
       </Modal>
     </>

@@ -1,5 +1,5 @@
 // import components here:
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Modal from '../../../Miscellaneous/Modal/Modal';
 import { useDispatch } from 'react-redux';
@@ -9,10 +9,10 @@ function EditContactModal({ selectedContact, open, setOpen }) {
   // const [open, setOpen] = useState(false);
 
   // local state for text fields when adding new contacts
-  const [name, setName] = useState(selectedContact.name);
-  const [email, setEmail] = useState(selectedContact.email);
-  const [phone, setPhone] = useState(selectedContact.phone);
-  const [work_phone, setWorkPhone] = useState(selectedContact.work_phone);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [work_phone, setWorkPhone] = useState('');
 
   const dispatch = useDispatch();
 
@@ -27,9 +27,24 @@ function EditContactModal({ selectedContact, open, setOpen }) {
       id: selectedContact.id,
     };
 
-    dispatch({ type: 'POST_CONTACT', payload: contactSubmission });
+    dispatch({ type: 'UPDATE_CONTACT', payload: contactSubmission });
+
+    setOpen(false);
+
+    setName('');
+    setEmail('');
+    setPhone('');
+    setWorkPhone('');
   };
 
+  useEffect(() => {
+    setName(selectedContact?.name);
+    setEmail(selectedContact?.email);
+    setPhone(selectedContact?.phone);
+    setWorkPhone(selectedContact?.work_phone);
+  }, [selectedContact]);
+
+  console.log('Edit Contact Selected', selectedContact);
   return (
     <>
       <Modal open={open}>
@@ -63,7 +78,7 @@ function EditContactModal({ selectedContact, open, setOpen }) {
             value={work_phone}
             onChange={(e) => setWorkPhone(e.target.value)}
           />
-          <button type='submit'>Add</button>
+          <button type='submit'>Update</button>
         </form>
 
         <button
@@ -71,7 +86,7 @@ function EditContactModal({ selectedContact, open, setOpen }) {
             setOpen(false);
           }}
         >
-          Close
+          Cancel
         </button>
       </Modal>
     </>

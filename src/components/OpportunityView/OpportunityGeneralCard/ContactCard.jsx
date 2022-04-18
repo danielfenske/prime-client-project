@@ -10,16 +10,21 @@ import {
   TextField,
 } from '@mui/material';
 
-import EditContactModal from './AddContactModal/AddContactModal';
+import EditContactModal from './EditContactModal/EditContactModal';
 import AddContactModal from './AddContactModal/AddContactModal';
 
 function ContactCard({ contacts }) {
   const [contactSelect, setContactSelect] = useState(-1);
   const [contactInfo, setContactInfo] = useState(null);
   const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const handleAdd = () => {
     setContactModalOpen(true);
+  };
+
+  const handleEdit = () => {
+    setEditModalOpen(true);
   };
 
   useEffect(() => {
@@ -45,7 +50,7 @@ function ContactCard({ contacts }) {
           )}
           renderOption={(props, option) => {
             return (
-              <MenuItem {...props} value={option.id}>
+              <MenuItem {...props} key={option.id} value={option.id}>
                 {option.name}
               </MenuItem>
             );
@@ -66,13 +71,18 @@ function ContactCard({ contacts }) {
             <AddIcon />
           </IconButton>
           {contactInfo && (
-            <IconButton>
+            <IconButton onClick={handleEdit}>
               <EditIcon />
             </IconButton>
           )}
         </div>
       </div>
       <AddContactModal open={contactModalOpen} setOpen={setContactModalOpen} />
+      <EditContactModal
+        selectedContact={contactInfo}
+        open={editModalOpen}
+        setOpen={setEditModalOpen}
+      />
     </>
   );
 }
