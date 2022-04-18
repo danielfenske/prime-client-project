@@ -47,8 +47,8 @@ CREATE TABLE "partner" (
 
 CREATE TABLE "opportunity" (
     "id" SERIAL PRIMARY KEY,
-    "name" VARCHAR(80) NOT NULL,
-    "opportunity_code" INT NOT NULL,
+    "name" VARCHAR(80),
+    "opportunity_code" VARCHAR(250),
     "status" INT,
     "user_id" INT REFERENCES "user",
     "contact_id" INT REFERENCES "contact",

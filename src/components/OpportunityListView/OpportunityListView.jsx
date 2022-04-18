@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-
+import OpportunityCard from './OpportunityCard/OpportunityCard';
 
 
 function OpportunityListView(){
@@ -21,6 +21,7 @@ function OpportunityListView(){
 
     return(
         <>
+        <OpportunityCard />
         <button onClick={getOpportunities}>Click Me</button>
         </>
     )
