@@ -25,16 +25,28 @@ function ProposalCard({ proposal }) {
     dispatch({ type: 'DELETE_PROPOSAL', payload: id });
   };
 
+  console.log('Proposal', proposal);
   return (
     <div className='proposal-card'>
-      <h1>{proposal.proposal_code}</h1>
-      <p>{proposal.date}</p>
-      <IconButton onClick={handleEdit}>
-        <EditIcon />
-      </IconButton>
-      <IconButton onClick={handleDelete}>
-        <DeleteIcon />
-      </IconButton>
+      <div className='info-container'>
+        <div>
+          <h1>{proposal.proposal_code}</h1>
+          <p>{new Date(proposal.date).toLocaleDateString()}</p>
+        </div>
+        <div className='description'>
+          <p>
+            <b>Description:</b> {proposal.description}
+          </p>
+        </div>
+      </div>
+      <div className='icon-container'>
+        <IconButton onClick={handleEdit}>
+          <EditIcon />
+        </IconButton>
+        <IconButton onClick={handleDelete}>
+          <DeleteIcon />
+        </IconButton>
+      </div>
     </div>
   );
 }
