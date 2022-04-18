@@ -7,7 +7,10 @@ import ContactCard from './ContactCard';
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
-  const contacts = useSelector((store) => store.contactReducer);
+  let contacts = useSelector((store) => store.contactReducer);
+  if (contacts.filter((c) => c.name === 'None').length === 0) {
+    contacts.unshift({ name: 'None', id: -1 });
+  }
 
   useEffect(() => {
     dispatch({

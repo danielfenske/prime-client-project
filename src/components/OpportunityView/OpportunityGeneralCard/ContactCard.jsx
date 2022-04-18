@@ -31,30 +31,18 @@ function ContactCard({ contacts }) {
     }
   }, [contactSelect]);
 
-  console.log(contactSelect);
   return (
     <>
       <div>
-        {/* <Select
-          value={contactSelect}
-          onChange={(e) => setContactSelect(e.target.value)}
-          size='small'
-        >
-          <MenuItem value={-1}>none</MenuItem>
-          {contacts.map((partner, index) => {
-            return (
-              <MenuItem key={index} value={partner.id}>
-                {partner.name}
-              </MenuItem>
-            );
-          })}
-        </Select> */}
         <Autocomplete
-          options={contacts.map((contact, index) => {
-            return { label: contact.name, id: contact.id };
-          })}
-          onChange={(e) => setContactSelect(e.target.value)}
-          renderInput={(params) => <TextField {...params} size='small' />}
+          getOptionLabel={(contact) => contact.name}
+          options={contacts}
+          onChange={(e, newValue) => {
+            setContactSelect(newValue.id);
+          }}
+          renderInput={(params) => (
+            <TextField {...params} label='Select Contact' size='small' />
+          )}
         />
         <div>
           {contactInfo && (
