@@ -1,38 +1,90 @@
 import { useDispatch, useSelector } from 'react-redux';
 import OpportunityCard from './OpportunityCard/OpportunityCard';
-import React, { useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { Button } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 
 function OpportunityListView() {
 
-    useEffect(() => {
-        dispatch({
-            type: 'FECTCH_OPPORTUNITY_LIST'
-        })
-    }, [])
-
+    const [search, setSearch] = useState('');
+    const [partner, setPartner] = useState(1);
+    const [status, setStatus] = useState(1);
 
     const dispatch = useDispatch();
 
-    const opportunityList = useSelector((store) => store.opportunityReducer.opportunityListReducer);
-    // const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
+    useEffect(() => {
+        dispatch({
+            type: 'FETCH_OPPORTUNITY_LIST'
+        })
+    }, [])
 
-    const getOpportunities = () => {
-
-        console.log(opportunityList);
-
+    const postOpportunity = () => {
+        console.log('in postOpportunity');
+        dispatch({ type: 'POST_OPPORTUNITY'});
     }
 
-
-
+    const opportunityList = useSelector((store) => store.opportunityReducer.opportunityListReducer);
 
     return (
         <>
-        {opportunityList.map((opportunity, i) => {
-            return(
-                <OpportunityCard key={i} opportunity={opportunity} />
-            )
-        })}
+            <div>
+                <div className='proposal-list-header'>
+                    <h1>Opportunities</h1>
+                    <Button onClick={postOpportunity} variant='contained' size='small'>
+                        Create New
+                    </Button>
+                </div>
+                <div>
+                    <TextField
+                        id='outlined-basic'
+                        label='Search Opportunities'
+                        variant='outlined'
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        size='small'
+                    />
+                    <FormControl>
+                        <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
+                        <Select
+                            labelId='demo-simple-select-label'
+                            id='demo-simple-select'
+                            label='Partner'
+                            value={partner}
+                            onChange={(e) => setPartner(e.target.value)}
+                            size='small'
+                        >
+                            <MenuItem value={1}>Bob</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <FormControl>
+                        <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+                        <Select
+                            labelId='demo-simple-select-label'
+                            id='demo-simple-select'
+                            label='Method'
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                            size='small'
+                        >
+                            <MenuItem value={1}>In-Progress</MenuItem>
+                            <MenuItem value={2}>Complete</MenuItem>
+                            <MenuItem value={3}>Archived</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+            </div>
+            <div>
+                {opportunityList.map((opportunity, i) => {
+                    return (
+                        <OpportunityCard key={i} opportunity={opportunity} />
+                    )
+                })}
+            </div>
         </>
     )
 }
