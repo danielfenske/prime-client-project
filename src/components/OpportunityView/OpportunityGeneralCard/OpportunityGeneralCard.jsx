@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import { IconButton, Select, MenuItem } from '@mui/material';
+
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
@@ -84,21 +89,40 @@ function ContactCard({ contacts }) {
   return (
     <>
       <div>
-        <select
+        <Select
           value={contactSelect}
           onChange={(e) => setContactSelect(e.target.value)}
+          size='small'
         >
-          <option value={-1}>none</option>
+          <MenuItem value={-1}>none</MenuItem>
           {contacts.map((partner, index) => {
             return (
-              <option key={index} value={partner.id}>
+              <MenuItem key={index} value={partner.id}>
                 {partner.name}
-              </option>
+              </MenuItem>
             );
           })}
-        </select>
-
-        {contactInfo && <span>{JSON.stringify(contactInfo)}</span>}
+        </Select>
+        <div>
+          {contactInfo && (
+            <>
+              <p>Name: {contactInfo?.name}</p>
+              <p>Phone: {contactInfo?.phone}</p>
+              <p>Work Phone: {contactInfo?.work_phone}</p>
+              <p>Email: {contactInfo?.email}</p>
+            </>
+          )}
+        </div>
+        <div>
+          <IconButton>
+            <AddIcon />
+          </IconButton>
+          {contactInfo && (
+            <IconButton>
+              <EditIcon />
+            </IconButton>
+          )}
+        </div>
       </div>
     </>
   );
