@@ -222,6 +222,8 @@ function ProposalGeneralCard() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 size='small'
+                multiline
+                rows={4}
               />
             </div>
           </div>
