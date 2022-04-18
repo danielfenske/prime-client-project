@@ -7,6 +7,7 @@ import partnerReducer from './partner.reducer';
 import itemReducer from './item.reducer';
 import headingReducer from './heading.reducer';
 import headingItemReducer from './heading_item.reducer';
+import unitTypeReducer from './unit_type.reducer';
 import proposalReducer from './proposal.reducer';
 import opportunityReducer from './opportunity.reducer';
 
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   headingItemReducer,
   proposalReducer,
   opportunityReducer,
+  unitTypeReducer,
 });
 
 export default rootReducer;

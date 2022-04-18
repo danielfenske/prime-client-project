@@ -21,6 +21,8 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Test from '../Test/Test';
+import ProposalView from '../ProposalView/ProposalView';
+import OpportunityListView from '../OpportunityListView/OpportunityListView';
 
 import AdminProtectedRoute from '../ProtectedRoute/AdminProtectedRoute';
 import AdminView from '../AdminView/AdminView';
@@ -48,8 +50,12 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-    dispatch({type: 'FETCH_PROPOSAL_LIST'});
-    dispatch({type: 'FETCH_PROPOSAL', payload: {opportunity_id: 1, id: 6}});
+    dispatch({ type: 'FETCH_CONTACT_LIST' });
+    dispatch({ type: 'FETCH_PROPOSAL_LIST' });
+    dispatch({
+      type: 'FETCH_PROPOSAL',
+      payload: { opportunity_id: 1, id: 30 },
+    });
   }, [dispatch]);
 
   return (
@@ -105,6 +111,20 @@ function App() {
                   >
                     <InfoPage />
                   </ProtectedRoute>
+
+                  {/* Custom Routes ---------------------------------------------------------------------------------------------------- */}
+                  <ProtectedRoute
+                    // shows proposal view if the user is logged in
+                    exact
+                    path='/proposal'
+                  >
+                    <ProposalView />
+                  </ProtectedRoute>
+
+                  <ProtectedRoute exact path='/opportunities'>
+                    <OpportunityListView />
+                  </ProtectedRoute>
+                  {/* Custom Routes ---------------------------------------------------------------------------------------------------- */}
 
                   <Route exact path='/login'>
                     {user.id ? (

@@ -46,7 +46,18 @@ function LargeTabs({ tabLabels, tabContents }) {
           })}
         </div>
         <div ref={tabContentContainer} className='tab-content-container'>
-          {tabContents[selectedTab]}
+          {tabContents.map((tab, index) => {
+            return (
+              <span
+                key={index}
+                style={{
+                  display: index === selectedTab ? 'grid' : 'none',
+                }}
+              >
+                {tab}
+              </span>
+            );
+          })}
         </div>
       </div>
     </>

@@ -6,6 +6,8 @@ import contactSaga from './contact.saga';
 import partnerSaga from './partner.saga';
 import itemSaga from './item.saga';
 import headingSaga from './heading.saga';
+import headingItemSaga from './heading_item.saga';
+import unitTypeSaga from './unit_type.saga';
 import proposalSaga from './proposal.saga';
 import opportunitySaga from './opportunity.saga';
 
@@ -27,5 +29,8 @@ export default function* rootSaga() {
     headingSaga(),
     proposalSaga(),
     opportunitySaga(),
+    headingItemSaga(),
+    unitTypeSaga(),
+    proposalSaga()
   ]);
 }
