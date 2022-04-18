@@ -117,7 +117,7 @@ function App() {
                   <ProtectedRoute
                     // shows proposal view if the user is logged in
                     exact
-                    path='/proposal'
+                    path='/proposal/:id'
                   >
                     <ProposalView />
                   </ProtectedRoute>
@@ -125,7 +125,7 @@ function App() {
                   <ProtectedRoute
                     // the opportunity route shows a single opportunity
                     exact
-                    path='/opportunity'
+                    path='/opportunity/:id'
                   >
                     <OpportunityView />
                   </ProtectedRoute>
