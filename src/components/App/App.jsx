@@ -52,11 +52,6 @@ function App() {
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
     dispatch({ type: 'FETCH_CONTACT_LIST' });
-    dispatch({ type: 'FETCH_PROPOSAL_LIST' });
-    dispatch({
-      type: 'FETCH_PROPOSAL',
-      payload: { opportunity_id: 1, id: 30 },
-    });
   }, [dispatch]);
 
   return (

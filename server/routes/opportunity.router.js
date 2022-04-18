@@ -50,7 +50,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     pool.query(sqlText, [opportunityId])
         .then((result) => {
-            res.send(result.rows)
+            res.send(result.rows[0])
         }).catch((error) => {
             console.log(error);
         })
@@ -65,7 +65,7 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     VALUES($1) RETURNING id;`;
 
     try {
-        const result = await pool.query(queryText, [userId])
+        const result = await pool.query(sqlText, [userId])
 
         const opportunity_id = result.rows[0].id;
 

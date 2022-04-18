@@ -1,23 +1,29 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import './OpportunityProposalListCard.css';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@mui/material';
 
 // IMPORT CHILDREN COMPONENT
 import ProposalCard from './ProposalCard/ProposalCard';
 
 function OpportunityProposalListCard() {
+
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { id } = useParams();
 
-  const proposalList = useSelector(
-    (store) => store.proposalReducer.proposalListReducer,
-  );
-
-  console.log(proposalList);
+  const proposal = useSelector((store) => store.proposalReducer.singleProposalReducer);
+  const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
 
   const postProposal = () => {
-    dispatch({ type: 'POST_PROPOSAL', payload: { opportunity_id: 1 } });
-  };
+    dispatch({ type: 'POST_PROPOSAL', payload: id});
+  }
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PROPOSAL_LIST', payload: id});
+  }, [])
 
   return (
     <>

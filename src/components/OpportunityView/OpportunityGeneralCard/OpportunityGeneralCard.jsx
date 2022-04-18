@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 // component imports
 import ContactCard from './ContactCard';
@@ -7,7 +8,8 @@ import ContactCard from './ContactCard';
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
-  let contacts = useSelector((store) => store.contactReducer);
+  const contacts = useSelector((store) => store.contactReducer);
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch({
@@ -15,6 +17,10 @@ function OpportunityGeneralCard() {
     });
     dispatch({
       type: 'FETCH_CONTACT_LIST',
+    });
+    dispatch({
+      type: 'FETCH_OPPORTUNITY',
+      payload: id,
     });
   }, []);
 

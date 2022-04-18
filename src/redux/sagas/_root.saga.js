@@ -30,7 +30,6 @@ export default function* rootSaga() {
     proposalSaga(),
     opportunitySaga(),
     headingItemSaga(),
-    unitTypeSaga(),
-    proposalSaga()
+    unitTypeSaga()
   ]);
 }
