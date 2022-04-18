@@ -11,11 +11,13 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import { Button } from '@mui/material';
 
 function ProposalGeneralCard() {
   const proposal = useSelector(
     (store) => store.proposalReducer.singleProposalReducer,
   );
+  const partner = useSelector((store) => store.partnerReducer.partnerReducer);
 
   const [date, setDate] = useState(proposal.date);
   const [proposal_code, setProposalCode] = useState(proposal.proposal_code);
@@ -72,6 +74,11 @@ function ProposalGeneralCard() {
     dispatch({ type: 'UPDATE_PROPOSAL', payload: proposalSubmission });
   };
 
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PARTNER_LIST' });
+  }, []);
+
+  console.log('Partner', partner, 'Proposal', proposal);
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -90,133 +97,140 @@ function ProposalGeneralCard() {
           <div className='general-info'>
             <h1>General Info</h1>
             {/* GENERAL INFORMATION */}
-            <TextField
-              id='outlined-basic'
-              label='Surcharge'
-              type='number'
-              variant='outlined'
-              value={surcharge}
-              onChange={(e) => setSurcharge(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='Surcharge Description'
-              variant='outlined'
-              value={surcharge_description}
-              onChange={(e) => setSurchargeDescription(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='date'
-              label='Proposal Date'
-              type='date'
-              defaultValue='2022-04-15'
-              value={date}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e) => setDate(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='House Type'
-              variant='outlined'
-              value={house_type}
-              onChange={(e) => setHouseType(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='Plan Identifier'
-              variant='outlined'
-              value={plan_identifier}
-              onChange={(e) => setPlanIdentifier(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='Building Code'
-              variant='outlined'
-              value={building_code}
-              onChange={(e) => setBuildingCode(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='date'
-              label='Plan Date'
-              type='date'
-              defaultValue='2022-04-15'
-              value={plan_date}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e) => setPlanDate(e.target.value)}
-              size='small'
-            />
+            <div className='inputs'>
+              <TextField
+                id='outlined-basic'
+                label='Surcharge'
+                type='number'
+                variant='outlined'
+                value={surcharge}
+                onChange={(e) => setSurcharge(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='outlined-basic'
+                label='Surcharge Description'
+                variant='outlined'
+                value={surcharge_description}
+                onChange={(e) => setSurchargeDescription(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='date'
+                label='Proposal Date'
+                type='date'
+                defaultValue='2022-04-15'
+                value={date}
+                InputLabelProps={{ shrink: true }}
+                onChange={(e) => setDate(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='outlined-basic'
+                label='House Type'
+                variant='outlined'
+                value={house_type}
+                onChange={(e) => setHouseType(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='outlined-basic'
+                label='Plan Identifier'
+                variant='outlined'
+                value={plan_identifier}
+                onChange={(e) => setPlanIdentifier(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='outlined-basic'
+                label='Building Code'
+                variant='outlined'
+                value={building_code}
+                onChange={(e) => setBuildingCode(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='date'
+                label='Plan Date'
+                type='date'
+                defaultValue='2022-04-15'
+                value={plan_date}
+                InputLabelProps={{ shrink: true }}
+                onChange={(e) => setPlanDate(e.target.value)}
+                size='small'
+              />
+            </div>
           </div>
           <div className='shipping-installation'>
             <h1>Shipping & Installation</h1>
             {/* SHIPPING/INSTALLATION */}
-            <FormControl>
-              <InputLabel id='demo-simple-select-label'>Method</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                label='Method'
-                value={method}
-                onChange={(e) => setMethod(e.target.value)}
-                size='small'
-              >
-                <MenuItem value={1}>Delivery Only</MenuItem>
-                <MenuItem value={2}>Delivery and Install</MenuItem>
-                <MenuItem value={3}>Pickup</MenuItem>
-              </Select>
-            </FormControl>
+            <div className='inputs'>
+              <FormControl>
+                <InputLabel id='demo-simple-select-label'>Method</InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  label='Method'
+                  value={method}
+                  onChange={(e) => setMethod(e.target.value)}
+                  size='small'
+                >
+                  <MenuItem value={1}>Delivery Only</MenuItem>
+                  <MenuItem value={2}>Delivery and Install</MenuItem>
+                  <MenuItem value={3}>Pickup</MenuItem>
+                </Select>
+              </FormControl>
 
-            <TextField
-              id='outlined-basic'
-              label='Method Message'
-              variant='outlined'
-              value={method_message}
-              onChange={(e) => setMethodMessage(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='Delivery Charge'
-              type='number'
-              value={delivery_charge}
-              variant='outlined'
-              onChange={(e) => setDeliveryCharge(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='Field Weld Charge'
-              type='number'
-              variant='outlined'
-              value={field_weld_charge}
-              onChange={(e) => setFieldWeldCharge(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='Field Weld Message'
-              variant='outlined'
-              value={field_weld_message}
-              onChange={(e) => setFieldWeldMessage(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='Description'
-              variant='outlined'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              size='small'
-            />
+              <TextField
+                id='outlined-basic'
+                label='Method Message'
+                variant='outlined'
+                value={method_message}
+                onChange={(e) => setMethodMessage(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='outlined-basic'
+                label='Delivery Charge'
+                type='number'
+                value={delivery_charge}
+                variant='outlined'
+                onChange={(e) => setDeliveryCharge(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='outlined-basic'
+                label='Field Weld Charge'
+                type='number'
+                variant='outlined'
+                value={field_weld_charge}
+                onChange={(e) => setFieldWeldCharge(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='outlined-basic'
+                label='Field Weld Message'
+                variant='outlined'
+                value={field_weld_message}
+                onChange={(e) => setFieldWeldMessage(e.target.value)}
+                size='small'
+              />
+              <TextField
+                id='outlined-basic'
+                label='Description'
+                variant='outlined'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                size='small'
+              />
+            </div>
+          </div>
+          <div>
+            <Button type='submit' variant='contained' size='small'>
+              Save Progress
+            </Button>
           </div>
         </div>
-
-        <button type='submit'>Save Progress</button>
       </form>
     </>
   );
