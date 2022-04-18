@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
+// component imports
+import ContactCard from './ContactCard';
 
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
   const contacts = useSelector((store) => store.contactReducer);
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch({
@@ -17,8 +20,8 @@ function OpportunityGeneralCard() {
     });
     dispatch({
       type: 'FETCH_OPPORTUNITY',
-      payload: id
-    })
+      payload: id,
+    });
   }, []);
 
   return (
@@ -69,42 +72,6 @@ function PartnerCard({ partners }) {
         </select>
 
         {partnerInfo && <span>{JSON.stringify(partnerInfo)}</span>}
-      </div>
-    </>
-  );
-}
-
-function ContactCard({ contacts }) {
-  const [contactSelect, setContactSelect] = useState(-1);
-  const [contactInfo, setContactInfo] = useState(null);
-
-  useEffect(() => {
-    console.log(contactSelect);
-    if (contactSelect === -1) {
-      setContactInfo(null);
-    } else {
-      setContactInfo(contacts.filter((p) => p.id == contactSelect)[0]);
-    }
-  }, [contactSelect]);
-
-  return (
-    <>
-      <div>
-        <select
-          value={contactSelect}
-          onChange={(e) => setContactSelect(e.target.value)}
-        >
-          <option value={-1}>none</option>
-          {contacts.map((partner, index) => {
-            return (
-              <option key={index} value={partner.id}>
-                {partner.name}
-              </option>
-            );
-          })}
-        </select>
-
-        {contactInfo && <span>{JSON.stringify(contactInfo)}</span>}
       </div>
     </>
   );
