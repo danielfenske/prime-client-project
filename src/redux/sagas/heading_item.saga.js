@@ -1,3 +1,4 @@
+import { UpdateOutlined } from '@mui/icons-material';
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
@@ -15,19 +16,8 @@ function* getHeadingItemList(action) {
     }
 }
 
-//fetch all heading_items along with item code and related data per heading
-function* getHeadingItemWithItemCode(action) {
-    // try {
-    //     console.log('in headingItemItemCodeList saga action.payload is', action.payload);
-        
-    //     const response = yield axios.get(`/api/heading/${action.payload}/item_with_item_code`);
-    //     console.log('in headingItemItemCodeList saga response is', response);
-
-    //     yield put({ type: 'SET_HEADING_ITEM_WITH_ITEM_CODE_LIST', payload: response.data })
-    // } catch (error) {
-    //     console.log('Error GETTing heading_items_with_item_code', error);
-    // }
-
+//fetch all heading_items along with item code and related data 
+function* getHeadingItemWithItemCode() {
     try {
         console.log('in headingItemItemCodeList saga');
         
@@ -57,13 +47,24 @@ function* updateHeadingItem(action) {
     console.log('in headingItemSaga updateHeadingItem, action.payload is', action.payload);
 
     try {
-        yield axios.put(`/api/heading/item/${action.payload.id}`, action.payload);
+        yield axios.put(`/api/heading/item/${action.payload.heading_item_id}`, action.payload);
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
+    } catch (error) {
+        console.log('Error UPDATing a heading_item_item_code', error);
+    }
+}
+
+//update item code in a heading_item
+function* updateHeadingItemItemCode(action) {
+    console.log('in headingItemSaga updateHeadingItemItemCode, action.payload is', action.payload);
+
+    try {
+        yield axios.put(`/api/heading/item/item_code`, action.payload);
         yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
     } catch (error) {
         console.log('Error UPDATing a heading_item', error);
     }
 }
-
 //delete a heading_item
 function* deleteHeadingItem(action) {
     console.log('in headingItemSaga deleteHeadingItem');
@@ -82,6 +83,7 @@ function* deleteHeadingItem(action) {
 function* headingItemSaga() {
     yield takeLatest('FETCH_HEADING_ITEM_LIST', getHeadingItemList);
     yield takeLatest('POST_HEADING_ITEM', postHeadingItem);
+    yield takeLatest('UPDATE_HEADING_ITEM_ITEM_CODE', updateHeadingItemItemCode);
     yield takeLatest('UPDATE_HEADING_ITEM', updateHeadingItem);
     yield takeLatest('DELETE_HEADING_ITEM', deleteHeadingItem);
     yield takeLatest('FETCH_HEADING_ITEMS_WITH_ITEM_CODE', getHeadingItemWithItemCode);
