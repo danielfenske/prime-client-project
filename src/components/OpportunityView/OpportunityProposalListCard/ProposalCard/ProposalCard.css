@@ -1,0 +1,34 @@
+.proposal-card {
+  display: grid;
+
+  padding: var(--padding);
+
+  border: 2px solid var(--grey-light);
+
+  border-radius: var(--border);
+
+  margin: var(--margin);
+
+  grid-template-columns: 1fr max-content;
+}
+
+.proposal-card .icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.proposal-card .info-container {
+  display: grid;
+  align-items: center;
+
+  gap: var(--padding);
+
+  grid-template-columns: max-content 1fr;
+}
+
+.proposal-card .description {
+  display: block;
+
+  height: 100%;
+}
