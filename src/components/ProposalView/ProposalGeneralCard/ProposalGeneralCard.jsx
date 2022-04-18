@@ -1,5 +1,6 @@
 // import components here:
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
@@ -15,6 +16,12 @@ function ProposalGeneralCard() {
   const proposal = useSelector(
     (store) => store.proposalReducer.singleProposalReducer,
   );
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PROPOSAL', payload: Number(id) });
+  }, [])
 
   const [date, setDate] = useState(proposal.date);
   const [proposal_code, setProposalCode] = useState(proposal.proposal_code);

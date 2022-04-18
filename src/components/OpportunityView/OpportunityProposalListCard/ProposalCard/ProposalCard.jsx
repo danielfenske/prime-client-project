@@ -3,22 +3,24 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function ProposalCard({ proposal }) {
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const opportunity_id = proposal.opportunity_id;
     const id = proposal.id;
 
     const handleEdit = () => {
         console.log('in handleEdit', id);
-        dispatch({ type: 'FETCH_PROPOSAL', payload: { opportunity_id: opportunity_id, id: id } });
+        dispatch({ type: 'FETCH_PROPOSAL', payload: id });
+        history.push(`/proposal/${id}`);
     }
 
     const handleDelete = () => {
         console.log('in handleDelete', id);
-        dispatch({ type: 'DELETE_PROPOSAL', payload: id});
+        dispatch({ type: 'DELETE_PROPOSAL', payload: id });
     }
 
     return (

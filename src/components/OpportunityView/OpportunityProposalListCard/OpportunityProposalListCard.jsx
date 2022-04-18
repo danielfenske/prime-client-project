@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 
 // IMPORT CHILDREN COMPONENT
 import ProposalCard from './ProposalCard/ProposalCard';
@@ -6,14 +8,19 @@ import ProposalCard from './ProposalCard/ProposalCard';
 function OpportunityProposalListCard() {
 
     const dispatch = useDispatch();
+    const history = useHistory();
+    const { id } = useParams();
 
     const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
 
-    console.log(proposalList);
-
     const postProposal = () => {
-        dispatch({ type: 'POST_PROPOSAL', payload: { opportunity_id: 1 } });
+        dispatch({ type: 'POST_PROPOSAL', payload: Number(id) });
+        history.push(`/proposal/${proposal.id}`);
     }
+
+    useEffect(() => {
+        dispatch({ type: 'FETCH_PROPOSAL_LIST', payload: Number(id) });
+    }, [])
 
     return (
         <>
@@ -22,9 +29,10 @@ function OpportunityProposalListCard() {
 
             <>
                 {
-                    proposalList && proposalList.map((proposal, index) => {
+                    proposalList && proposalList.map((proposal) => {
                         return (
                             <ProposalCard
+                                key={proposal.id}
                                 proposal={proposal}
                             />
                         )
