@@ -18,8 +18,9 @@ function OpportunityCard({ opportunity }) {
             payload: opportunity.id
         })
         console.log(opportunity.id);
+        
         //  not working 👇🏼
-        history.push(`/api/opportunity/${opportunity.id}`);
+        history.push(`/opportunity/${opportunity.id}`);
     }
 
     const handleDelete = () => {

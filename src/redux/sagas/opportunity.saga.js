@@ -19,7 +19,7 @@ function* getOpportunitiesList() {
 // GET specific opportunity
 function* getOpportunity(action) {
 
-    const opportunity_id = action.payload.opportunity_id;
+    const opportunity_id = action.payload;
 
     try{
         const response = yield axios.get(`/api/opportunity/${opportunity_id}`);
