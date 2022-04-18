@@ -9,7 +9,7 @@ function* getOpportunitiesList() {
 
         const response = yield axios.get('/api/opportunity')
 
-        yield put({type: 'SET_OPPORTUNITY', payload: response.data})
+        yield put({type: 'SET_OPPORTUNITY_LIST', payload: response.data})
 
     }catch(error) {
         console.log('Getting oppotunities failed', error);
@@ -25,7 +25,7 @@ function* getOpportunity(action) {
         const response = yield axios.get(`/api/opportunity/${opportunity_id}`);
 
         // set off reducer here
-        yield put({type: 'SPECIFIC_OPPORTUNITY', payload: response.data})
+        yield put({type: 'SET_OPPORTUNITY', payload: response.data})
 
     }catch(error) {
         console.log('error getting specific opportunity ', error);
@@ -60,8 +60,8 @@ function* postOpportunity(){
 
 
 function* opportunitySaga() {
-    yield takeLatest('SET_OPPORTUNITY_LIST', getOpportunitiesList),
-    yield takeLatest('SET_SPECIFIC_OPPORTUNITY', getOpportunity)
+    yield takeLatest('FECTCH_OPPORTUNITY_LIST', getOpportunitiesList),
+    yield takeLatest('FETCH_OPPORTUNITY', getOpportunity)
 }
 
 
