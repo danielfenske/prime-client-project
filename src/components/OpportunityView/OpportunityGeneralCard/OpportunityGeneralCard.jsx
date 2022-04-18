@@ -103,3 +103,5 @@ function ContactCard({ contacts }) {
     </>
   );
 }
+
+export default OpportunityGeneralCard;

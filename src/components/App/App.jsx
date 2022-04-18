@@ -23,6 +23,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import Test from '../Test/Test';
 import ProposalView from '../ProposalView/ProposalView';
 import OpportunityListView from '../OpportunityListView/OpportunityListView';
+import OpportunityView from '../OpportunityView/OpportunityView';
 
 import AdminProtectedRoute from '../ProtectedRoute/AdminProtectedRoute';
 import AdminView from '../AdminView/AdminView';
@@ -116,9 +117,17 @@ function App() {
                   <ProtectedRoute
                     // shows proposal view if the user is logged in
                     exact
-                    path='/proposal'
+                    path='/proposal/:id'
                   >
                     <ProposalView />
+                  </ProtectedRoute>
+
+                  <ProtectedRoute
+                    // the opportunity route shows a single opportunity
+                    exact
+                    path='/opportunity/:id'
+                  >
+                    <OpportunityView />
                   </ProtectedRoute>
 
                   <ProtectedRoute exact path='/opportunities'>
@@ -141,7 +150,7 @@ function App() {
                     {user.id ? (
                       // If the user is already logged in,
                       // redirect them to the /user page
-                      <Redirect to='/user' />
+                      <Redirect to='/opportunities' />
                     ) : (
                       // Otherwise, show the registration page
                       <RegisterPage />
@@ -152,7 +161,7 @@ function App() {
                     {user.id ? (
                       // If the user is already logged in,
                       // redirect them to the /user page
-                      <Redirect to='/user' />
+                      <Redirect to='/opportunities' />
                     ) : (
                       // Otherwise, show the Landing page
                       <LandingPage />
