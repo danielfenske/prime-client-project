@@ -14,7 +14,8 @@ function HeadingCard(props) {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
-    // dispatch({ type: 'FETCH_HEADING_ITEM_LIST' });
+    //When params is set, use below code instead 
+    //dispatch({type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: Number(id)})
     dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: 4});
   }, []);
 
@@ -22,7 +23,7 @@ function HeadingCard(props) {
 
   const addNewLineItem = () => {
     console.log('in addNewLineItem');
-    dispatch({type:'POST_HEADING', payload: Number(id)})
+    dispatch({type:'POST_HEADING', payload: 4})
   }
 
 
