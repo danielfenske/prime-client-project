@@ -9,85 +9,92 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
 function OpportunityListView() {
+  const [search, setSearch] = useState('');
+  const [partner, setPartner] = useState(1);
+  const [status, setStatus] = useState(1);
 
-    const [search, setSearch] = useState('');
-    const [partner, setPartner] = useState(1);
-    const [status, setStatus] = useState(1);
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_OPPORTUNITY_LIST',
+    });
+  }, []);
 
-    useEffect(() => {
-        dispatch({
-            type: 'FETCH_OPPORTUNITY_LIST'
-        })
-    }, [])
+  const postOpportunity = () => {
+    console.log('in postOpportunity');
+    dispatch({ type: 'POST_OPPORTUNITY' });
+  };
 
-    const postOpportunity = () => {
-        console.log('in postOpportunity');
-        dispatch({ type: 'POST_OPPORTUNITY'});
-    }
+  const opportunityList = useSelector(
+    (store) => store.opportunityReducer.opportunityListReducer,
+  );
 
-    const opportunityList = useSelector((store) => store.opportunityReducer.opportunityListReducer);
+  return (
+    <>
+      <div>
+        <div className='proposal-list-header'>
+          <h1>Opportunities</h1>
+          <Button onClick={postOpportunity} variant='contained' size='small'>
+            Create New
+          </Button>
+        </div>
+        <div>
+          <TextField
+            id='outlined-basic'
+            label='Search Opportunities'
+            variant='outlined'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            size='small'
+          />
+          <FormControl>
+            <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              label='Partner'
+              value={partner}
+              onChange={(e) => setPartner(e.target.value)}
+              size='small'
+            >
+              <MenuItem value={1}>Bob</MenuItem>
+            </Select>
+          </FormControl>
 
-    return (
-        <>
-            <div>
-                <div className='proposal-list-header'>
-                    <h1>Opportunities</h1>
-                    <Button onClick={postOpportunity} variant='contained' size='small'>
-                        Create New
-                    </Button>
-                </div>
-                <div>
-                    <TextField
-                        id='outlined-basic'
-                        label='Search Opportunities'
-                        variant='outlined'
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        size='small'
-                    />
-                    <FormControl>
-                        <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
-                        <Select
-                            labelId='demo-simple-select-label'
-                            id='demo-simple-select'
-                            label='Partner'
-                            value={partner}
-                            onChange={(e) => setPartner(e.target.value)}
-                            size='small'
-                        >
-                            <MenuItem value={1}>Bob</MenuItem>
-                        </Select>
-                    </FormControl>
-
-                    <FormControl>
-                        <InputLabel id='demo-simple-select-label'>Status</InputLabel>
-                        <Select
-                            labelId='demo-simple-select-label'
-                            id='demo-simple-select'
-                            label='Method'
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value)}
-                            size='small'
-                        >
-                            <MenuItem value={1}>In-Progress</MenuItem>
-                            <MenuItem value={2}>Complete</MenuItem>
-                            <MenuItem value={3}>Archived</MenuItem>
-                        </Select>
-                    </FormControl>
-                </div>
-            </div>
-            <div>
-                {opportunityList.map((opportunity, i) => {
-                    return (
-                        <OpportunityCard key={i} opportunity={opportunity} />
-                    )
-                })}
-            </div>
-        </>
-    )
+          <FormControl>
+            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              label='Method'
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              size='small'
+            >
+              <MenuItem value={1}>In-Progress</MenuItem>
+              <MenuItem value={2}>Complete</MenuItem>
+              <MenuItem value={3}>Archived</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+      </div>
+      <div>
+        {opportunityList
+          .filter((o) => {
+            console.log('Opportunity List', o);
+            return (
+              o.name.toUpperCase().includes(search.toUpperCase()) &&
+              o.partner_id == partner &&
+              o.status == status
+            );
+          })
+          .map((opportunity, i) => {
+            return <OpportunityCard key={i} opportunity={opportunity} />;
+          })}
+      </div>
+    </>
+  );
 }
-
 
 export default OpportunityListView;
