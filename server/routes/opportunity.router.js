@@ -46,7 +46,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     // unique opportunity id
     const opportunityId = req.params.id;
-    const sqlText = `SELECT * FROM "opportunity" WHERE "opportunity_code" = $1;`
+    const sqlText = `SELECT * FROM "opportunity" WHERE "id" = $1;`
 
     pool.query(sqlText, [opportunityId])
         .then((result) => {
@@ -58,19 +58,23 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
 
 
-router.post('/', rejectUnauthenticated, (req, res) => {
+router.post('/', rejectUnauthenticated, async (req, res) => {
 
+    const userId = req.user.id;
+    const sqlText = ` INSERT INTO "opportunity" ("user_id")
+    VALUES($1) RETURNING id;`;
 
-    const sqlText = ` INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16);`
+    try {
+        const result = await pool.query(queryText, [userId])
 
-    pool.query(sqlText, [req.body.name, req.body.opportunityCode, req.body.statusCode, req.body.userId, req.body.contactId, req.body.partnerId, req.body.dueDate, req.body.type, req.body.communityName, req.body.DevelopmentType, req.body.address, req.body.city, req.body.state, req.body.zip, req.body.taxRate, req.body.disabled])
-    .then(() => {
-        res.sendStatus(200)
-    }).catch((error) => {
-        console.log(error);
-    })
-})
+        const opportunity_id = result.rows[0].id;
+
+        res.send({ opportunity_id: opportunity_id });
+
+    } catch (error) {
+        res.sendStatus(500);
+    }
+});
 
 
 
@@ -95,7 +99,7 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
     "zip" = $10, 
     "tax_rate" = $11,
     "disabled" = $12
-    WHERE "opportunity_code" = $13;`;
+    WHERE "id" = $13;`;
 
     pool.query(sqlText, [req.body.name, req.body.status, req.body.dueDate, req.body.type, req.body.communityName, req.body.developmentType, req.body.address, req.body.city, req.body.state, req.body.zip, req.body.taxRate, req.body.disabled, opportunityCode])
         .then(() => {
@@ -113,7 +117,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
     const opportunityId = req.params.id;
     const sqlText = `UPDATE "opportunity"
     SET "disabled" = true
-    WHERE "opportunity_code" = $1;`;
+    WHERE "id" = $1;`;
 
     pool.query(sqlText, [opportunityId])
         .then(() => {
@@ -121,7 +125,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
         }).catch((error) => {
             console.log(error);
         })
-    
+
 })
 
 
