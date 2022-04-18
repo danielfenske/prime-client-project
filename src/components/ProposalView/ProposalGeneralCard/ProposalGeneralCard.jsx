@@ -1,5 +1,6 @@
 // import components here:
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './ProposalGeneralCard.css';
 
 // link to the autocomplete
@@ -14,38 +15,48 @@ import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 
 function ProposalGeneralCard() {
-  const proposal = useSelector(
-    (store) => store.proposalReducer.singleProposalReducer,
-  );
+  const proposal = useSelector((store) => store.proposalReducer.singleProposalReducer);
   const partner = useSelector((store) => store.partnerReducer.partnerReducer);
 
-  const [date, setDate] = useState(proposal.date);
-  const [proposal_code, setProposalCode] = useState(proposal.proposal_code);
-  const [house_type, setHouseType] = useState(proposal.house_type);
-  const [plan_identifier, setPlanIdentifier] = useState(
-    proposal.plan_identifier,
-  );
-  const [plan_date, setPlanDate] = useState(proposal.plan_date);
-  const [building_code, setBuildingCode] = useState(proposal.building_code);
-  const [partner_discount, setPartnerDiscount] = useState(
-    proposal.partner_discount,
-  );
-  const [surcharge, setSurcharge] = useState(proposal.surcharge);
-  const [surcharge_description, setSurchargeDescription] = useState(
-    proposal.surcharge_description,
-  );
+  const { id } = useParams();
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PROPOSAL', payload: id});
+  }, []);
+
+  useEffect(() => {
+    setDate(proposal.date);
+    setProposalCode(proposal.proposal_code);
+    setHouseType(proposal.house_type);
+    setPlanIdentifier(proposal.plan_identifier);
+    setPlanDate(proposal.plan_date);
+    setBuildingCode(proposal.building_code);
+    setPartnerDiscount(proposal.partner_discount);
+    setSurcharge(proposal.surcharge);
+    setSurchargeDescription(proposal.surcharge_description);
+    setMethod(proposal.method || 1);
+    setMethodMessage(proposal.method_message);
+    setDeliveryCharge(proposal.delivery_charge);
+    setFieldWeldCharge(proposal.field_weld_charge);
+    setFieldWeldMessage(proposal.field_weld_message);
+    setDescription(proposal.description);
+  }, [proposal]);
+
+  const [date, setDate] = useState('');
+  const [proposal_code, setProposalCode] = useState('');
+  const [house_type, setHouseType] = useState('');
+  const [plan_identifier, setPlanIdentifier] = useState('');
+  const [plan_date, setPlanDate] = useState('');
+  const [building_code, setBuildingCode] = useState('');
+  const [partner_discount, setPartnerDiscount] = useState('');
+  const [surcharge, setSurcharge] = useState('');
+  const [surcharge_description, setSurchargeDescription] = useState('');
   const [method, setMethod] = useState(1);
-  const [method_message, setMethodMessage] = useState(proposal.method_message);
-  const [delivery_charge, setDeliveryCharge] = useState(
-    proposal.delivery_charge,
-  );
-  const [field_weld_charge, setFieldWeldCharge] = useState(
-    proposal.field_weld_charge,
-  );
-  const [field_weld_message, setFieldWeldMessage] = useState(
-    proposal.field_weld_message,
-  );
-  const [description, setDescription] = useState(proposal.description);
+  const [method_message, setMethodMessage] = useState('');
+  const [delivery_charge, setDeliveryCharge] = useState('');
+  const [field_weld_charge, setFieldWeldCharge] = useState('');
+  const [field_weld_message, setFieldWeldMessage] = useState('');
+  const [description, setDescription] = useState('');
 
   const dispatch = useDispatch();
 
