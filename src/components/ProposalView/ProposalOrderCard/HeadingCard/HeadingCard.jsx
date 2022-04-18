@@ -9,6 +9,7 @@ function HeadingCard(props) {
   const [messageInput, setMessageInput] = useState(props.message);
   const [nameInput, setNameInput] = useState(props.name);
   const [surchargeInput, setSurchargeInput] = useState(0);
+  const [itemId, setItemId] = useState('');
   const {id} =useParams();
   
 
@@ -18,14 +19,18 @@ function HeadingCard(props) {
     //dispatch({type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: Number(id)})
     dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: 4});
   }, []);
-
+  const items = useSelector((store) => store.itemReducer);
   const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+  
+  
 
   const addNewLineItem = () => {
     console.log('in addNewLineItem');
-    dispatch({type:'POST_HEADING_ITEM', payload: 4})
+    console.log('itemID is', itemId);
+    // dispatch({type:'POST_HEADING_ITEM', payload: 4})
   }
 
+  
 
   console.log('lineItemList is', lineItemList);
 
@@ -64,6 +69,13 @@ function HeadingCard(props) {
         </div>
         <div>
           <h2>Items</h2>
+
+          <select onChange={e => setItemId(e.target.value)}>
+            {items.map((item, index) => {
+            return <option key={index} value={item.id}>{item.item_code}</option>;
+            })}
+          </select>
+
           <button onClick={addNewLineItem}>Add Item</button>
           <div className='item-container'>
             {/* this item is a test */}

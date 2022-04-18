@@ -11,18 +11,29 @@ function HeadingItemCard({ lineItem }) {
   const items = useSelector((store) => store.itemReducer);
   const dispatch = useDispatch();
 
+  const [selectedItem, setSelectedItem] = useState(0);
+
   console.log('lineItem is', lineItem);
   console.log('items are', items);
 
-  const handleItemSelect = () => {
+  const handleItemSelect = (e) => {
     console.log('in handleItemSelect');
 
+    setSelectedItem(e.target.value)
   }
+
+  useEffect(() => {
+    const thisItem = items.reduce((total, item) => {
+      if (item.id === selectedItem) {
+        return item;
+      }
+    })
+  }, [selectedItem])
 
   return (
     <div className='heading-item-card'>
 
-      <select onChange={handleItemSelect}>
+      <select value={selectedItem} onChange={handleItemSelect}>
         {items.map((item, index) => {
           return <option key={index} value={item.id}>{item.item_code}</option>;
         })}

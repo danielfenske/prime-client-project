@@ -37,14 +37,14 @@ function CreateItemModal() {
 
     const { value } = event.target;
 
-    setValues({
-      ...values,
+    setItem({
+      ...item,
       [name]: value,
     });
   }
 
   //the unit_type_id property of the item object is set when a user selects one of the dropdown options 
-  const [unitInput, setUnitInput] = useState("");
+  const [unitInput, setUnitInput] = useState("1");
 
   const setUnitPair = (event) => {
     setUnitInput(event.target.value)
