@@ -14,16 +14,17 @@ function OpportunityListView() {
     const [partner, setPartner] = useState(1);
     const [status, setStatus] = useState(1);
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch({
             type: 'FETCH_OPPORTUNITY_LIST'
         })
     }, [])
 
-    const dispatch = useDispatch();
-
     const postOpportunity = () => {
         console.log('in postOpportunity');
+        dispatch({ type: 'POST_OPPORTUNITY'});
     }
 
     const opportunityList = useSelector((store) => store.opportunityReducer.opportunityListReducer);

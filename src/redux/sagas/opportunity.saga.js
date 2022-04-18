@@ -12,7 +12,7 @@ function* getOpportunitiesList() {
         yield put({type: 'SET_OPPORTUNITY_LIST', payload: response.data})
 
     }catch(error) {
-        console.log('Getting oppotunities failed', error);
+        console.log('Getting opportunities failed', error);
     }
 }
 
@@ -34,12 +34,13 @@ function* getOpportunity(action) {
 
 // UPDATE opportunity
 function* updateOpportunity(action) {
-    const opportunity_id = action.payload.opportunity_id;
+    const opportunityId = action.payload.id;
+    const updatedOpportunity = action.payload;
 
     try{
-        const response = yield axios.put(`/api/opportunity/${opportunity_id}`)
+        yield axios.put(`/api/opportunity/${opportunityId}`, updatedOpportunity)
 
-        // set off reducer here
+        yield put({type: 'FETCH_OPPORTUNITY', payload: opportunityId})
     }catch(error) {
         console.log('error UPDATING opportunity', error);
     }
@@ -48,9 +49,12 @@ function* updateOpportunity(action) {
 
 function* postOpportunity(){
     try{
-        const response = yield axios.post(`/api/opportunity`)
+        const opportunityResponse = yield axios.post(`/api/opportunity`)
 
-        // set off reducer here
+        const opportunityId = opportunityResponse.data.opportunity_id;
+        yield put({type: 'FETCH_OPPORTUNITY', payload: opportunityId});
+        yield put({type: 'FETCH_OPPORTUNITY_LIST'});
+        
     }catch(error) {
         console.log('error posting Opportunity', error);
         
@@ -58,7 +62,7 @@ function* postOpportunity(){
 }
 
 // DELETE (disable) existing opportunity within DB
-function* deleteSaga(action) {
+function* deleteOpportunity(action) {
     const id = action.payload;
   
     try {
@@ -75,7 +79,9 @@ function* deleteSaga(action) {
 function* opportunitySaga() {
     yield takeLatest('FETCH_OPPORTUNITY_LIST', getOpportunitiesList),
     yield takeLatest('FETCH_OPPORTUNITY', getOpportunity),
-    yield takeLatest('DELETE_SAGA', deleteSaga);
+    yield takeLatest('DELETE_OPPORTUNITY', deleteOpportunity);
+    yield takeLatest('POST_OPPORTUNITY', postOpportunity);
+    yield takeLatest('UPDATE_OPPORTUNITY', updateOpportunity);
 }
 
 
