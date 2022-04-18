@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import { Button } from '@mui/material';
 
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
   const contacts = useSelector((store) => store.contactReducer);
-  const {id} = useParams();
+  const { id } = useParams();
+  const opportunity = useSelector((store) => store.opportunityReducer.specificOpportunityReducer);
 
   useEffect(() => {
     dispatch({
@@ -21,10 +24,123 @@ function OpportunityGeneralCard() {
     })
   }, []);
 
+  useEffect(() => {
+
+    setName(opportunity.name);
+    setDueDate(opportunity.due_date);
+    setStatus(opportunity.status);
+    setType(opportunity.type);
+    setCommunityName(opportunity.community_name);
+    setDevelopmentType(opportunity.development_type);
+    setAddress(opportunity.address_line_1);
+    setCity(opportunity.city);
+    setState(opportunity.state);
+    setZip(opportunity.zip);
+    setTaxRate(opportunity.tax_rate);
+  }, [opportunity]);
+
+
+  const [name, setName] = useState('');
+  const [due_date, setDueDate] = useState('');
+  const [status, setStatus] = useState('');
+  const [type, setType] = useState('');
+  const [community_name, setCommunityName] = useState('');
+  const [development_type, setDevelopmentType] = useState('');
+  const [address_line_1, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState('');
+  const [tax_rate, setTaxRate] = useState('');
+
+
+  const handleSubmit = () => {
+    console.log('user submitted the form');
+
+    let opportunitySubmission = {
+      id: opportunity.id,
+      name: name, 
+      due_date: due_date,
+      status: status,
+      type: type,
+      community_name: community_name,
+      development_type: development_type,
+      address_line_1: address_line_1,
+      city: city,
+      state: state,
+      zip: zip,
+      tax_rate: tax_rate
+    }
+
+    // dispatch to UPDATE with new values
+    dispatch({
+      type: 'UPDATE_OPPORTUNITY',
+      payload: opportunitySubmission
+    })
+  }
+
+
   return (
     <>
       <div>
-        <h2>This is the Proposal General Information</h2>
+          <h2>General Information</h2>
+          <TextField
+            id='outlined-basic'
+            label='Opportunity Name'
+            variant='outlined'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Status'
+            variant='outlined'
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='date'
+            label='Proposal Date'
+            type='date'
+            defaultValue='2022-04-15'
+            value={due_date}
+            InputLabelProps={{ shrink: true }}
+            onChange={(e) => setDueDate(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Type'
+            variant='outlined'
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Community Name'
+            variant='outlined'
+            value={community_name}
+            onChange={(e) => setCommunityName(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Development Type'
+            variant='outlined'
+            value={development_type}
+            onChange={(e) => setDevelopmentType(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Address'
+            variant='outlined'
+            value={address_line_1}
+            onChange={(e) => setAddress(e.target.value)}
+            size='small'
+          />
       </div>
       <div>
         <h2>Partner Information</h2>
@@ -33,6 +149,41 @@ function OpportunityGeneralCard() {
       </div>
       <div>
         <h2>Opportunity Type</h2>
+          <TextField
+            id='outlined-basic'
+            label='Zip'
+            variant='outlined'
+            value={zip}
+            onChange={(e) => setZip(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='City'
+            variant='outlined'
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='State'
+            variant='outlined'
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Tax Rate'
+            variant='outlined'
+            value={tax_rate}
+            onChange={(e) => setTaxRate(e.target.value)}
+            size='small'
+          />
+        <Button onClick={handleSubmit} variant='contained' size='small'>
+          Save Progress
+        </Button>
       </div>
     </>
   );
