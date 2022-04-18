@@ -2,15 +2,15 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 // GETs list of all contacts held in DB
-function* getContactList() {    
+function* getContactList() {
   try {
-      const contactResponse = yield axios.get(`/api/contact`);
+    const contactResponse = yield axios.get(`/api/contact`);
 
     // sends list to be stored in redux state
-    yield put ({type: 'SET_CONTACT_LIST', payload: contactResponse.data});
+    yield put({ type: 'SET_CONTACT_LIST', payload: contactResponse.data });
 
   } catch (error) {
-      console.log('Error GETTING contacts', error); 
+    console.log('Error GETTING contacts', error);
   }
 }
 
@@ -21,9 +21,9 @@ function* postContact(action) {
   try {
     yield axios.post(`api/contact`, newContact);
 
-    yield put({type: 'FETCH_CONTACT_LIST'});
+    yield put({ type: 'FETCH_CONTACT_LIST' });
   } catch (error) {
-    console.log('Error POSTING contact', error);   
+    console.log('Error POSTING contact', error);
   }
 }
 
@@ -36,7 +36,7 @@ function* updateContact(action) {
   try {
     yield axios.put(`api/contact/${contactId}`, updatedContact);
 
-    yield put({type: 'FETCH_CONTACT_LIST'});
+    yield put({ type: 'FETCH_CONTACT_LIST' });
   } catch (error) {
     console.log('Error UPDATING contact', error);
   }

@@ -97,11 +97,10 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
     "city" = $8, 
     "state" = $9, 
     "zip" = $10, 
-    "tax_rate" = $11,
-    "disabled" = $12
-    WHERE "id" = $13;`;
+    "tax_rate" = $11
+    WHERE "id" = $12;`;
 
-    pool.query(sqlText, [req.body.name, req.body.status, req.body.dueDate, req.body.type, req.body.communityName, req.body.developmentType, req.body.address, req.body.city, req.body.state, req.body.zip, req.body.taxRate, req.body.disabled, opportunityCode])
+    pool.query(sqlText, [req.body.name, req.body.status, req.body.due_date, req.body.type, req.body.community_name, req.body.development_type, req.body.address_line_1, req.body.city, req.body.state, req.body.zip, req.body.tax_rate, opportunityCode])
         .then(() => {
             res.sendStatus(200);
         }).catch((error) => {
