@@ -15,15 +15,13 @@ import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 
 function ProposalGeneralCard() {
-  const proposal = useSelector(
-    (store) => store.proposalReducer.singleProposalReducer,
-  );
+  const proposal = useSelector((store) => store.proposalReducer.singleProposalReducer);
   const partner = useSelector((store) => store.partnerReducer.partnerReducer);
 
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_PROPOSAL', payload: Number(id) });
+    dispatch({ type: 'FETCH_PROPOSAL', payload: id});
   }, []);
 
   useEffect(() => {
@@ -36,7 +34,7 @@ function ProposalGeneralCard() {
     setPartnerDiscount(proposal.partner_discount);
     setSurcharge(proposal.surcharge);
     setSurchargeDescription(proposal.surcharge_description);
-    setMethod(proposal.method);
+    setMethod(proposal.method || 1);
     setMethodMessage(proposal.method_message);
     setDeliveryCharge(proposal.delivery_charge);
     setFieldWeldCharge(proposal.field_weld_charge);

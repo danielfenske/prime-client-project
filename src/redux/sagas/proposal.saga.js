@@ -37,7 +37,9 @@ function* postProposal(action) {
     const proposalResponse = yield axios.post(`api/proposal/${opportunity_id}`);
 
     const proposalId = proposalResponse.data.proposalId;
-    yield put({type: 'FETCH_PROPOSAL', payload: {opportunity_id: opportunity_id, id: proposalId}});
+    yield put({type: 'FETCH_PROPOSAL', payload: proposalId});
+    yield put({type: 'FETCH_PROPOSAL_LIST'});
+
   } catch (error) {
     console.log('Error POSTING contact', error);   
   }

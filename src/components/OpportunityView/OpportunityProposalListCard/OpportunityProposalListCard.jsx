@@ -14,15 +14,15 @@ function OpportunityProposalListCard() {
   const history = useHistory();
   const { id } = useParams();
 
+  const proposal = useSelector((store) => store.proposalReducer.singleProposalReducer);
   const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
 
   const postProposal = () => {
-    dispatch({ type: 'POST_PROPOSAL', payload: Number(id) });
-    history.push(`/proposal/${proposal.id}`);
+    dispatch({ type: 'POST_PROPOSAL', payload: id});
   }
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_PROPOSAL_LIST', payload: Number(id) });
+    dispatch({ type: 'FETCH_PROPOSAL_LIST', payload: id});
   }, [])
 
   return (
