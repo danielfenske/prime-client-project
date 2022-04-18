@@ -35,7 +35,7 @@ function* postHeadingItem(action) {
     
     try { 
         yield axios.post(`/api/heading/${action.payload}/item`);
-        yield put({ type: 'FETCH_HEADING_ITEM_LIST', payload: action.payload });
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: action.payload });
     } catch (error) {
         console.log('Error POSTing a new heading', error);
     }

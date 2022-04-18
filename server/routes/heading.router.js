@@ -148,7 +148,7 @@ router.post('/:id/item', (req, res) => {
     if (req.isAuthenticated()) {
         const sqlText =
         `INSERT INTO "item_heading" ("heading_id", "item_id")
-        VALUES ($1, 1)`;
+        VALUES ($1, 7)`;
 
         const valueArray = [req.params.id];
 

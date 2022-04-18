@@ -9,7 +9,7 @@ function HeadingCard(props) {
   const [messageInput, setMessageInput] = useState(props.message);
   const [nameInput, setNameInput] = useState(props.name);
   const [surchargeInput, setSurchargeInput] = useState(0);
-  const [itemId, setItemId] = useState('');
+  // const [itemId, setItemId] = useState('');
   const {id} =useParams();
   
 
@@ -26,8 +26,8 @@ function HeadingCard(props) {
 
   const addNewLineItem = () => {
     console.log('in addNewLineItem');
-    console.log('itemID is', itemId);
-    // dispatch({type:'POST_HEADING_ITEM', payload: 4})
+    // console.log('itemID is', itemId);
+    dispatch({type:'POST_HEADING_ITEM', payload: 4})
   }
 
   
@@ -70,11 +70,11 @@ function HeadingCard(props) {
         <div>
           <h2>Items</h2>
 
-          <select onChange={e => setItemId(e.target.value)}>
+          {/* <select onChange={e => setItemId(e.target.value)}>
             {items.map((item, index) => {
             return <option key={index} value={item.id}>{item.item_code}</option>;
             })}
-          </select>
+          </select> */}
 
           <button onClick={addNewLineItem}>Add Item</button>
           <div className='item-container'>

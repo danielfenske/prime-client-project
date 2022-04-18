@@ -22,13 +22,13 @@ function HeadingItemCard({ lineItem }) {
     setSelectedItem(e.target.value)
   }
 
-  useEffect(() => {
-    const thisItem = items.reduce((total, item) => {
-      if (item.id === selectedItem) {
-        return item;
-      }
-    })
-  }, [selectedItem])
+  // useEffect(() => {
+  //   const thisItem = items.reduce((total, item) => {
+  //     if (item.id === selectedItem) {
+  //       return item;
+  //     }
+  //   })
+  // }, [selectedItem])
 
   return (
     <div className='heading-item-card'>
