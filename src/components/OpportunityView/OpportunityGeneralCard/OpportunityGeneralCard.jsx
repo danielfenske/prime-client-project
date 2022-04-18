@@ -4,6 +4,9 @@ import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 
+// component imports
+import ContactCard from './ContactCard';
+
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
@@ -20,8 +23,8 @@ function OpportunityGeneralCard() {
     });
     dispatch({
       type: 'FETCH_OPPORTUNITY',
-      payload: id
-    })
+      payload: id,
+    });
   }, []);
 
   useEffect(() => {
@@ -223,42 +226,6 @@ function PartnerCard({ partners }) {
         </select>
 
         {partnerInfo && <span>{JSON.stringify(partnerInfo)}</span>}
-      </div>
-    </>
-  );
-}
-
-function ContactCard({ contacts }) {
-  const [contactSelect, setContactSelect] = useState(-1);
-  const [contactInfo, setContactInfo] = useState(null);
-
-  useEffect(() => {
-    console.log(contactSelect);
-    if (contactSelect === -1) {
-      setContactInfo(null);
-    } else {
-      setContactInfo(contacts.filter((p) => p.id == contactSelect)[0]);
-    }
-  }, [contactSelect]);
-
-  return (
-    <>
-      <div>
-        <select
-          value={contactSelect}
-          onChange={(e) => setContactSelect(e.target.value)}
-        >
-          <option value={-1}>none</option>
-          {contacts.map((partner, index) => {
-            return (
-              <option key={index} value={partner.id}>
-                {partner.name}
-              </option>
-            );
-          })}
-        </select>
-
-        {contactInfo && <span>{JSON.stringify(contactInfo)}</span>}
       </div>
     </>
   );
