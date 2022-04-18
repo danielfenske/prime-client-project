@@ -32,7 +32,7 @@ CREATE TABLE "partner" (
     "name" VARCHAR(80),
     "type" VARCHAR(100),
     "partner_code" VARCHAR(80),
-    "partner_discount" DECIMAL (5, 2),
+    "partner_discount" DECIMAL (25, 2),
     "rounding_type" INT,
     "phone_number" INT,
     "address_line_1" VARCHAR(250),
@@ -61,7 +61,7 @@ CREATE TABLE "opportunity" (
     "city" VARCHAR(80),
     "state" VARCHAR(2),
     "zip" INT,
-    "tax_rate" DECIMAL(5, 2),
+    "tax_rate" DECIMAL(25, 2),
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
  INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
@@ -77,13 +77,13 @@ CREATE TABLE "proposal" (
     "plan_identifier" VARCHAR(80),
     "plan_date" TIMESTAMPTZ,
     "building_code" VARCHAR(80),
-    "partner_discount" DECIMAL (5, 2),
-    "surcharge" DECIMAL (5, 2),
+    "partner_discount" DECIMAL (25, 2),
+    "surcharge" DECIMAL (25, 2),
     "surcharge_description" VARCHAR(250),
     "method" INT, -- will be a dropdown, we will simply target the INT or id
     "method_message" VARCHAR(250),
-    "delivery_charge" DECIMAL (5, 2),
-    "field_weld_charge" DECIMAL (5, 2),
+    "delivery_charge" DECIMAL (25, 2),
+    "field_weld_charge" DECIMAL (25, 2),
     "field_weld_message" VARCHAR(250),
     "description" VARCHAR(250),
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
@@ -96,7 +96,7 @@ CREATE TABLE "heading" (
 	"name" VARCHAR(100),
 	"message" VARCHAR(250),
 	"proposal_id" INT REFERENCES "proposal",
-	"surcharge" DECIMAL (5, 2),
+	"surcharge" DECIMAL (25, 2),
 	"order" INT,
     "taxable" BOOLEAN
 );
@@ -132,9 +132,9 @@ CREATE TABLE "item" (
 	"item_code" VARCHAR (20),
 	"name" VARCHAR(80),
 	"description" VARCHAR (200),
-	"price_per_price_unit" DECIMAL (9,2),
+	"price_per_price_unit" DECIMAL (25, 2),
 	"unit_type_id" INT,
-	"unit_weight" DECIMAL (5, 2), -- unit weight is the relationship between the mesure_unit and price_unit
+	"unit_weight" DECIMAL (25, 2), -- unit weight is the relationship between the mesure_unit and price_unit
 	"disabled" BOOLEAN NOT NULL DEFAULT FALSE 
 
 );
@@ -148,11 +148,11 @@ CREATE TABLE "item_heading"(
 	"item_id" INT REFERENCES "item",
 	"order" INT,
 	"price_unit" DECIMAL,
-	"single_unit_price" DECIMAL (10, 2),
+	"single_unit_price" DECIMAL (25, 2),
 	"measure_unit" DECIMAL,
 	"rounded_measure_unit" DECIMAL,
 	"qty" INT,
-	"total_item_price" DECIMAL(10,2)
+	"total_item_price" DECIMAL(25, 2)
 	); 
 	
 INSERT INTO "item_heading" ("heading_id", "item_id", "order", "price_unit", "single_unit_price", "measure_unit", "rounded_measure_unit", "qty", "total_item_price")
@@ -162,7 +162,7 @@ VALUES (1, 1, 1, 3.33, 35.90, 13.33, 53.23, 3, 2432.23);
 
 CREATE TABLE "partner_pricing"(
 	"id" SERIAL PRIMARY KEY,
-	"price" DECIMAL (5,2),
+	"price" DECIMAL (25, 2),
 	"item_id" INT REFERENCES "item",
 	"partner_id" INT REFERENCES "partner",
 	"disabled" BOOLEAN NOT NULL DEFAULT FALSE

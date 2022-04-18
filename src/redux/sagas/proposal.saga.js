@@ -16,11 +16,10 @@ function* getProposalList() {
 
 // GETs specific proposal
 function* getProposal(action) {
-    const opportunity_id = action.payload.opportunity_id;
-    const proposalId = action.payload.id;
+    const proposalId = action.payload;
 
     try {
-        const proposalResponse = yield axios.get(`/api/proposal/${opportunity_id}/${proposalId}`);
+      const proposalResponse = yield axios.get(`/api/proposal/${proposalId}`);
   
       // sends proposal to be stored in redux state
       yield put ({type: 'SET_PROPOSAL', payload: proposalResponse.data});
@@ -32,15 +31,15 @@ function* getProposal(action) {
 
 // POST new contact to DB
 function* postProposal(action) {
-  const opportunity_id = action.payload.opportunity_id;
+  const opportunity_id = action.payload;
 
   try {
     const proposalResponse = yield axios.post(`api/proposal/${opportunity_id}`);
 
     const proposalId = proposalResponse.data.proposalId;
+    yield put({type: 'FETCH_PROPOSAL', payload: proposalId});
+    yield put({type: 'FETCH_PROPOSAL_LIST'});
 
-
-    yield put({type: 'FETCH_PROPOSAL', payload: {opportunity_id: opportunity_id, id: proposalId}});
   } catch (error) {
     console.log('Error POSTING contact', error);   
   }
@@ -55,7 +54,7 @@ function* updateProposal(action) {
   try {
     yield axios.put(`api/proposal/${proposalId}`, updatedProposal);
 
-    yield put({type: 'FETCH_PROPOSAL'});
+    yield put({type: 'FETCH_PROPOSAL', payload: proposalId});
   } catch (error) {
     console.log('Error UPDATING proposal', error);
   }
