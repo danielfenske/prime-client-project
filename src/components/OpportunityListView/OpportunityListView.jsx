@@ -82,7 +82,6 @@ function OpportunityListView() {
       <div>
         {opportunityList
           .filter((o) => {
-            console.log('Opportunity List', o);
             return (
               o.name.toUpperCase().includes(search.toUpperCase()) &&
               o.partner_id == partner &&
