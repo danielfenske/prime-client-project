@@ -57,11 +57,25 @@ function* postOpportunity(){
     }
 }
 
+// DELETE (disable) existing opportunity within DB
+function* deleteSaga(action) {
+    const id = action.payload;
+  
+    try {
+      yield axios.delete(`api/opportunity/${id}`);
+  
+      yield put({type: 'FETCH_OPPORTUNITY_LIST'});
+    } catch (error) {
+      console.log('Error DELETING proposal', error);
+      
+    }
+  }
 
 
 function* opportunitySaga() {
-    yield takeLatest('FECTCH_OPPORTUNITY_LIST', getOpportunitiesList),
-    yield takeLatest('FETCH_OPPORTUNITY', getOpportunity)
+    yield takeLatest('FETCH_OPPORTUNITY_LIST', getOpportunitiesList),
+    yield takeLatest('FETCH_OPPORTUNITY', getOpportunity),
+    yield takeLatest('DELETE_SAGA', deleteSaga);
 }
 
 
