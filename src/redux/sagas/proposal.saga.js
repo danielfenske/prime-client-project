@@ -29,7 +29,7 @@ function* getProposal(action) {
     }
 }
 
-// POST new contact to DB
+// POST new proposal to DB
 function* postProposal(action) {
   const opportunity_id = action.payload;
 
