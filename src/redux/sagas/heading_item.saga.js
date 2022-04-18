@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-// //fetch all heading_items(line items)
-// function* getHeadingItemList(action) {
-//     try {
-//         const headingItemResponse = yield axios.get(`/api/heading/${action.payload}/item`);
-//         console.log('in headingItemSaga getHeadingItemList, headingItemResponse is', headingItemResponse);
+//fetch all heading_items(line items)
+function* getHeadingItemList(action) {
+    try {
+        const headingItemResponse = yield axios.get(`/api/heading/${action.payload}/item`);
+        console.log('in headingItemSaga getHeadingItemList, headingItemResponse is', headingItemResponse);
 
 
-//         //send all heading_items to be stored in the heading_item reducer
-//         yield put({ type: 'SET_HEADING_ITEM_LIST', payload: headingItemResponse.data })
-//     } catch (error) {
-//         console.log('Error GETTing heading_items', error);
-//     }
-// }
+        //send all heading_items to be stored in the heading_item reducer
+        yield put({ type: 'SET_HEADING_ITEM_LIST', payload: headingItemResponse.data })
+    } catch (error) {
+        console.log('Error GETTing heading_items', error);
+    }
+}
 
 //fetch all heading_items along with item code and related data per heading
 function* getHeadingItemWithItemCode(action) {
@@ -32,10 +32,10 @@ function* getHeadingItemWithItemCode(action) {
 //post a new heading_item to DB
 function* postHeadingItem(action) {
     console.log('in headingItemSaga postHeadingItem, action.payload is', action.payload);
-
-    try {
-        yield axios.post(`/api/heading/item`, action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: action.payload });
+    
+    try { 
+        yield axios.post(`/api/heading/${action.payload}/item`);
+        yield put({ type: 'FETCH_HEADING_ITEM_LIST', payload: action.payload });
     } catch (error) {
         console.log('Error POSTing a new heading', error);
     }
@@ -69,7 +69,7 @@ function* deleteHeadingItem(action) {
 
 
 function* headingItemSaga() {
-    // yield takeLatest('FETCH_HEADING_ITEM_LIST', getHeadingItemList);
+    yield takeLatest('FETCH_HEADING_ITEM_LIST', getHeadingItemList);
     yield takeLatest('POST_HEADING_ITEM', postHeadingItem);
     yield takeLatest('UPDATE_HEADING_ITEM', updateHeadingItem);
     yield takeLatest('DELETE_HEADING_ITEM', deleteHeadingItem);

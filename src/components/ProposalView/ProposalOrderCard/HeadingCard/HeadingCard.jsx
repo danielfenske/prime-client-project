@@ -23,7 +23,7 @@ function HeadingCard(props) {
 
   const addNewLineItem = () => {
     console.log('in addNewLineItem');
-    dispatch({type:'POST_HEADING', payload: 4})
+    dispatch({type:'POST_HEADING_ITEM', payload: 4})
   }
 
 

@@ -94,7 +94,7 @@ router.get('/:id/item', (req, res) => {
     console.log('in heading/item router GET route');
 
     if(req.isAuthenticated()) {
-        const sqlText = `SELECT * FROM "item_heading" WHERE "item_heading"."heading_id" = $1;`
+        const sqlText = `SELECT * FROM "item_heading" WHERE "heading_id" = $1;`
         pool.query(sqlText, [req.params.id])
         .then((result) => {
             console.log('result.rows is', result.rows);
@@ -124,7 +124,7 @@ router.get('/:id/item_with_item_code', (req, res) => {
          ON "item"."unit_type_id" = "unit_type"."id"
          WHERE "item_heading"."heading_id" = $1;
         `;
-        
+
         pool.query(sqlText, [req.params.id])
         .then((result) => {
             console.log('result.rows is', result.rows);
@@ -143,7 +143,8 @@ router.get('/:id/item_with_item_code', (req, res) => {
 router.post('/:id/item', (req, res) => {
     console.log('in heading/item router POST route');
     console.log('req.body is', req.body);
-
+    console.log('req.params.id is', req.params.id);
+    
     if (req.isAuthenticated()) {
         const sqlText =
         `INSERT INTO "item_heading" ("heading_id")
@@ -153,7 +154,7 @@ router.post('/:id/item', (req, res) => {
 
         pool.query(sqlText, valueArray)
             .then((result) => {
-                res.send(201)
+                res.sendStatus(201)
             }).catch((error) => {
                 console.log('error posting a new heading', error);
                 res.sendStatus(500);
