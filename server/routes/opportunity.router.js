@@ -50,7 +50,7 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 
     pool.query(sqlText, [opportunityId])
         .then((result) => {
-            res.send(result.rows)
+            res.send(result.rows[0])
         }).catch((error) => {
             console.log(error);
         })

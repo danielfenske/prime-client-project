@@ -1,28 +1,38 @@
 import { useDispatch, useSelector } from 'react-redux';
 import OpportunityCard from './OpportunityCard/OpportunityCard';
+import React, { useEffect } from 'react';
 
 
-function OpportunityListView(){
+function OpportunityListView() {
+
+    useEffect(() => {
+        dispatch({
+            type: 'FECTCH_OPPORTUNITY_LIST'
+        })
+    }, [])
+
 
     const dispatch = useDispatch();
 
+    const opportunityList = useSelector((store) => store.opportunityReducer.opportunityListReducer);
+    // const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
 
     const getOpportunities = () => {
-        dispatch({
-            type: 'SET_OPPORTUNITY_LIST'
-        })
+
+        console.log(opportunityList);
+
     }
 
 
 
 
-
-
-
-    return(
+    return (
         <>
-        <OpportunityCard />
-        <button onClick={getOpportunities}>Click Me</button>
+        {opportunityList.map((opportunity, i) => {
+            return(
+                <OpportunityCard key={i} opportunity={opportunity} />
+            )
+        })}
         </>
     )
 }
