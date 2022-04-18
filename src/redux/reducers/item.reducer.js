@@ -1,5 +1,4 @@
 const itemReducer = (state = [], action) => {
-    console.log('in itemReducer');
     
     switch (action.type) {
       case 'SET_ITEM_LIST':
