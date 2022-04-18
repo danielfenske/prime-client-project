@@ -36,6 +36,9 @@ function* getOpportunity(action) {
 function* updateOpportunity(action) {
     const opportunityId = action.payload.id;
     const updatedOpportunity = action.payload;
+    console.log('new opportunity', updatedOpportunity);
+    console.log('opportunity id', opportunityId);
+    
 
     try{
         yield axios.put(`/api/opportunity/${opportunityId}`, updatedOpportunity)
