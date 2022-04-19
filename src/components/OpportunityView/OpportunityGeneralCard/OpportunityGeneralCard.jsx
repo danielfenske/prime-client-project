@@ -88,7 +88,7 @@ function OpportunityGeneralCard() {
     <>
       <div className='card-header'>
         <div className="code-container">
-          <h3>Opportunity Code:</h3>
+          <h1>Single Opportunity</h1>
           <span className="code"><h3>{opportunity.opportunity_code}</h3></span>
         </div>
         <Button onClick={handleSubmit} variant='contained' size='small'>

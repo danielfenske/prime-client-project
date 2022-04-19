@@ -113,7 +113,7 @@ function ProposalGeneralCard() {
     <>
       <div className='card-header'>
         <div className="code-container">
-          <h3>Proposal Code:</h3>
+          <h1>Single Proposal</h1>
           <span className="code"><h3>{proposal.proposal_code}</h3></span>
         </div>
         <Button onClick={handleSubmit} variant='contained' size='small'>
