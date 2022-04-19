@@ -101,6 +101,14 @@ function OpportunityGeneralCard() {
           <div className="form-container">
             <TextField
               id='outlined-basic'
+              label='Opportunity Code'
+              variant='outlined'
+              value={opportunity_code}
+              onChange={(e) => setOpportunityCode(e.target.value)}
+              size='small'
+            />
+            <TextField
+              id='outlined-basic'
               label='Opportunity Name'
               variant='outlined'
               value={name}
@@ -138,7 +146,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Community Name'
               variant='outlined'
-              value={community_name}
+              value={community_name ? community_name : name}
               onChange={(e) => setCommunityName(e.target.value)}
               size='small'
             />

@@ -61,11 +61,14 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', rejectUnauthenticated, async (req, res) => {
 
     const userId = req.user.id;
-    const sqlText = ` INSERT INTO "opportunity" ("user_id")
-    VALUES($1) RETURNING id;`;
+    const defaultOpportunityCode = 'AAA-2022-01';
+    const defaultName = 'new opportunity';
+
+    const sqlText = `INSERT INTO "opportunity" ("user_id", "opportunity_code", "name")
+    VALUES($1, $2, $3) RETURNING id;`;
 
     try {
-        const result = await pool.query(sqlText, [userId])
+        const result = await pool.query(sqlText, [userId, defaultOpportunityCode, defaultName])
 
         const opportunity_id = result.rows[0].id;
 
