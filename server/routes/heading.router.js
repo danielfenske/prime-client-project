@@ -117,7 +117,7 @@ router.get('/item_with_item_code', (req, res) => {
         const sqlText =
         `SELECT "item_heading"."id", "item_heading"."heading_id", "item_heading"."item_id", "item_heading"."order", "item_heading"."price_unit", "item_heading"."single_unit_price",
          "item_heading"."measure_unit", "item_heading"."rounded_measure_unit", "item_heading"."qty", "item_heading"."total_item_price", "item"."item_code", "item"."name", "item"."description", 
-         "item"."price_per_price_unit", "unit_type"."measurement_unit", "unit_type"."pricing_unit"
+         "item"."price_per_price_unit", "unit_type"."measurement_unit", "unit_type"."pricing_unit", "item"."unit_weight"
          FROM "item_heading"
          JOIN "item"
          ON "item_heading"."item_id" = "item"."id"
@@ -201,10 +201,10 @@ router.put('/item/update', async (req, res) => {
 
             const sqlText =
                 `UPDATE "item_heading"
-                 SET "measure_unit" = $1, "qty" = $2, "order" = $3
-                 WHERE "id" = $4;`;
+                 SET "measure_unit" = $1, "qty" = $2, "order" = $3, "price_per_price_unit" = $4
+                 WHERE "id" = $5;`;
 
-            const valueArray = [req.body.measure_unit, req.body.qty, req.body.order, req.body.heading_item_id];
+            const valueArray = [req.body.measure_unit, req.body.qty, req.body.order, req.body.price_per_price_unit, req.body.heading_item_id];
 
             await connection.query(sqlText, valueArray);
 
@@ -226,6 +226,37 @@ router.put('/item/update', async (req, res) => {
           AND "item_heading"."id" = $1;`;
 
             await connection.query(sqlTextRounding, [req.body.heading_item_id]);
+
+            //calculate price_unit
+
+            const sqlTextPriceUnit = 
+            `UPDATE "item_heading"
+             SET "price_unit" = "rounded_measure_unit" * "item"."unit_weight"
+             FROM "item"
+             WHERE "item_heading"."item_id" = "item"."id"
+             AND "item_heading"."id" = $1;`;
+
+             await connection.query(sqlTextPriceUnit, [req.body.heading_item_id]);
+
+             //calculate single_unit_price
+
+             const sqlTextSingleUnitPrice = 
+            `UPDATE "item_heading"
+             SET "single_unit_price" = "price_unit"*"price_per_price_unit"
+             WHERE "item_heading"."id" = $1;`;
+
+             await connection.query(sqlTextSingleUnitPrice, [req.body.heading_item_id]);
+
+             //calculate total_item_price
+
+             const sqlTextTotalItemPrice = 
+            `UPDATE "item_heading"
+             SET "total_item_price" = "single_unit_price"*"qty"
+             WHERE "item_heading"."id" = $1;`;
+            
+             await connection.query(sqlTextTotalItemPrice, [req.body.heading_item_id]);
+
+
 
             await connection.query('COMMIT;');
             res.sendStatus(200);
