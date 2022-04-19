@@ -32,14 +32,14 @@ function OpportunityListView() {
 
   return (
     <>
+      <div className='card-header'>
+        <h1>Opportunities</h1>
+        <Button onClick={postOpportunity} variant='contained' size='small'>
+          Create New
+        </Button>
+      </div>
       <div>
-        <div className='proposal-list-header'>
-          <h1>Opportunities</h1>
-          <Button onClick={postOpportunity} variant='contained' size='small'>
-            Create New
-          </Button>
-        </div>
-        <div>
+        <div className="filter-container">
           <TextField
             id='outlined-basic'
             label='Search Opportunities'

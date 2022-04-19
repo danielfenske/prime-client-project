@@ -161,3 +161,11 @@ h6 {
   width: 95%;
   margin: auto;
 }
+
+.filter-container  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--padding-large);
+  padding: 30px 0px;
+}
