@@ -1,14 +1,25 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@mui/material';
 
 import './ProposalPreviewCard.css';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 function ProposalPreviewCard() {
-  const store = useSelector((store) => store);
+  const dispatch = useDispatch();
+  const proposals = useSelector((store) => store.proposalEverything);
+  const { id } = useParams();
 
-  const {} = store;
+  const proposal = proposals[0];
 
-  console.log('All PDF Information', store);
+  useEffect(() => {
+    dispatch({
+      type: 'GET_PROPOSAL_EVERYTHING',
+      payload: id,
+    });
+  }, []);
+
+  console.log('All PDF Information', proposal);
   return (
     <>
       <div className='proposal-preview'>
