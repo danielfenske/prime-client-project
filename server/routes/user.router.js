@@ -60,8 +60,60 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-// update a users password
-router.put('/update/password', async (req, res) => {
+// update a users password through the admin view
+router.put('/update/admin/account/:id', async (req, res) => {
+  if (req.isAuthenticated()) {
+    try {
+      let rb = req.body;
+      let userId = req.params.id;
+      let access_level = rb.accessInput;
+      let username = rb.usernameInput;
+      let firstname = rb.firstInput;
+      let lastname = rb.lastInput;
+      console.log(req.body);
+
+      const sqlText = `
+      UPDATE "user" 
+      SET "username" = $1, 
+      "first_name" = $2, 
+      "last_name" = $3, 
+      "access_level" = $4 
+      WHERE "id" = $5;
+      `;
+      // sql options for preventing sql injection
+      const Sanitization = [username, firstname, lastname, access_level, userId];
+
+      // query the database
+      await pool.query(sqlText, Sanitization);
+
+      res.sendStatus(201);
+    } catch (err) {
+      console.error('Error in password update', err);
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(403);
+  }
+})
+
+// router.put('/update', async (req, res) => {
+//   if (req.isAuthenticated() && req.user.access_level > 2) {
+//     try {
+
+//       // console.log(req.body);
+
+//       res.sendStatus(201);
+//     } catch (err) {
+//       console.error('Error updating user', err);
+//       res.sendStatus(500);
+//     }
+//   } else {
+//     res.sendStatus(403);
+//   }
+// })
+
+// update a users password when from the logged in user
+router.put('/update/user/account', async (req, res) => {
   if (req.isAuthenticated()) {
     try {
       // get the user id and password from the request
@@ -93,20 +145,22 @@ router.put('/update/password', async (req, res) => {
   }
 })
 
-router.put('/update', async (req, res) => {
-  if (req.isAuthenticated() && req.user.access_level > 2) {
-    try {
-      console.log(req.body);
-
-      res.sendStatus(201);
-    } catch (err) {
-      console.error('Error updating user', err);
-      res.sendStatus(500);
-    }
+router.put('/:id', (req, res) => {
+  if (req.isAuthenticated()) {
+      let disabled = true;
+      let id = req.params.id;
+      let queryText = `UPDATE "user" SET "disabled" = $1 WHERE "id" = $2;`;
+      pool.query(queryText, [disabled, id])
+          .then((result) => {
+              res.sendStatus(200);
+          })
+          .catch((error) => {
+              res.sendStatus(500);
+          })
   } else {
-    res.sendStatus(403);
+      res.sendStatus(403);
   }
-})
+});
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route

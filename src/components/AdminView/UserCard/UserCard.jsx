@@ -1,6 +1,7 @@
 import { TextField, Select, MenuItem, Button, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 function UserCard({ user }) {
   // destruct the user object
@@ -13,12 +14,31 @@ function UserCard({ user }) {
     'Sales Lead',
     'Administrator',
   ];
-
+  const dispatch = useDispatch();
   const [accessInput, setAccessInput] = useState(access_level);
   const [usernameInput, setUsernameInput] = useState(username);
   const [firstInput, setFirstInput] = useState(first_name);
   const [lastInput, setLastInput] = useState(last_name);
-
+  const handleDisable = () => {
+    let payload = {
+      id
+    }
+    dispatch({
+      type: 'DISABLE_USER', payload: payload
+    })
+  }
+  const handlePut = () => {
+    let payload = {
+      id,
+      accessInput,
+      usernameInput,
+      firstInput,
+      lastInput
+    }
+    dispatch({
+      type: 'UPDATE_USER_VIA_ADMIN', payload: payload
+    })
+  }
   console.log(accessInput);
   return (
     <>
@@ -69,11 +89,11 @@ function UserCard({ user }) {
             first_name !== firstInput ||
             last_name !== lastInput ||
             access_level !== accessInput) && (
-            <Button variant='contained' color='secondary'>
+            <Button onClick={handlePut}  variant='contained' color='secondary'>
               Save
             </Button>
           )}
-          <IconButton>
+          <IconButton onClick={handleDisable}>
             <DeleteIcon />
           </IconButton>
         </div>
