@@ -12,26 +12,14 @@ import { SettingsPowerRounded } from '@mui/icons-material';
 function HeadingItemCard({ lineItem }) {
   const items = useSelector((store) => store.itemReducer);
   const dispatch = useDispatch();
-
-  // //calculation!
-  // const calPrice = (roundedMeasure, unitWeight, pricePerPriceUnit) =>{
-  //   let singleUnitPrice = roundedMeasure * unitWeight * pricePerPriceUnit
-
-  //   return singleUnitPrice;
-  // }
-
   const [selectedItem, setSelectedItem] = useState(1);
   const [qty, setQty] = useState(lineItem.qty);
   const [measurement, setMeasurement] = useState(lineItem.measure_unit);
   const [order, setOrder] = useState(lineItem.order);
-  const [singleUnitPrice, setSingleUnitPrice] = useState(lineItem.single_unit_price);
-  const [totalPrice, setTotalPrice] = useState(lineItem.total_item_price);
   const [ft, setFt] = useState('');
   const [inches, setInches] = useState('');
-  const [pricePerPriceUnit, setPricePerPriceUnit] = useState(lineItem.price_per_price_unit);
+  const [pricePerPriceUnit, setPricePerPriceUnit] = useState(lineItem.override_price || lineItem.default_price);
 
-
- 
 
   console.log('lineItem is', lineItem);
   console.log('items are', items);
@@ -40,7 +28,6 @@ function HeadingItemCard({ lineItem }) {
     e.preventDefault();
     console.log('in handleItemSelect');
     setSelectedItem(e.target.value);
-   
   }
  
   const updateQtyMeasurementOrderPricePerPriceUnit= (e) => {
@@ -85,15 +72,6 @@ function HeadingItemCard({ lineItem }) {
     dispatch({type:'UPDATE_HEADING_ITEM_ITEM_CODE', payload: {heading_item_id: lineItem.id, item_id: selectedItem }})
     }
   }, [selectedItem])
-
-
-  // useEffect(() => {
-  //   let item = items[selectedItem]
-  //   let roundedMeasure = measurement
-  //   console.log('calc variables', { roundedMeasure, item });
-  //   setSingleUnitPrice(calPrice(roundedMeasure, item.unit_weight, item.price_per_price_unit));
-  //   setTotalPrice(qty * calPrice(roundedMeasure, item.unit_weight, item.price_per_price_unit));
-  // }, [items, selectedItem, qty, measurement])
 
   useEffect(() => {
     console.log('ft is', ft);

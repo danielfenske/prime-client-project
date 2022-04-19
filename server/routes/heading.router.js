@@ -117,7 +117,7 @@ router.get('/item_with_item_code', (req, res) => {
         const sqlText =
         `SELECT "item_heading"."id", "item_heading"."heading_id", "item_heading"."item_id", "item_heading"."order", "item_heading"."price_unit", "item_heading"."single_unit_price",
          "item_heading"."measure_unit", "item_heading"."rounded_measure_unit", "item_heading"."qty", "item_heading"."total_item_price", "item"."item_code", "item"."name", "item"."description", 
-         "item"."price_per_price_unit", "unit_type"."measurement_unit", "unit_type"."pricing_unit", "item"."unit_weight"
+         "item"."price_per_price_unit" AS "default_price", "unit_type"."measurement_unit", "unit_type"."pricing_unit", "item"."unit_weight", "item_heading"."price_per_price_unit" AS "override_price"
          FROM "item_heading"
          JOIN "item"
          ON "item_heading"."item_id" = "item"."id"
