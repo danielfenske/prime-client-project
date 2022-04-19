@@ -10,6 +10,7 @@ import headingItemSaga from './heading_item.saga';
 import unitTypeSaga from './unit_type.saga';
 import proposalSaga from './proposal.saga';
 import opportunitySaga from './opportunity.saga';
+import zipCodeSaga from './zip_code.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -30,6 +31,7 @@ export default function* rootSaga() {
     proposalSaga(),
     opportunitySaga(),
     headingItemSaga(),
-    unitTypeSaga()
+    unitTypeSaga(),
+    zipCodeSaga(),
   ]);
 }
