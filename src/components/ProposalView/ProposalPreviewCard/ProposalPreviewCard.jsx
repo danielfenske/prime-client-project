@@ -8,9 +8,14 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 function ProposalPreviewCard() {
   const dispatch = useDispatch();
   const proposals = useSelector((store) => store.proposalEverything);
+  const items = useSelector((store) => store.itemReducer);
   const { id } = useParams();
 
   const proposal = proposals[0];
+
+  const getItem = (id) => {
+    return items.filter((i) => i.id === id)[0];
+  };
 
   useEffect(() => {
     dispatch({
@@ -53,7 +58,7 @@ function ProposalPreviewCard() {
                         .map((li, index) => {
                           return (
                             <p key={index}>
-                              {li.qty} - {li.total_item_price}
+                              {li.qty} - {getItem(li.item_id)?.name}
                             </p>
                           );
                         })}
