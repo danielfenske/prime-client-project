@@ -45,7 +45,7 @@ function OpportunityProposalListCard() {
       <div className="filter-container">
         <TextField
           id='outlined-basic'
-          label='Search Opportunities'
+          label='Search Proposals'
           variant='outlined'
           value={search}
           onChange={(e) => setSearch(e.target.value)}
