@@ -61,27 +61,30 @@ router.post('/register', (req, res, next) => {
 });
 
 // update a users password through the admin view
-router.put('/update/admin/password', async (req, res) => {
+router.put('/update/admin/account/:id', async (req, res) => {
   if (req.isAuthenticated()) {
     try {
-      // get the user id and password from the request
-      const { userId, newPassword } = req.body;
+      let rb = req.body;
+      let userId = req.params.id;
+      let access_level = rb.accessInput;
+      let username = rb.usernameInput;
+      let firstname = rb.firstInput;
+      let lastname = rb.lastInput;
+      console.log(req.body);
 
-      // encrypt the new password
-      const password = encryptLib.encryptPassword(newPassword);
-
-      // sql query
       const sqlText = `
-        UPDATE "user" SET "password" = $1
-        WHERE
-          "id" = $2 AND
-          "id" = $3;
-      `
+      UPDATE "user" 
+      SET "username" = $1, 
+      "first_name" = $2, 
+      "last_name" = $3, 
+      "access_level" = $4 
+      WHERE "id" = $5;
+      `;
       // sql options for preventing sql injection
-      const sqlOption = [password, userId, req.user.id];
+      const Sanitization = [username, firstname, lastname, access_level, userId];
 
       // query the database
-      await pool.query(sqlText, sqlOption);
+      await pool.query(sqlText, Sanitization);
 
       res.sendStatus(201);
     } catch (err) {
@@ -93,24 +96,24 @@ router.put('/update/admin/password', async (req, res) => {
   }
 })
 
-router.put('/update', async (req, res) => {
-  if (req.isAuthenticated() && req.user.access_level > 2) {
-    try {
+// router.put('/update', async (req, res) => {
+//   if (req.isAuthenticated() && req.user.access_level > 2) {
+//     try {
 
-      // console.log(req.body);
+//       // console.log(req.body);
 
-      res.sendStatus(201);
-    } catch (err) {
-      console.error('Error updating user', err);
-      res.sendStatus(500);
-    }
-  } else {
-    res.sendStatus(403);
-  }
-})
+//       res.sendStatus(201);
+//     } catch (err) {
+//       console.error('Error updating user', err);
+//       res.sendStatus(500);
+//     }
+//   } else {
+//     res.sendStatus(403);
+//   }
+// })
 
 // update a users password when from the logged in user
-router.put('/update/user/password', async (req, res) => {
+router.put('/update/user/account', async (req, res) => {
   if (req.isAuthenticated()) {
     try {
       // get the user id and password from the request
@@ -142,7 +145,7 @@ router.put('/update/user/password', async (req, res) => {
   }
 })
 
-router.delete('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   if (req.isAuthenticated()) {
       let disabled = true;
       let id = req.params.id;
