@@ -1,0 +1,34 @@
+.opportunity-card {
+  display: grid;
+
+  padding: var(--padding);
+
+  border: 2px solid var(--grey-light);
+
+  border-radius: var(--border);
+
+  margin: var(--margin);
+
+  grid-template-columns: 1fr max-content;
+}
+
+.opportunity-card .icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.opportunity-card .info-container {
+  display: grid;
+  align-items: center;
+
+  gap: var(--padding);
+
+  grid-template-columns: max-content 1fr;
+}
+
+.opportunity-card .description {
+  display: block;
+
+  height: 100%;
+}

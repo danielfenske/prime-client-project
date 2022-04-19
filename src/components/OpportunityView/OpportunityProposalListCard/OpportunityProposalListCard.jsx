@@ -1,38 +1,48 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import './OpportunityProposalListCard.css';
+
+import { Button } from '@mui/material';
 
 // IMPORT CHILDREN COMPONENT
 import ProposalCard from './ProposalCard/ProposalCard';
 
 function OpportunityProposalListCard() {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { id } = useParams();
 
-    const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
+  const proposal = useSelector((store) => store.proposalReducer.singleProposalReducer);
+  const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
 
-    console.log(proposalList);
+  const postProposal = () => {
+    dispatch({ type: 'POST_PROPOSAL', payload: id});
+  }
 
-    const postProposal = () => {
-        dispatch({ type: 'POST_PROPOSAL', payload: { opportunity_id: 1 } });
-    }
+  useEffect(() => {
+    dispatch({ type: 'FETCH_PROPOSAL_LIST', payload: id});
+  }, [])
 
-    return (
-        <>
-            <h1>Proposals</h1>
-            <button onClick={postProposal}>Create New</button>
-
-            <>
-                {
-                    proposalList && proposalList.map((proposal, index) => {
-                        return (
-                            <ProposalCard
-                                proposal={proposal}
-                            />
-                        )
-                    })
-                }
-            </>
-        </>
-    )
+  return (
+    <>
+      <div>
+        <div className='proposal-list-header'>
+          <h1>Proposals</h1>
+          <Button onClick={postProposal} variant='contained' size='small'>
+            Create New
+          </Button>
+        </div>
+        <div>
+          {proposalList &&
+            proposalList.map((proposal, index) => {
+              return <ProposalCard key={index} proposal={proposal} />;
+            })}
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default OpportunityProposalListCard;

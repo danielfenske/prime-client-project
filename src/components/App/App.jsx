@@ -52,11 +52,6 @@ function App() {
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
     dispatch({ type: 'FETCH_CONTACT_LIST' });
-    dispatch({ type: 'FETCH_PROPOSAL_LIST' });
-    dispatch({
-      type: 'FETCH_PROPOSAL',
-      payload: { opportunity_id: 1, id: 30 },
-    });
   }, [dispatch]);
 
   return (
@@ -130,7 +125,7 @@ function App() {
                     <OpportunityView />
                   </ProtectedRoute>
 
-                  <ProtectedRoute exact path='/opportunities'>
+                  <ProtectedRoute exact path='/home'>
                     <OpportunityListView />
                   </ProtectedRoute>
                   {/* Custom Routes ---------------------------------------------------------------------------------------------------- */}
@@ -139,7 +134,7 @@ function App() {
                     {user.id ? (
                       // If the user is already logged in,
                       // redirect to the /user page
-                      <Redirect to='/user' />
+                      <Redirect to='/home' />
                     ) : (
                       // Otherwise, show the login page
                       <LoginPage />
@@ -150,7 +145,7 @@ function App() {
                     {user.id ? (
                       // If the user is already logged in,
                       // redirect them to the /user page
-                      <Redirect to='/opportunities' />
+                      <Redirect to='/home' />
                     ) : (
                       // Otherwise, show the registration page
                       <RegisterPage />
@@ -161,7 +156,7 @@ function App() {
                     {user.id ? (
                       // If the user is already logged in,
                       // redirect them to the /user page
-                      <Redirect to='/opportunities' />
+                      <Redirect to='/home' />
                     ) : (
                       // Otherwise, show the Landing page
                       <LandingPage />

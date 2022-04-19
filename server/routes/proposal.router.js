@@ -58,15 +58,14 @@ router.get('/', (req, res) => {
 })
 
 // get single proposal
-router.get('/:opportunityId/:proposalId', (req, res) => {
+router.get('/:proposalId', (req, res) => {
 
-    let opportunity_id = req.params.opportunityId;
     let id = req.params.proposalId;
 
-    let queryText = `SELECT * FROM "proposal" WHERE "opportunity_id" = $1 AND "id" = $2;`;
+    let queryText = `SELECT * FROM "proposal" WHERE "id" = $1;`;
 
     if (req.isAuthenticated()) {
-        pool.query(queryText, [opportunity_id, id])
+        pool.query(queryText, [id])
             .then((result) => {
                 let requestedProposal = result.rows[0];
 
@@ -97,7 +96,7 @@ router.post('/:id', async (req, res) => {
             res.send({proposalId: proposalId});
 
         } catch (error) {
-            re.sendStatus(500);
+            res.sendStatus(500);
         }
 
     } else {
