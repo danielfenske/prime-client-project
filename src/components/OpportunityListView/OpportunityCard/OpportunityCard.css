@@ -1,6 +1,4 @@
-.opportunity-card {
-  display: grid;
-
+.list-card {
   padding: var(--padding);
 
   border: 2px solid var(--grey-light);
@@ -9,26 +7,21 @@
 
   margin: var(--margin);
 
-  grid-template-columns: 1fr max-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.opportunity-card .icon-container {
+.list-card .card-icon-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.opportunity-card .info-container {
-  display: grid;
-  align-items: center;
-
-  gap: var(--padding);
-
-  grid-template-columns: max-content 1fr;
-}
-
-.opportunity-card .description {
-  display: block;
-
-  height: 100%;
+.list-card .card-info-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 5px;
 }
