@@ -9,6 +9,8 @@
   display: grid;
   /* padding: var(--padding); */
   transition: all .2s;
+  overflow-y: scroll;
+  max-height: 100%;
 }
 
 .tab-content-container.hidden {

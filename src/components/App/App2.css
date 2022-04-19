@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap");
 
 body {
   margin: 0;
-  font-family: 'Heebo', sans-serif;
+  font-family: "Heebo", sans-serif;
   color: var(--black);
 }
 
@@ -14,11 +14,11 @@ body {
   --white: white;
   --white-transparent: #ffffff3d;
   --very-light-grey: #eee;
-  --orange: #D0441C;
-  --orange-light: #E87655;
-  --grey-light: #DAD5D3;
+  --orange: #d0441c;
+  --orange-light: #e87655;
+  --grey-light: #dad5d3;
   --grey: #8d8886;
-  --grey-dark: #605D5C;
+  --grey-dark: #605d5c;
   --shadow: #03002941;
 
   /* the padding to be used in the app */
@@ -37,7 +37,13 @@ body {
   --gap: 10px;
 }
 
-p, h1, h2 ,h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: var(--margin-small) 0px;
 }
 
@@ -72,7 +78,6 @@ p, h1, h2 ,h3, h4, h5, h6 {
   border-radius: var(--border);
 }
 
-
 /* GLOBAL STYLING */
 .list-card {
   padding: var(--padding);
@@ -99,5 +104,60 @@ p, h1, h2 ,h3, h4, h5, h6 {
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--gap);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--padding-large);
+  padding: 20px;
+  background-color: var(--very-light-grey);
+}
+
+.code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--padding-large);
+}
+
+.code {
+  background-color: black;
+  color: white;
+  width: 170px;
+  text-align: center;
+}
+
+.card-body {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px 0px;
+}
+
+.card-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--padding-large);
+  padding: 0px 20px;
+}
+
+.form-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--padding-large);
+  width: 95%;
+  margin: auto;
 }
