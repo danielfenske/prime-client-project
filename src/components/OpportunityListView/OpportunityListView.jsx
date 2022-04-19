@@ -82,6 +82,10 @@ function OpportunityListView() {
       <div>
         {opportunityList
           .filter((o) => {
+            if (o.name === null || o.partner_id === null || o.status === null) {
+              return true;
+            }
+
             return (
               o.name.toUpperCase().includes(search.toUpperCase()) &&
               o.partner_id == partner &&
