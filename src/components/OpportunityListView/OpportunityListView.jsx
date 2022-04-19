@@ -38,46 +38,44 @@ function OpportunityListView() {
           Create New
         </Button>
       </div>
-      <div>
-        <div className="filter-container">
-          <TextField
-            id='outlined-basic'
-            label='Search Opportunities'
-            variant='outlined'
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+      <div className="filter-container">
+        <TextField
+          id='outlined-basic'
+          label='Search Opportunities'
+          variant='outlined'
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          size='small'
+        />
+        <FormControl>
+          <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            label='Partner'
+            value={partner}
+            onChange={(e) => setPartner(e.target.value)}
             size='small'
-          />
-          <FormControl>
-            <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              label='Partner'
-              value={partner}
-              onChange={(e) => setPartner(e.target.value)}
-              size='small'
-            >
-              <MenuItem value={1}>Bob</MenuItem>
-            </Select>
-          </FormControl>
+          >
+            <MenuItem value={1}>Bob</MenuItem>
+          </Select>
+        </FormControl>
 
-          <FormControl>
-            <InputLabel id='demo-simple-select-label'>Status</InputLabel>
-            <Select
-              labelId='demo-simple-select-label'
-              id='demo-simple-select'
-              label='Method'
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              size='small'
-            >
-              <MenuItem value={1}>In-Progress</MenuItem>
-              <MenuItem value={2}>Complete</MenuItem>
-              <MenuItem value={3}>Archived</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+        <FormControl>
+          <InputLabel id='demo-simple-select-label'>Status</InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            label='Method'
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            size='small'
+          >
+            <MenuItem value={1}>In-Progress</MenuItem>
+            <MenuItem value={2}>Complete</MenuItem>
+            <MenuItem value={3}>Archived</MenuItem>
+          </Select>
+        </FormControl>
       </div>
       <div>
         {opportunityList
