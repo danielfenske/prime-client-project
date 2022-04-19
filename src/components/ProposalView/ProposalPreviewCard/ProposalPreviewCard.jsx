@@ -19,32 +19,60 @@ function ProposalPreviewCard() {
     });
   }, []);
 
-  console.log('All PDF Information', proposal);
   return (
     <>
-      <div className='proposal-preview'>
-        <div className='pdf-container'>
-          <div className='page'>
-            <header>
-              <div className='logo-1'>
-                <h1>LOGO</h1>
-              </div>
-              <div className='title'>
-                <h1>R & F Metals</h1>
-              </div>
-              <div className='company-info'></div>
-            </header>
+      {proposal && (
+        <div className='proposal-preview'>
+          <div className='pdf-container'>
+            <div className='page'>
+              <header>
+                <div className='logo-1'>
+                  <h1>LOGO</h1>
+                </div>
+                <div className='title'>
+                  <h1>R & F Metals</h1>
+                </div>
+                <div className='company-info'>
+                  <p>Proposal:</p>
+                  <p>{proposal.proposal_code}</p>
+                  <p>Prepared By:</p>
+                  <p>
+                    {proposal.first_name} {proposal.last_name}
+                  </p>
+                </div>
+              </header>
+              {proposal.headings.map((heading, index) => {
+                return (
+                  <section key={index}>
+                    <p>{heading.name}</p>
+                    <div>
+                      {proposal?.line_items
+                        .filter(
+                          (line_item) => line_item?.heading_id === heading.id,
+                        )
+                        .map((li, index) => {
+                          return (
+                            <p key={index}>
+                              {li.qty} - {li.total_item_price}
+                            </p>
+                          );
+                        })}
+                    </div>
+                  </section>
+                );
+              })}
+            </div>
           </div>
+          <Button
+            variant='contained'
+            onClick={() => {
+              window.print();
+            }}
+          >
+            Print
+          </Button>
         </div>
-        <Button
-          variant='contained'
-          onClick={() => {
-            window.print();
-          }}
-        >
-          Print
-        </Button>
-      </div>
+      )}
     </>
   );
 }
