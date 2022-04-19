@@ -36,9 +36,33 @@ function* fetchAllUsers() {
   }
 }
 
+function* updateUserViaAdmin(action) {
+  // console.log(action.payload);
+  try {
+    yield axios.put(`/api/user/update/admin/account/${action.payload.id}`, action.payload);
+    yield put ({type: 'FETCH_ALL_USERS'})
+  } catch (err) {
+    console.error('failed saga', err);
+  }
+}
+function* disableUser(action) {
+    console.log(action.payload);
+
+  try {
+
+    yield axios.put(`/api/user/${action.payload.id}`);
+    yield put ({type: 'FETCH_ALL_USERS'})
+
+  } catch (err) {
+    console.error('failed saga', err);
+  }
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('FETCH_ALL_USERS', fetchAllUsers);
+  yield takeLatest('UPDATE_USER_VIA_ADMIN', updateUserViaAdmin); 
+  yield takeLatest('DISABLE_USER', disableUser);
 }
 
 export default userSaga;
