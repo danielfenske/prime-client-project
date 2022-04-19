@@ -83,13 +83,14 @@ router.get('/:proposalId', (req, res) => {
 router.post('/:id', async (req, res) => {
 
     let opportunity_id = req.params.id;
+    let defaultProposalCode = 'AAA-2022-01-01';
 
-    let queryText = `INSERT INTO "proposal" ("opportunity_id") VALUES ($1) RETURNING id;`;
+    let queryText = `INSERT INTO "proposal" ("opportunity_id", "proposal_code") VALUES ($1, $2) RETURNING id;`;
 
     if (req.isAuthenticated()) {
 
         try {
-            const result = await pool.query(queryText, [opportunity_id])
+            const result = await pool.query(queryText, [opportunity_id, defaultProposalCode])
 
             const proposalId = result.rows[0].id;
     

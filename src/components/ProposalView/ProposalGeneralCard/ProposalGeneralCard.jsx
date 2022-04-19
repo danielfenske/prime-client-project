@@ -127,6 +127,34 @@ function ProposalGeneralCard() {
           <div className="form-container">
             <TextField
               id='outlined-basic'
+              label='Proposal Code'
+              variant='outlined'
+              value={proposal_code}
+              onChange={(e) => setProposalCode(e.target.value)}
+              size='small'
+            />
+            <TextField
+              id='date'
+              label='Proposal Date'
+              type='date'
+              defaultValue='2022-04-15'
+              value={date}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) => setDate(e.target.value)}
+              size='small'
+            />
+            <TextField
+              id='date'
+              label='Plan Date'
+              type='date'
+              defaultValue='2022-04-15'
+              value={plan_date}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) => setPlanDate(e.target.value)}
+              size='small'
+            />
+            <TextField
+              id='outlined-basic'
               label='Partner Discount'
               type='number'
               variant='outlined'
@@ -134,7 +162,7 @@ function ProposalGeneralCard() {
               onChange={(e) => setPartnerDiscount(e.target.value)}
               size='small'
             />
-            <TextField
+            {/* <TextField
               id='outlined-basic'
               label='Surcharge'
               type='number'
@@ -150,17 +178,7 @@ function ProposalGeneralCard() {
               value={surcharge_description}
               onChange={(e) => setSurchargeDescription(e.target.value)}
               size='small'
-            />
-            <TextField
-              id='date'
-              label='Proposal Date'
-              type='date'
-              defaultValue='2022-04-15'
-              value={date}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e) => setDate(e.target.value)}
-              size='small'
-            />
+            /> */}
             <TextField
               id='outlined-basic'
               label='House Type'
@@ -183,16 +201,6 @@ function ProposalGeneralCard() {
               variant='outlined'
               value={building_code}
               onChange={(e) => setBuildingCode(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='date'
-              label='Plan Date'
-              type='date'
-              defaultValue='2022-04-15'
-              value={plan_date}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e) => setPlanDate(e.target.value)}
               size='small'
             />
           </div>
