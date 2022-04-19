@@ -8,7 +8,7 @@ import { InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 
 
-function CreateItemModal() {
+function CreateItemModal( {show}) {
   const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
   const store = useSelector((store) => store);
@@ -30,15 +30,15 @@ function CreateItemModal() {
     unit_type_id: ""
   }
 
-  const [item, setItem] = useState(initialValues);
+  const [values, setValues] = useState(initialValues);
 
   //when a user enters input, the properties of the item object change
   const handleInputChange = (name, event) => {
 
     const { value } = event.target;
 
-    setItem({
-      ...item,
+    setValues({
+      ...values,
       [name]: value,
     });
   }
@@ -101,15 +101,15 @@ function CreateItemModal() {
 
   console.log('unitTypeList is', unitTypeList);
   console.log('unitInput is', unitInput);
-  console.log('item', item);
+  console.log('values', values);
   console.log('unitWeight', unitWeight);
   return (
     <Modal open={open}>
       <h1>Add New Item</h1>
       <form onSubmit={handleSubmit}>
-        <TextField id="outlined-basic" label="item code" variant="outlined" value={item.item_code} onChange={(e) => handleInputChange("item_code", e)} />
-        <TextField id="outlined-basic" label="name" variant="outlined" value={item.name} onChange={(e) => handleInputChange("name", e)} />
-        <TextField id="outlined-basic" label="description" variant="outlined" value={item.description} onChange={(e) => handleInputChange("description", e)} />
+        <TextField id="outlined-basic" label="item code" variant="outlined" value={values.item_code} onChange={(e) => handleInputChange("item_code", e)} />
+        <TextField id="outlined-basic" label="name" variant="outlined" value={values.name} onChange={(e) => handleInputChange("name", e)} />
+        <TextField id="outlined-basic" label="description" variant="outlined" value={values.description} onChange={(e) => handleInputChange("description", e)} />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">measurement unit, pricing unit</InputLabel>
           <Select
@@ -138,7 +138,7 @@ function CreateItemModal() {
 
         {/* render the pice per pricing unit input field if the unit_type_id is selected from the dropdown */}
         {unitInput !== "" &&
-          <TextField id="outlined-basic" label={`price per ${unitTypeList[unitInput]?.pricing_unit}`} variant="outlined" value={item.price_per_price_unit} onChange={(e) => handleInputChange("price_per_price_unit", e)} />
+          <TextField id="outlined-basic" label={`price per ${unitTypeList[unitInput]?.pricing_unit}`} variant="outlined" value={values.price_per_price_unit} onChange={(e) => handleInputChange("price_per_price_unit", e)} />
         }
 
         <button type="submit">Add Item</button>

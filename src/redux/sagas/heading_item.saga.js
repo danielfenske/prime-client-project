@@ -47,7 +47,7 @@ function* updateHeadingItem(action) {
     console.log('in headingItemSaga updateHeadingItem, action.payload is', action.payload);
 
     try {
-        yield axios.put(`/api/heading/item/${action.payload.heading_item_id}`, action.payload);
+        yield axios.put('/api/heading/item/update', action.payload);
         yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
     } catch (error) {
         console.log('Error UPDATing a heading_item_item_code', error);
@@ -67,16 +67,41 @@ function* updateHeadingItemItemCode(action) {
 }
 //delete a heading_item
 function* deleteHeadingItem(action) {
-    console.log('in headingItemSaga deleteHeadingItem');
+    console.log('in headingItemSaga deleteHeadingItem, action.payload', action.payload);
 
     try {
-        yield axios.put(`/api/heading/item/${action.payload.id}`);
+        yield axios.delete(`/api/heading/item/${action.payload}`);
         yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
     } catch (error) {
         console.log('Error DELETing a heading_item', error);
     }
 }
 
+//move up line item order
+function* moveUpOrder(action) {
+    console.log('in headingItemSaga moveDownOrder', action.payload);
+    
+    try {
+        yield axios.put(`/api/heading/item/order_up`, action.payload);
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
+    } catch (error) {
+        console.log('Error moving up the order', error);
+        
+    }
+}
+
+//move down line item order
+function* moveDownOrder(action) {
+    console.log('in headingItemSaga moveUpOrder', action.payload);
+    
+    try {
+        yield axios.put(`/api/heading/item/order_down`, action.payload);
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
+    } catch (error) {
+        console.log('Error moving down the order', error);
+        
+    }
+}
 
 
 
@@ -87,6 +112,8 @@ function* headingItemSaga() {
     yield takeLatest('UPDATE_HEADING_ITEM', updateHeadingItem);
     yield takeLatest('DELETE_HEADING_ITEM', deleteHeadingItem);
     yield takeLatest('FETCH_HEADING_ITEMS_WITH_ITEM_CODE', getHeadingItemWithItemCode);
+    yield takeLatest('MOVE_ORDER_UP', moveUpOrder);
+    yield takeLatest('MOVE_ORDER_DOWN', moveDownOrder);
 }
 
 export default headingItemSaga;
