@@ -60,8 +60,8 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-// update a users password
-router.put('/update/password', async (req, res) => {
+// update a users password through the admin view
+router.put('/update/admin/password', async (req, res) => {
   if (req.isAuthenticated()) {
     try {
       // get the user id and password from the request
@@ -96,7 +96,8 @@ router.put('/update/password', async (req, res) => {
 router.put('/update', async (req, res) => {
   if (req.isAuthenticated() && req.user.access_level > 2) {
     try {
-      console.log(req.body);
+
+      // console.log(req.body);
 
       res.sendStatus(201);
     } catch (err) {
@@ -107,6 +108,56 @@ router.put('/update', async (req, res) => {
     res.sendStatus(403);
   }
 })
+
+// update a users password when from the logged in user
+router.put('/update/user/password', async (req, res) => {
+  if (req.isAuthenticated()) {
+    try {
+      // get the user id and password from the request
+      const { userId, newPassword } = req.body;
+
+      // encrypt the new password
+      const password = encryptLib.encryptPassword(newPassword);
+
+      // sql query
+      const sqlText = `
+        UPDATE "user" SET "password" = $1
+        WHERE
+          "id" = $2 AND
+          "id" = $3;
+      `
+      // sql options for preventing sql injection
+      const sqlOption = [password, userId, req.user.id];
+
+      // query the database
+      await pool.query(sqlText, sqlOption);
+
+      res.sendStatus(201);
+    } catch (err) {
+      console.error('Error in password update', err);
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(403);
+  }
+})
+
+router.delete('/:id', (req, res) => {
+  if (req.isAuthenticated()) {
+      let disabled = true;
+      let id = req.params.id;
+      let queryText = `UPDATE "user" SET "disabled" = $1 WHERE "id" = $2;`;
+      pool.query(queryText, [disabled, id])
+          .then((result) => {
+              res.sendStatus(200);
+          })
+          .catch((error) => {
+              res.sendStatus(500);
+          })
+  } else {
+      res.sendStatus(403);
+  }
+});
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
