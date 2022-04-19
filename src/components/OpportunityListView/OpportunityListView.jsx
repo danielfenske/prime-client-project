@@ -80,9 +80,17 @@ function OpportunityListView() {
         </div>
       </div>
       <div>
-        {opportunityList.map((opportunity, i) => {
-          return <OpportunityCard key={i} opportunity={opportunity} />;
-        })}
+        {opportunityList
+          .filter((o) => {
+            return (
+              o.name.toUpperCase().includes(search.toUpperCase()) &&
+              o.partner_id == partner &&
+              o.status == status
+            );
+          })
+          .map((opportunity, i) => {
+            return <OpportunityCard key={i} opportunity={opportunity} />;
+          })}
       </div>
     </>
   );

@@ -15,21 +15,38 @@ import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 
 function ProposalGeneralCard() {
-  const proposal = useSelector((store) => store.proposalReducer.singleProposalReducer);
+  const proposal = useSelector(
+    (store) => store.proposalReducer.singleProposalReducer,
+  );
   const partner = useSelector((store) => store.partnerReducer.partnerReducer);
 
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_PROPOSAL', payload: id});
+    dispatch({ type: 'FETCH_PROPOSAL', payload: id });
   }, []);
 
   useEffect(() => {
-    setDate(proposal.date);
+    // dates for inputs need to be in year-month-day format
+    const proposalDate = new Date(proposal.date); // get a date object of the date
+    const inputProposalDate = `${proposalDate.getFullYear()}-${proposalDate
+      .getMonth()
+      .toString()
+      .padStart(2, '0')}-${proposalDate.getDay().toString().padStart(2, '0')}`; // get the year month and day as strings
+
+    setDate(inputProposalDate);
     setProposalCode(proposal.proposal_code);
     setHouseType(proposal.house_type);
     setPlanIdentifier(proposal.plan_identifier);
-    setPlanDate(proposal.plan_date);
+
+    // get the plan date
+    const planDate = new Date(proposal.plan_date);
+    const inputPlanDate = `${planDate.getFullYear()}-${planDate
+      .getMonth()
+      .toString()
+      .padStart(2, '0')}-${planDate.getDay().toString().padStart(2, '0')}`;
+
+    setPlanDate(inputPlanDate);
     setBuildingCode(proposal.building_code);
     setPartnerDiscount(proposal.partner_discount);
     setSurcharge(proposal.surcharge);
