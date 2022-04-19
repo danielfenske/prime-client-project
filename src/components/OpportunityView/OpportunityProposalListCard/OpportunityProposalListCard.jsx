@@ -50,6 +50,7 @@ function OpportunityProposalListCard() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           size='small'
+          style={{ width: 300 }}
         />
         <FormControl>
           <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
@@ -60,6 +61,7 @@ function OpportunityProposalListCard() {
             value={partner}
             onChange={(e) => setPartner(e.target.value)}
             size='small'
+            style={{ width: 200 }}
           >
             <MenuItem value={1}>Bob</MenuItem>
           </Select>
@@ -74,6 +76,7 @@ function OpportunityProposalListCard() {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
             size='small'
+            style={{ width: 200 }}
           >
             <MenuItem value={1}>In-Progress</MenuItem>
             <MenuItem value={2}>Complete</MenuItem>

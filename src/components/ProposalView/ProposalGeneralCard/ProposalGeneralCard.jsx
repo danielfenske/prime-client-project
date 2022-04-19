@@ -132,6 +132,7 @@ function ProposalGeneralCard() {
               value={proposal_code}
               onChange={(e) => setProposalCode(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='date'
@@ -142,6 +143,7 @@ function ProposalGeneralCard() {
               InputLabelProps={{ shrink: true }}
               onChange={(e) => setDate(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='date'
@@ -152,6 +154,7 @@ function ProposalGeneralCard() {
               InputLabelProps={{ shrink: true }}
               onChange={(e) => setPlanDate(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -161,6 +164,7 @@ function ProposalGeneralCard() {
               value={partner_discount}
               onChange={(e) => setPartnerDiscount(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             {/* <TextField
               id='outlined-basic'
@@ -186,6 +190,7 @@ function ProposalGeneralCard() {
               value={house_type}
               onChange={(e) => setHouseType(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -194,6 +199,7 @@ function ProposalGeneralCard() {
               value={plan_identifier}
               onChange={(e) => setPlanIdentifier(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -202,6 +208,7 @@ function ProposalGeneralCard() {
               value={building_code}
               onChange={(e) => setBuildingCode(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
           </div>
         </div>
@@ -218,6 +225,7 @@ function ProposalGeneralCard() {
                 value={method}
                 onChange={(e) => setMethod(e.target.value)}
                 size='small'
+                style={{ width: 200 }}
               >
                 <MenuItem value={1}>Delivery Only</MenuItem>
                 <MenuItem value={2}>Delivery and Install</MenuItem>
@@ -232,6 +240,7 @@ function ProposalGeneralCard() {
               value={method_message}
               onChange={(e) => setMethodMessage(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -241,6 +250,7 @@ function ProposalGeneralCard() {
               variant='outlined'
               onChange={(e) => setDeliveryCharge(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -250,6 +260,7 @@ function ProposalGeneralCard() {
               value={field_weld_charge}
               onChange={(e) => setFieldWeldCharge(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -258,6 +269,7 @@ function ProposalGeneralCard() {
               value={field_weld_message}
               onChange={(e) => setFieldWeldMessage(e.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -266,6 +278,7 @@ function ProposalGeneralCard() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               size='small'
+              style={{ width: 200 }}
               multiline
               rows={4}
             />
