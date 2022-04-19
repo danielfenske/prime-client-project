@@ -71,3 +71,33 @@ p, h1, h2 ,h3, h4, h5, h6 {
 
   border-radius: var(--border);
 }
+
+
+/* GLOBAL STYLING */
+.list-card {
+  padding: var(--padding);
+
+  border: 2px solid var(--grey-light);
+
+  border-radius: var(--border);
+
+  margin: var(--margin);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-card .card-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-card .card-info-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 5px;
+}

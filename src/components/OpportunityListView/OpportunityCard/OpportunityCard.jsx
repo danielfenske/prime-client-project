@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import './OpportunityCard.css';
 
 function OpportunityCard({ opportunity }) {
 
