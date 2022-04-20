@@ -60,8 +60,8 @@ function CreateItemModal( {show}) {
   //dispatch 1 for unit_weight if the measurement unit and the pricing unit are the same
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    if (unitWeight != 0) {
+    
+    if(values.unit_type_id === 3){
       dispatch({
         type: 'POST_ITEM',
         payload: {
@@ -69,9 +69,17 @@ function CreateItemModal( {show}) {
           unit_weight: unitWeight
         }
       })
-
       setValues(initialValues);
-      setUnitWeight('');
+
+    } else if(values.unit_type_id === 8){
+      dispatch({
+        type: 'POST_ITEM',
+        payload: {
+          ...values,
+          unit_weight: unitWeight
+        }
+      })
+      setValues(initialValues);
     } else if (values.unit_type_id === 6) {
       dispatch({
         type: 'POST_ITEM',
@@ -81,7 +89,25 @@ function CreateItemModal( {show}) {
         }
       })
       setValues(initialValues);
-    } else {
+    } else if (values.unit_type_id === 4) {
+      dispatch({
+        type: 'POST_ITEM',
+        payload: {
+          ...values,
+          unit_weight: Number(unitWeight) * 0.01
+        }
+      })
+      setValues(initialValues);
+    } else if (values.unit_type_id === 9) {
+      dispatch({
+        type: 'POST_ITEM',
+        payload: {
+          ...values,
+          unit_weight: Number(unitWeight) * 0.01
+        }
+      })
+      setValues(initialValues);
+    }  else {
       dispatch({
         type: 'POST_ITEM',
         payload: {
@@ -124,16 +150,16 @@ function CreateItemModal( {show}) {
         
         {/* render the unit weight input field if the unit_type_id is 3 or 4 or 8 or 9 */}
         {unitInput === 3 &&
-          <TextField id="outlined-basic" label={`${unitTypeList[unitInput]?.pricing_unit} per ${unitTypeList[unitInput]?.measurement_unit}`} variant="outlined" value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
+          <TextField id="outlined-basic" label="unit weight LBS" variant="outlined" value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
         }
         {unitInput === 4 &&
-          <TextField id="outlined-basic" label={`${unitTypeList[unitInput]?.pricing_unit} per ${unitTypeList[unitInput]?.measurement_unit}`} variant="outlined" value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
+          <TextField id="outlined-basic" label="unit weight LBS" variant="outlined" value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
         }
         {unitInput === 8 &&
-          <TextField id="outlined-basic" label={`${unitTypeList[unitInput]?.pricing_unit} per ${unitTypeList[unitInput]?.measurement_unit}`} variant="outlined" value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
+          <TextField id="outlined-basic" label="unit weight LBS" variant="outlined" value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
         }
         {unitInput === 9 &&
-          <TextField id="outlined-basic" label={`${unitTypeList[unitInput]?.pricing_unit} per ${unitTypeList[unitInput]?.measurement_unit}`} variant="outlined" value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
+          <TextField id="outlined-basic" label="unit weight LBS" variant="outlined" value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
         }
 
         {/* render the pice per pricing unit input field if the unit_type_id is selected from the dropdown */}
