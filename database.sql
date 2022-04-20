@@ -38,7 +38,7 @@ CREATE TABLE "partner" (
     "address_line_1" VARCHAR(250),
     "city" VARCHAR(80),
     "state" VARCHAR(2),
-    "zip" INT,
+    "zip" VARCHAR,
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
  INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "disabled")
@@ -145,15 +145,15 @@ CREATE TABLE "item_heading"(
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
 	"order" INT,
-	"price_per_price_unit" DECIMAL (5, 2),
-	"price_unit" DECIMAL (5, 2),
-	"single_unit_price" DECIMAL (5, 2),
+	"price_per_price_unit" DECIMAL (25, 2),
+	"price_unit" DECIMAL (25, 2),
+	"single_unit_price" DECIMAL (25, 2),
 	"ft" INT,
 	"inches" INT,
-	"measure_unit" DECIMAL (5,2),
-	"rounded_measure_unit" DECIMAL (5, 2),
+	"measure_unit" DECIMAL (25, 2),
+	"rounded_measure_unit" DECIMAL (25, 2),
 	"qty" INT,
-	"total_item_price" DECIMAL (5,2)
+	"total_item_price" DECIMAL (25, 2),
 	); 
 	
 
