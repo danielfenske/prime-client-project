@@ -22,6 +22,76 @@
   padding: .5in;
 }
 
+.page header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: var(--margin);
+}
+
+.page header .logo {
+  max-width: 100%;
+}
+
+.page header .company-info {
+  text-align: right;
+  /* margin-left: auto; */
+  /* width: max-content; */
+}
+
+.page section {
+  margin: var(--margin-large) 0px;
+}
+
+.page .delivery {
+  margin-left: var(--margin-large);
+}
+
+/* HEADINGS ------ */
+.page .heading-section .title {
+  text-decoration: underline;
+  margin-bottom: var(--margin);
+}
+
+.page .heading-section .line-item {
+  /* margin-left: var(--margin-large); */
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* gap: var(--margin-large); */
+}
+
+.page .heading-section .line-item .item-qty {
+  display: inline-block;
+  text-align: right;
+  min-width: max-content;
+  width: calc(var(--margin-large) * 2);
+  /* margin-right: var(--margin); */
+}
+
+.page .heading-section .line-item .first-container {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr;
+  gap: var(--margin);
+}
+
+.page .heading-section .line-item .first-container .item-name {
+  text-align: right;
+}
+
+.page .heading-section .line-item .item_measure {
+  text-align: right;
+}
+
+.page .heading-section .line-item .item_description {
+  text-align: right;
+}
+
+.page .heading-section .total-price {
+  margin: var(--margin) 0px var(--margin-large);
+  text-align: right;
+}
+/* HEADINGS ------ */
 
 @media print {
 

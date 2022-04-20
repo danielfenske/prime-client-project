@@ -5,6 +5,8 @@ import './ProposalPreviewCard.css';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
+const logo = './RFLogo.png';
+
 function ProposalPreviewCard() {
   const dispatch = useDispatch();
   const proposals = useSelector((store) => store.proposalEverything);
@@ -30,6 +32,53 @@ function ProposalPreviewCard() {
     }
   };
 
+  const calcHeadingTotal = (headingTotal, heading, proposal) => {
+    let finalTotal = 0;
+
+    let numbers = {};
+
+    /*
+      Example Equations:
+        headingTotal = 106,374.33
+
+    */
+
+    // heading total
+    finalTotal += headingTotal;
+    console.log('finalTotal', finalTotal);
+
+    // surcharge
+    finalTotal += headingTotal * Number(heading.surcharge * 0.01);
+    console.log('finalTotal', finalTotal);
+
+    numbers = {
+      ...numbers,
+      heading: finalTotal.toLocaleString('en-US'),
+    };
+
+    // tax rate
+    if (heading.taxable === true) {
+      finalTotal += headingTotal * Number(proposal.tax_rate * 0.01);
+    }
+    console.log('finalTotal', finalTotal);
+
+    numbers = {
+      ...numbers,
+      tax: (headingTotal * Number(proposal.tax_rate * 0.01)).toLocaleString(
+        'en-US',
+      ),
+      total: finalTotal.toLocaleString('en-US'),
+    };
+
+    return (
+      <>
+        {/* <p>Heading: ${numbers.heading}</p>
+        <p>Tax: ${numbers.tax}</p> */}
+        <p>Total: ${numbers.total}</p>
+      </>
+    );
+  };
+
   useEffect(() => {
     dispatch({
       type: 'GET_PROPOSAL_EVERYTHING',
@@ -50,16 +99,18 @@ function ProposalPreviewCard() {
             <div className='page'>
               {/* HEADER */}
               <header>
-                <div className='logo-1'>
-                  <h1>LOGO</h1>
-                </div>
+                <div className='logo-1'>{/* <h1>LOGO</h1> */}</div>
                 <div className='title'>
-                  <h1>R & F Metals</h1>
+                  {/* <h1>R & F Metals</h1> */}
+                  <img className='logo' src={logo} alt='R & F Metals' />
                 </div>
                 <div className='company-info'>
-                  <p>Proposal:</p>
+                  <p>
+                    <b>{new Date(proposal.date).toLocaleDateString()}</b>
+                  </p>
+                  <p>Proposal</p>
                   <p>{proposal.proposal_code}</p>
-                  <p>Prepared By:</p>
+                  <p>Prepared By</p>
                   <p>
                     {proposal.first_name} {proposal.last_name}
                   </p>
@@ -67,27 +118,27 @@ function ProposalPreviewCard() {
               </header>
 
               {/* PARTNER INFORMATION */}
-              <div className='partner-info'>
+              <section className='partner-info'>
                 <p>{proposal.name /* This is the partner name */}</p>
                 <p>{proposal.address_line_1}</p>
                 <p>
                   {proposal.city}, {proposal.state} {proposal.zip}
                 </p>
-              </div>
+              </section>
+
+              {/* General INFO */}
+              <section className='general-info'>
+                <p>Community: {proposal.community_name}</p>
+                <p>Development Type: {proposal.development_type}</p>
+              </section>
 
               {/* DELIVERY METHOD */}
-              <div>
+              <section className='delivery'>
                 <p>
                   <b>{getDeliveryMethod(proposal.method)}:</b>{' '}
                   {proposal.method_message}
                 </p>
-              </div>
-
-              {/* General INFO */}
-              <div className='general-info'>
-                <p>Community: {proposal.community_name}</p>
-                <p>Development Type: {proposal.development_type}</p>
-              </div>
+              </section>
 
               {/* HEADING SECTIONS */}
               {proposal.headings
@@ -102,7 +153,9 @@ function ProposalPreviewCard() {
                 .map((heading, index) => {
                   return (
                     <section key={index} className='heading-section'>
-                      <p>{heading.name}</p>
+                      <p className='title'>
+                        <b>{heading.name}</b>
+                      </p>
                       <div>
                         {proposal?.line_items
                           .filter(
@@ -112,9 +165,11 @@ function ProposalPreviewCard() {
                             const item = getItem(li.item_id);
                             return (
                               <p key={index} className='line-item'>
-                                <span className='item-qty'>{li.qty}</span>
-                                <span className='item_name'>
-                                  - {item?.name}
+                                <span className='first-container'>
+                                  <span className='item-qty'>{li.qty}</span>-
+                                  <span className='item-name'>
+                                    {item?.name}
+                                  </span>
                                 </span>
                                 <span className='item_measure'>
                                   {li.ft ? (
@@ -136,15 +191,16 @@ function ProposalPreviewCard() {
                           })}
                       </div>
                       <div className='total-price'>
-                        Total: $
-                        {proposal?.line_items
-                          .reduce((total, item) => {
+                        {calcHeadingTotal(
+                          proposal?.line_items.reduce((total, item) => {
                             if (item.heading_id === heading.id) {
                               return total + Number(item.total_item_price);
                             }
                             return total;
-                          }, 0)
-                          .toLocaleString('en-US')}
+                          }, 0),
+                          heading,
+                          proposal,
+                        )}
                       </div>
                     </section>
                   );
