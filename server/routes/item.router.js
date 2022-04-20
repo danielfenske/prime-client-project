@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   if (req.isAuthenticated()) {
 
     const sqlText = `
-      SELECT * FROM "item"
+      SELECT "item".*, "unit_type"."measurement_unit", "unit_type"."pricing_unit" FROM "item"
       JOIN "unit_type"
         ON "item"."unit_type_id" = "unit_type"."id";
     `;

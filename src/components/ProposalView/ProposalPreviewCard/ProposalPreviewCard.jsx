@@ -90,28 +90,65 @@ function ProposalPreviewCard() {
               </div>
 
               {/* HEADING SECTIONS */}
-              {proposal.headings.map((heading, index) => {
-                return (
-                  <section key={index}>
-                    <p>{heading.name}</p>
-                    <div>
-                      {proposal?.line_items
-                        .filter(
-                          (line_item) => line_item?.heading_id === heading.id,
-                        )
-                        .map((li, index) => {
-                          const item = getItem(li.item_id);
-                          return (
-                            <p key={index}>
-                              {li.qty} - {item?.name} {li.rounded_measure_unit}
-                              {item?.measurement_unit}
-                            </p>
-                          );
-                        })}
-                    </div>
-                  </section>
-                );
-              })}
+              {proposal.headings
+                .reduce((total, heading) => {
+                  if (total.filter((e) => e.id === heading.id).length < 1) {
+                    // total.push(heading);
+                    return [...total, heading];
+                  } else {
+                    return total;
+                  }
+                }, [])
+                .map((heading, index) => {
+                  return (
+                    <section key={index} className='heading-section'>
+                      <p>{heading.name}</p>
+                      <div>
+                        {proposal?.line_items
+                          .filter(
+                            (line_item) => line_item?.heading_id === heading.id,
+                          )
+                          .map((li, index) => {
+                            const item = getItem(li.item_id);
+                            return (
+                              <p key={index} className='line-item'>
+                                <span className='item-qty'>{li.qty}</span>
+                                <span className='item_name'>
+                                  - {item?.name}
+                                </span>
+                                <span className='item_measure'>
+                                  {li.ft ? (
+                                    <>
+                                      {li.ft}' {li.inches}"
+                                    </>
+                                  ) : (
+                                    <>
+                                      {li.measure_unit}
+                                      {item?.measurement_unit}
+                                    </>
+                                  )}
+                                </span>
+                                <span className='item_description'>
+                                  {item?.description}
+                                </span>
+                              </p>
+                            );
+                          })}
+                      </div>
+                      <div className='total-price'>
+                        Total: $
+                        {proposal?.line_items
+                          .reduce((total, item) => {
+                            if (item.heading_id === heading.id) {
+                              return total + Number(item.total_item_price);
+                            }
+                            return total;
+                          }, 0)
+                          .toLocaleString('en-US')}
+                      </div>
+                    </section>
+                  );
+                })}
             </div>
           </div>
           <Button
