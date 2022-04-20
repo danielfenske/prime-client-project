@@ -4,7 +4,7 @@ const router = express.Router();
 
 // fetch all headings
 router.get('/', (req, res) => {
-    console.log('in heading router GET route');
+    // console.log('in heading router GET route');
 
     if (req.isAuthenticated()) {
 
@@ -25,8 +25,8 @@ router.get('/', (req, res) => {
 
 // add a new heading
 router.post('/', (req, res) => {
-    console.log('in heading router POST route');
-    console.log('req.body is', req.body);
+    // console.log('in heading router POST route');
+    // console.log('req.body is', req.body);
     if (req.isAuthenticated()) {
 
         const sqlText =
@@ -49,8 +49,8 @@ router.post('/', (req, res) => {
 
 // update a heading
 router.put('/:id', (req, res) => {
-    console.log('in heading router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading router PUT route');
+    // console.log('req.body is', req.body);
     if (req.isAuthenticated()) {
         const sqlText =
             `UPDATE "heading" 
@@ -73,7 +73,7 @@ router.put('/:id', (req, res) => {
 
 // delete a heading
 router.delete('/:id', (req, res) => {
-    console.log('in heading router DELETE route');
+    // console.log('in heading router DELETE route');
     if (req.isAuthenticated()) {
         const sqlText = `DELETE FROM "heading" WHERE "id" = $1`;
 
@@ -91,7 +91,7 @@ router.delete('/:id', (req, res) => {
 
 //get all line items
 router.get('/:id/item', (req, res) => {
-    console.log('in heading/item router GET route');
+    // console.log('in heading/item router GET route');
 
     if (req.isAuthenticated()) {
         const sqlText = `SELECT * FROM "item_heading" WHERE "heading_id" = $1;`
@@ -110,7 +110,7 @@ router.get('/:id/item', (req, res) => {
 
 //get all line items and related item information
 router.get('/item_with_item_code', (req, res) => {
-    console.log('in heading/item_with_item_code router GET route, req.params is');
+    // console.log('in heading/item_with_item_code router GET route, req.params is');
 
     if (req.isAuthenticated()) {
 
@@ -140,9 +140,8 @@ router.get('/item_with_item_code', (req, res) => {
 // add a new line item (this will create an empty item card)
 router.post('/:id/item', (req, res) => {
     console.log('in heading/item router POST route');
-    console.log('req.body is', req.body);
     console.log('req.params.id is', req.params.id);
-
+    
     if (req.isAuthenticated()) {
         const sqlText =
             `INSERT INTO "item_heading" ("heading_id", "item_id")
@@ -164,8 +163,8 @@ router.post('/:id/item', (req, res) => {
 
 //update the item code of a line item
 router.put('/item/item_code', (req, res) => {
-    console.log('in heading/item/item_code PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item/item_code PUT route');
+    // console.log('req.body is', req.body);
 
     if (req.isAuthenticated()) {
         const sqlText =
@@ -188,8 +187,8 @@ router.put('/item/item_code', (req, res) => {
 
 // update a new line item (the user actually saves the information on the new line item or updates an existing line item)
 router.put('/item/update', async (req, res) => {
-    console.log('in heading/item router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item router PUT route');
+    // console.log('req.body is', req.body);
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
@@ -272,8 +271,8 @@ router.put('/item/update', async (req, res) => {
 
 // update a new line item with ft and inches (the user actually saves the information on the new line item or updates an existing line item)
 router.put('/item/update/ft_inches', async (req, res) => {
-    console.log('in heading/item/ft_inches router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item/ft_inches router PUT route');
+    // console.log('req.body is', req.body);
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
@@ -365,8 +364,8 @@ router.put('/item/update/ft_inches', async (req, res) => {
 
 //update line item order (go down)
 router.put('/item/order_down', async (req, res) => {
-    console.log('in heading/item/order_down router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item/order_down router PUT route');
+    // console.log('req.body is', req.body);
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
@@ -414,8 +413,8 @@ router.put('/item/order_down', async (req, res) => {
 
 //update line item order (go up)
 router.put('/item/order_up', async (req, res) => {
-    console.log('in heading/item/order_up router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item/order_up router PUT route');
+    // console.log('req.body is', req.body);
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
@@ -464,7 +463,7 @@ router.put('/item/order_up', async (req, res) => {
 
 // delete a line item
 router.delete('/item/:id', (req, res) => {
-    console.log('in heading/item router DELETE route', req.params.id);
+    // console.log('in heading/item router DELETE route', req.params.id);
     if (req.isAuthenticated()) {
         const sqlText = `DELETE FROM "item_heading" WHERE "id" = $1;`;
 
