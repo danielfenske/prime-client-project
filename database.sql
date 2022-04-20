@@ -60,7 +60,7 @@ CREATE TABLE "opportunity" (
     "address_line_1" VARCHAR(250),
     "city" VARCHAR(80),
     "state" VARCHAR(2),
-    "zip" INT,
+    "zip" VARCHAR,
     "tax_rate" DECIMAL(25, 2),
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -167,6 +167,3 @@ CREATE TABLE "partner_pricing"(
 	"partner_id" INT REFERENCES "partner",
 	"disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
-
-INSERT INTO "partner_pricing"("price", "item_id", "partner_id", "disabled")
-VALUES(3.33, 1, 1, TRUE);

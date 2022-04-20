@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import './OpportunityCard.css';
 
 function OpportunityCard({ opportunity }) {
 
@@ -27,7 +26,7 @@ function OpportunityCard({ opportunity }) {
     return (
         <div className='list-card'>
             <div className='card-info-container'>
-                <h1>{opportunity.name}</h1>
+                <h2>{opportunity.name}</h2>
                 <p><strong>Description: </strong>{opportunity.community_name}</p>
                 <p><strong>Due date: </strong>{new Date(opportunity.due_date).toLocaleDateString()}</p>
             </div>
