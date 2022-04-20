@@ -25,14 +25,14 @@ function OpportunityProposalListCard() {
 
   const proposal = useSelector((store) => store.proposalReducer.singleProposalReducer);
   const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
-
+  const partners = useSelector((store) => store.partnerReducer.partnerReducer);
   const postProposal = () => {
     dispatch({ type: 'POST_PROPOSAL', payload: id });
   }
 
   useEffect(() => {
     dispatch({ type: 'FETCH_PROPOSAL_LIST', payload: id });
-  }, [])
+  }, []) 
 
   return (
     <>
@@ -63,24 +63,11 @@ function OpportunityProposalListCard() {
             size='small'
             style={{ width: 200 }}
           >
-            <MenuItem value={1}>Bob</MenuItem>
-          </Select>
-          <Select
-                    labelId="folder-label"
-                    id="folders"
-                    // open={open}
-                    // onClose={handleClose}
-                    // onOpen={handleOpen}
-                    value={folder}
-                    label="folder"
-                    onChange={testing}
-                    >
-                    
-                    {folders.map((thisFolder, i) => (                        
-                        <MenuItem key={i} value={thisFolder.id}> <em>{thisFolder.folder_name}</em> </MenuItem>                        
+          {/* <MenuItem value={1}>In-Progress</MenuItem> */}
+            {partners.map((thisPartner, i) => (                        
+                        <MenuItem key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>                        
                         ))}
-                        
-                    </Select>
+          </Select>
         </FormControl>
 
         <FormControl>

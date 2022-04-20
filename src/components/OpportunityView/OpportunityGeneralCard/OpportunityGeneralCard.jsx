@@ -7,21 +7,27 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material';
 
+import EditContactModal from './EditContactModal/EditContactModal';
+import AddContactModal from './AddContactModal/AddContactModal';
 // component imports
 import ContactCard from './ContactCard';
 
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
+  const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
   const contacts = useSelector((store) => store.contactReducer);
   const { id } = useParams();
   const opportunity = useSelector((store) => store.opportunityReducer.specificOpportunityReducer);
 
   useEffect(() => {
-    dispatch({
-      type: 'FETCH_PARTNER_LIST',
-    });
+    // dispatch({
+    //   type: 'FETCH_PARTNER_LIST',
+    // });
     dispatch({
       type: 'FETCH_CONTACT_LIST',
     });
@@ -61,9 +67,23 @@ function OpportunityGeneralCard() {
   const [zip, setZip] = useState('');
   const [tax_rate, setTaxRate] = useState('');
 
+  // partner use states
+  const [partnerName, setPartnername] = useState("");
+  const [partnerAddress, setPartnerAddress] = useState("");
+  const [partnerPhoneNumber, setPartnerPhoneNumber] = useState("");
+
+ // contact use states 
+ const [contactName, setContactName] = useState('');
+ const [contactPhoneNumber, setContactPhoneNumber] = useState('');
+ const [contactEmail, setContactEmail] = useState('');
+
+
   const [partner_id, setPartnerId] = useState(1);
   const [contact_id, setContactId] = useState(1);
 
+  const handleEditPartner = (thisPartner) => {
+    dispatch ({type: 'SET_EDIT_PARTNER', payload: thisPartner});
+  }
   const handleSubmit = () => {
     console.log('user submitted the form');
 
@@ -204,11 +224,44 @@ function OpportunityGeneralCard() {
                 size='small'
                 style={{ width: 200 }}
               >
-                <MenuItem value={1}>Heather</MenuItem>
-                <MenuItem value={2}>Dan</MenuItem>
-                <MenuItem value={3}>Dave</MenuItem>
+                {partners.map((thisPartner, i) => (                        
+                        <MenuItem onClick= {() => handleEditPartner(thisPartner)} key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>                        
+                        ))}
               </Select>
             </FormControl>
+
+            <TextField
+              id='outlined-basic'
+              label='Name'
+              variant='outlined'
+              defaultValue={editablePartner.name}
+              value={partnerName}
+              onChange={(e) => setPartnername(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+            <TextField
+              id='outlined-basic'
+              label='Address'
+              variant='outlined'
+              defaultValue={editablePartner.address_line_1}
+              value={partnerAddress}
+              onChange={(e) => setPartnerAddress(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+             <TextField
+              id='outlined-basic'
+              label='Phone Number'
+              variant='outlined'
+              defaultValue={editablePartner.phone_number}
+              value={partnerPhoneNumber}
+              onChange={(e) => setPartnerPhoneNumber(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+           
+
             <FormControl>
               <InputLabel id='demo-simple-select-label'>Contact</InputLabel>
               <Select
@@ -220,11 +273,47 @@ function OpportunityGeneralCard() {
                 size='small'
                 style={{ width: 200 }}
               >
-                <MenuItem value={1}>Mark</MenuItem>
-                <MenuItem value={2}>Dave</MenuItem>
-                <MenuItem value={3}>Cam</MenuItem>
+                {/* <MenuItem value={1}>none</MenuItem> */}
+                {contacts.map((thisContact, i) => (                        
+                        <MenuItem key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>                        
+                        ))}
+                
               </Select>
             </FormControl>
+            <TextField
+              id='outlined-basic'
+              label='Name'
+              variant='outlined'
+              value={opportunity_code}
+              onChange={(e) => setOpportunityCode(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+            <TextField
+              id='outlined-basic'
+              label='Phone Number'
+              variant='outlined'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+            <TextField
+              id='outlined-basic'
+              label='Email'
+              variant='outlined'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+          {/* <IconButton >
+            <AddIcon />
+          </IconButton>
+            <IconButton >
+              <EditIcon />
+            </IconButton> */}
+
           </div>
         </div>
         <div>

@@ -8,6 +8,15 @@ const partnerReducer = (state = [], action) => {
             return state;
     }
 }
+const partnerEditReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_EDIT_PARTNER': 
+            return action.payload;
+        default:
+            return state;
+    }
+}
 export default combineReducers({
     partnerReducer,
+    partnerEditReducer,
 })
