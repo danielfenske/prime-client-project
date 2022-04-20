@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -10,7 +10,10 @@ import Grid from '@mui/material/Grid';
 import Modal from '../../../Miscellaneous/Modal/Modal';
 
 
-function EditPartnerModal() {
+
+function EditPartnerModal({ open, setOpen}) {
+
+    const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
 
     const [name, setName] = useState('');
     const [type, setType] = useState('');
@@ -27,13 +30,13 @@ function EditPartnerModal() {
     // const handleOpen = () => setOpen(true);
     // const handleClose = () => setOpen(false);
 
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
 
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
         dispatch({
-            type: 'POST_PARTNER',
+            type: 'UPDATE_PARTNER',
             payload: {
                 name,
                 type,
@@ -63,13 +66,13 @@ function EditPartnerModal() {
 
     return (
         <>
-         <button
+         {/* <button
           onClick={() => {
             setOpen(true);
           }}
         >
           Open
-        </button>
+        </button> */}
             <Modal open={open}>
             <form onSubmit={handleSubmit}>
                     <TextField
@@ -90,7 +93,7 @@ function EditPartnerModal() {
                         value={partner_code}
                         onChange={(event) => setPartner_code(event.target.value)}
                     />
-                    <TextField // im confused as to what this is again, maybe i forgot
+                    <TextField 
                         sx={{ mt: 2 }}
                         required
                         label="Partner Discount"
@@ -139,7 +142,7 @@ function EditPartnerModal() {
                         value={zip}
                         onChange={(event) => setZip(event.target.value)}
                     />
-                     <button type="submit">Submit Partner</button>
+                     <button type="submit">Submit Edited Partner</button>
                 </form>
                 <button
                     onClick={() => {

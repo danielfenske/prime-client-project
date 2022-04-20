@@ -82,21 +82,20 @@ function OpportunityGeneralCard() {
   const [partner_id, setPartnerId] = useState(1);
   const [contact_id, setContactId] = useState(1);
 
-  const [partnerModalOpen, setPartnerModalOpen] = useState(false);
-  const [partnereditModalOpen, setPartnerEditModalOpen] = useState(false);
+  const [partnerAddModalOpen, setPartnerAddModalOpen] = useState(false);
+  const [partnerEditModalOpen, setPartnerEditModalOpen] = useState(false);
 
   const handleEditPartner = (thisPartner) => {
     dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
   }
   const handlePartnerAdd = () => {
-    setPartnerModalOpen(true);
-    // somehow access the modal here
+    setPartnerAddModalOpen(true);
   }
+
   const handlePartnerEdit = () => {
     setPartnerEditModalOpen(true);
-    // somehow accesss the edit modal here
-
   }
+
   const handleSubmit = () => {
     console.log('user submitted the form');
 
@@ -265,6 +264,7 @@ function OpportunityGeneralCard() {
             <IconButton onClick={handlePartnerAdd}>
               <AddIcon />
             </IconButton>
+
             <IconButton onClick={handlePartnerEdit}>
               <EditIcon />
             </IconButton>
@@ -381,6 +381,8 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
+      <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} /> 
+      <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} /> 
     </>
   );
 }
