@@ -54,21 +54,6 @@ function* updateHeadingItem(action) {
     }
 }
 
-//update a heading_item when the measurement unit is FT 
-function* updateHeadingItemFtInches(action) {
-    console.log('in headingItemSaga updateHeadingItemFtInches, action.payload is', action.payload);
-
-    try {
-        yield axios.put('/api/heading/item/update/ft_inches', action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
-    } catch (error) {
-        console.log('Error UPDATing a heading_item_item_code', error);
-    }
-}
-
-
-
-
 //update item code in a heading_item
 function* updateHeadingItemItemCode(action) {
     console.log('in headingItemSaga updateHeadingItemItemCode, action.payload is', action.payload);
@@ -129,7 +114,6 @@ function* headingItemSaga() {
     yield takeLatest('FETCH_HEADING_ITEMS_WITH_ITEM_CODE', getHeadingItemWithItemCode);
     yield takeLatest('MOVE_ORDER_UP', moveUpOrder);
     yield takeLatest('MOVE_ORDER_DOWN', moveDownOrder);
-    yield takeLatest('UPDATE_HEADING_ITEM_FT_INCHES', updateHeadingItemFtInches);
 }
 
 export default headingItemSaga;

@@ -11,7 +11,7 @@ function ProposalOrderCard() {
   const dispatch = useDispatch();
   const store = useSelector((store) => store);
   const headings = store.headingReducer;
-  // console.log('headings', headings);
+  console.log('headings', headings);
   
   // **Placeholder data** should be replaced by data from the server ---------
   // const placeHolderHeading = [
