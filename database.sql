@@ -38,7 +38,7 @@ CREATE TABLE "partner" (
     "address_line_1" VARCHAR(250),
     "city" VARCHAR(80),
     "state" VARCHAR(2),
-    "zip" INT,
+    "zip" VARCHAR,
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
  INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "disabled")
@@ -60,7 +60,7 @@ CREATE TABLE "opportunity" (
     "address_line_1" VARCHAR(250),
     "city" VARCHAR(80),
     "state" VARCHAR(2),
-    "zip" INT,
+    "zip" VARCHAR,
     "tax_rate" DECIMAL(25, 2),
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
@@ -106,7 +106,7 @@ INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "
 VALUES ('frank', 'exterior staircase railing', 1, 3.33, 4, true );
 
 
-SELECT * FROM "heading";
+
 
 	
 CREATE TABLE "unit_type" (
@@ -139,26 +139,23 @@ CREATE TABLE "item" (
 
 );
 
-INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id", "disabled")
-VALUES ('W2765', 'Steel Rod', '10ft round steel rod', 3.33, 3, FAlSE);
 
 CREATE TABLE "item_heading"(
 	"id" SERIAL PRIMARY KEY,
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
 	"order" INT,
-	"price_unit" DECIMAL,
+	"price_per_price_unit" DECIMAL (25, 2),
+	"price_unit" DECIMAL (25, 2),
 	"single_unit_price" DECIMAL (25, 2),
-	"measure_unit" DECIMAL,
-	"rounded_measure_unit" DECIMAL,
+	"ft" INT,
+	"inches" INT,
+	"measure_unit" DECIMAL (25, 2),
+	"rounded_measure_unit" DECIMAL (25, 2),
 	"qty" INT,
-	"total_item_price" DECIMAL(25, 2)
+	"total_item_price" DECIMAL (25, 2)
 	); 
 	
-INSERT INTO "item_heading" ("heading_id", "item_id", "order", "price_unit", "single_unit_price", "measure_unit", "rounded_measure_unit", "qty", "total_item_price")
-VALUES (1, 1, 1, 3.33, 35.90, 13.33, 53.23, 3, 2432.23);
-
---SELECT * FROM "item_heading";
 
 CREATE TABLE "partner_pricing"(
 	"id" SERIAL PRIMARY KEY,
@@ -167,6 +164,3 @@ CREATE TABLE "partner_pricing"(
 	"partner_id" INT REFERENCES "partner",
 	"disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
-
-INSERT INTO "partner_pricing"("price", "item_id", "partner_id", "disabled")
-VALUES(3.33, 1, 1, TRUE);

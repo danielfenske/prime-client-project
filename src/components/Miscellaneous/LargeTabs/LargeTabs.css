@@ -9,6 +9,8 @@
   display: grid;
   /* padding: var(--padding); */
   transition: all .2s;
+  overflow-y: scroll;
+  max-height: 100%;
 }
 
 .tab-content-container.hidden {
@@ -31,7 +33,7 @@
 
   border-radius: var(--border);
 
-  /* width: 200px; */
+  width: 150px;
   height: 50px;
 }
 

@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
   if (req.isAuthenticated()) {
     if (access_level > 1) {
-      queryText = `SELECT * FROM "proposal" WHERE "disabled" = $1;`
+      queryText = `SELECT * FROM "proposal" WHERE "disabled" = $1 ORDER BY "id" DESC;`
 
       pool.query(queryText, [disabled])
         .then((result) => {
@@ -45,17 +45,18 @@ router.get('/', (req, res) => {
       pool.query(queryText, [userId, disabled])
         .then((result) => {
           requestedProposals = result.rows;
-
           res.send(requestedProposals);
         })
         .catch((error) => {
+          console.log('error in proposal GET', error);
+
           res.sendStatus(500);
         })
     }
   } else {
     res.sendStatus(403);
   }
-})
+});
 
 // get single proposal
 router.get('/:proposalId', (req, res) => {
@@ -68,10 +69,11 @@ router.get('/:proposalId', (req, res) => {
     pool.query(queryText, [id])
       .then((result) => {
         let requestedProposal = result.rows[0];
-
         res.send(requestedProposal);
       })
       .catch((error) => {
+        console.log('error in proposal SINGLE GET', error);
+
         res.sendStatus(500);
       })
   } else {
@@ -126,22 +128,26 @@ router.get('/everything/:id', async (req, res) => {
 router.post('/:id', async (req, res) => {
 
   let opportunity_id = req.params.id;
+  let defaultProposalCode = 'AAA-2022-01-01';
 
-  let queryText = `INSERT INTO "proposal" ("opportunity_id") VALUES ($1) RETURNING id;`;
+  let queryText = `INSERT INTO "proposal" ("opportunity_id", "proposal_code") VALUES ($1, $2) RETURNING id;`;
 
   if (req.isAuthenticated()) {
 
     try {
-      const result = await pool.query(queryText, [opportunity_id])
+      const result = await pool.query(queryText, [opportunity_id, defaultProposalCode])
 
       const proposalId = result.rows[0].id;
 
-      res.send({ proposalId: proposalId });
+      res.send({
+        proposalId: proposalId
+      });
 
     } catch (error) {
+      console.log('error in proposal POST', error);
+
       res.sendStatus(500);
     }
-
   } else {
     res.sendStatus(403);
   }
@@ -198,6 +204,8 @@ router.put('/:id', (req, res) => {
         res.sendStatus(200);
       })
       .catch((error) => {
+        console.log('error in proposal UPDATE', error);
+
         res.sendStatus(500);
       })
   } else {
@@ -220,6 +228,8 @@ router.delete('/:id', (req, res) => {
         res.sendStatus(200);
       })
       .catch((error) => {
+        console.log('error in proposal DELETE', error);
+
         res.sendStatus(500);
       })
   } else {
