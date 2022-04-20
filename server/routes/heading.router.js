@@ -2,15 +2,15 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-// fetch all headings
-router.get('/', (req, res) => {
-    console.log('in heading router GET route');
+// fetch all headings per proposal
+router.get('/:id', (req, res) => {
+    console.log('in heading router GET route, req.params.id is', req.params.id);
 
     if (req.isAuthenticated()) {
 
-        const sqlText = `SELECT * FROM "heading";`;
+        const sqlText = `SELECT * FROM "heading" WHERE "heading"."proposal_id" = $1;`;
 
-        pool.query(sqlText)
+        pool.query(sqlText, [req.params.id])
             .then((result) => {
                 console.log('result.rows is', result.rows);
                 res.send(result.rows);
@@ -89,7 +89,7 @@ router.delete('/:id', (req, res) => {
     }
 });
 
-//get all line items
+//get all line items per heading
 router.get('/:id/item', (req, res) => {
     console.log('in heading/item router GET route');
 
@@ -109,7 +109,7 @@ router.get('/:id/item', (req, res) => {
 });
 
 //get all line items and related item information
-router.get('/item_with_item_code', (req, res) => {
+router.get('/item_with_item_code/:id', (req, res) => {
     console.log('in heading/item_with_item_code router GET route, req.params is');
 
     if (req.isAuthenticated()) {

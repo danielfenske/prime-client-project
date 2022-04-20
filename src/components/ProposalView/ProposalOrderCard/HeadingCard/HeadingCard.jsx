@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {useParams} from 'react-router-dom';
 import HeadingItemCard from '../HeadingItemCard/HeadingItemCard';
 
 function HeadingCard(props) {
@@ -9,7 +8,7 @@ function HeadingCard(props) {
   const [messageInput, setMessageInput] = useState(props.message);
   const [nameInput, setNameInput] = useState(props.name);
   const [surchargeInput, setSurchargeInput] = useState(0);
-  // const [itemId, setItemId] = useState('');
+
 
   // console.log('props', props);
  
@@ -18,8 +17,7 @@ function HeadingCard(props) {
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
     //When params is set, use below code instead 
-    //dispatch({type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: Number(id)})
-    dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE'});
+    dispatch({type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: props.id})
   }, []);
   const items = useSelector((store) => store.itemReducer);
   const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;

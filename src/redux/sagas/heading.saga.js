@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-//fetch all headings
-function* getHeadingList() {
+//fetch all headings per proposal
+function* getHeadingList(action) {
     try {
-        const headingResponse = yield axios.get(`/api/heading`);
+        console.log('in getHeadingList saga, action.payload is', action.payload);
+        
+        const headingResponse = yield axios.get(`/api/heading/${action.payload}`);
         console.log('in headingSaga getHeadingList, headingResponse is', headingResponse);
         
 
