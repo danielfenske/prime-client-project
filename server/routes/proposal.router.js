@@ -93,11 +93,11 @@ router.get('/everything/:id', async (req, res) => {
           json_agg("heading".*) AS "headings",
           json_agg("item_heading".*) AS "line_items"
         FROM "proposal"
-        JOIN "opportunity"
+        FULL JOIN "opportunity"
           ON "proposal".opportunity_id = "opportunity".id
         FULL JOIN "partner"
           ON "opportunity".partner_id = "partner".id
-        JOIN "user"
+        FULL JOIN "user"
           ON "opportunity".user_id = "user".id
         FULL JOIN "contact"
           ON "opportunity".contact_id = "contact".id
