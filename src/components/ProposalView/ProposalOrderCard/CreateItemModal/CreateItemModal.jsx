@@ -8,8 +8,8 @@ import { InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 
 
-function CreateItemModal( {show}) {
-  const [open, setOpen] = useState(true);
+function CreateItemModal( {open, setOpen}) {
+  // const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
   const store = useSelector((store) => store);
   const [unitWeight, setUnitWeight] = useState("");

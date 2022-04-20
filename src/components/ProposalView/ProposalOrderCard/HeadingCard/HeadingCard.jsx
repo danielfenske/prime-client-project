@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HeadingItemCard from '../HeadingItemCard/HeadingItemCard';
+import CreateItemModal from '../CreateItemModal/CreateItemModal';
 
 function HeadingCard(props) {
   const dispatch = useDispatch();
@@ -8,6 +9,7 @@ function HeadingCard(props) {
   const [messageInput, setMessageInput] = useState(props.message);
   const [nameInput, setNameInput] = useState(props.name);
   const [surchargeInput, setSurchargeInput] = useState(0);
+  const [createItemModalOpen, setCreateItemModalOpen] = useState(false);
 
 
   // console.log('props', props);
@@ -22,14 +24,16 @@ function HeadingCard(props) {
   const items = useSelector((store) => store.itemReducer);
   const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
   
-  
-
   const addNewLineItem = () => {
     console.log('in addNewLineItem');
     // console.log('itemID is', itemId);
     dispatch({type:'POST_HEADING_ITEM', payload: props.id})
   }
 
+  const addNewItem = () => {
+    console.log(('in addNewItem'));
+    setCreateItemModalOpen(true);
+  }
   
 
   // console.log('lineItemList is', lineItemList);
@@ -70,13 +74,10 @@ function HeadingCard(props) {
         <div>
           <h2>Items</h2>
 
-          {/* <select onChange={e => setItemId(e.target.value)}>
-            {items.map((item, index) => {
-            return <option key={index} value={item.id}>{item.item_code}</option>;
-            })}
-          </select> */}
 
-          <button onClick={addNewLineItem}>Add Item</button>
+          <button onClick={addNewLineItem}>Add New Line Item</button>
+          <button onClick={addNewItem}>Add New Item</button>
+          <CreateItemModal open={createItemModalOpen} setOpen={setCreateItemModalOpen}/>
           <div className='item-container'>
             {/* this item is a test */}
             {lineItemList.filter(lineItem => props.id === lineItem.heading_id).map((lineItem, index) => {
