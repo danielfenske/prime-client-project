@@ -49,6 +49,8 @@ router.get('/', (req, res) => {
                     res.send(requestedProposals);
                 })
                 .catch((error) => {
+                    console.log('error in proposal GET', error);
+
                     res.sendStatus(500);
                 })
         }
@@ -72,6 +74,8 @@ router.get('/:proposalId', (req, res) => {
                 res.send(requestedProposal);
             })
             .catch((error) => {
+                console.log('error in proposal SINGLE GET', error);
+
                 res.sendStatus(500);
             })
     } else {
@@ -93,10 +97,14 @@ router.post('/:id', async (req, res) => {
             const result = await pool.query(queryText, [opportunity_id, defaultProposalCode])
 
             const proposalId = result.rows[0].id;
-    
-            res.send({proposalId: proposalId});
+
+            res.send({
+                proposalId: proposalId
+            });
 
         } catch (error) {
+            console.log('error in proposal POST', error);
+
             res.sendStatus(500);
         }
 
@@ -156,6 +164,8 @@ router.put('/:id', (req, res) => {
                 res.sendStatus(200);
             })
             .catch((error) => {
+                console.log('error in proposal UPDATE', error);
+
                 res.sendStatus(500);
             })
     } else {
@@ -172,12 +182,14 @@ router.delete('/:id', (req, res) => {
     let queryText = `UPDATE "proposal" SET "disabled" = $1 WHERE "id" = $2;`;
 
     if (req.isAuthenticated()) {
-        
+
         pool.query(queryText, [disabled, id])
             .then((result) => {
                 res.sendStatus(200);
             })
             .catch((error) => {
+                console.log('error in proposal DELETE', error);
+
                 res.sendStatus(500);
             })
     } else {
