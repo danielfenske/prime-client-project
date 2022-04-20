@@ -12,12 +12,12 @@ import { SettingsPowerRounded } from '@mui/icons-material';
 function HeadingItemCard({ lineItem }) {
   const items = useSelector((store) => store.itemReducer);
   const dispatch = useDispatch();
-  const [selectedItem, setSelectedItem] = useState(1);
+  const [selectedItem, setSelectedItem] = useState(lineItem.item_id);
   const [qty, setQty] = useState(lineItem.qty);
   const [measurement, setMeasurement] = useState(lineItem.measure_unit);
   const [order, setOrder] = useState(lineItem.order);
-  const [ft, setFt] = useState('');
-  const [inches, setInches] = useState('');
+  const [ft, setFt] = useState(lineItem.ft);
+  const [inches, setInches] = useState(lineItem.inches);
   const [pricePerPriceUnit, setPricePerPriceUnit] = useState(lineItem.override_price || lineItem.default_price);
 
 
@@ -80,7 +80,13 @@ function HeadingItemCard({ lineItem }) {
    
     dispatch({type:'UPDATE_HEADING_ITEM_ITEM_CODE', payload: {heading_item_id: lineItem.id, item_id: selectedItem }})
     
-  }, [selectedItem, pricePerPriceUnit])
+  }, [selectedItem])
+
+  useEffect(() => {
+   
+    setPricePerPriceUnit(lineItem.override_price || lineItem.default_price)
+    
+  }, [lineItem])
 
   // useEffect(() => {
   //   console.log('ft is', ft);
@@ -122,8 +128,8 @@ function HeadingItemCard({ lineItem }) {
         <>
           {lineItem?.measurement_unit === 'FT' ?
             <>
-              <TextField id="outlined-basic" label="FT" variant="outlined" onChange={(e)=> setFt(e.target.value)} /> and
-              <TextField id="outlined-basic" label="IN" variant="outlined" onChange={(e)=> setInches(e.target.value)} /> per item
+              <TextField id="outlined-basic" label="FT" variant="outlined" value={ft} onChange={(e)=> setFt(e.target.value)} /> and
+              <TextField id="outlined-basic" label="IN" variant="outlined" value={inches} onChange={(e)=> setInches(e.target.value)} /> per item
             </>
             :
             <>
