@@ -11,7 +11,7 @@ function HeadingCard(props) {
   const [surchargeInput, setSurchargeInput] = useState(0);
   // const [itemId, setItemId] = useState('');
 
-  console.log('props', props);
+  // console.log('props', props);
  
   // console.log('props.id is', props.id);
 
@@ -34,7 +34,7 @@ function HeadingCard(props) {
 
   
 
-  console.log('lineItemList is', lineItemList);
+  // console.log('lineItemList is', lineItemList);
 
 
   return (
