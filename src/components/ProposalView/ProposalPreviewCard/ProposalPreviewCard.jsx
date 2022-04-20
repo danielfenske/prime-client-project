@@ -110,10 +110,12 @@ function ProposalPreviewCard() {
                   </p>
                   <p>Proposal</p>
                   <p>{proposal.proposal_code}</p>
-                  <p>Prepared By</p>
-                  <p>
-                    {proposal.first_name} {proposal.last_name}
-                  </p>
+                  <div className='sales-person'>
+                    <p>Prepared By</p>
+                    <p>
+                      {proposal.first_name} {proposal.last_name}
+                    </p>
+                  </div>
                 </div>
               </header>
 
@@ -154,7 +156,7 @@ function ProposalPreviewCard() {
                   return (
                     <section key={index} className='heading-section'>
                       <p className='title'>
-                        <b>{heading.name}</b>
+                        <b>{heading.name}:</b>
                       </p>
                       <div>
                         {proposal?.line_items
@@ -205,6 +207,12 @@ function ProposalPreviewCard() {
                     </section>
                   );
                 })}
+              <section className='field-weld'>
+                <p>
+                  Field Weld: $
+                  {Number(proposal.field_weld_charge).toLocaleString('en-US')}
+                </p>
+              </section>
             </div>
           </div>
           <Button

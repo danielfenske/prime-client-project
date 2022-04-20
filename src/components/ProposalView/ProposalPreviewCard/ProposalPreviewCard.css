@@ -87,6 +87,14 @@
   margin: var(--margin) 0px var(--margin-large);
   text-align: right;
 }
+
+.page .field-weld {
+  text-align: right;
+}
+
+.page .sales-person {
+  color: var(--grey);
+}
 /* HEADINGS ------ */
 
 @media print {
@@ -131,5 +139,6 @@
     padding: 0px;
     margin: 0px;
     box-shadow: none;
+    color: black;
   }
 }
