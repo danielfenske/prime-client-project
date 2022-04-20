@@ -18,7 +18,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     // GET all opportunities for an admin
     if (access_level > 1) {
-        sqlText = `SELECT * FROM "opportunity" WHERE "disabled" = false;`;
+        sqlText = `SELECT * FROM "opportunity" WHERE "disabled" = false ORDER BY "id" DESC;`;
 
         pool.query(sqlText)
             .then((result) => {

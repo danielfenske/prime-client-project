@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
     if (req.isAuthenticated()) {
         if (access_level > 1) {
-            queryText = `SELECT * FROM "proposal" WHERE "disabled" = $1;`
+            queryText = `SELECT * FROM "proposal" WHERE "disabled" = $1 ORDER BY "id" DESC;`
 
             pool.query(queryText, [disabled])
                 .then((result) => {

@@ -90,6 +90,20 @@ function OpportunityGeneralCard() {
     })
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // API CODE             
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      console.log('you hit enter');
+
+      // Saga for the API
+      dispatch({
+        type: 'FETCH_CITY_STATE',
+        payload: { zip: zip, opportunityId: opportunity.id }
+      });
+    }
+  }
 
   return (
     <>
@@ -224,6 +238,7 @@ function OpportunityGeneralCard() {
                 variant='outlined'
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
+                onKeyPress={handleKeyPress}
                 size='small'
                 style={{ width: 200 }}
               />
