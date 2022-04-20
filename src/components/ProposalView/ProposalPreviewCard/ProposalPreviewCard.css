@@ -1,0 +1,144 @@
+.proposal-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  flex-direction: column;
+}
+
+.pdf-container {
+  display: grid;
+  align-items: center;
+}
+
+.page {
+  width: 7.5in;
+  min-height: 11in;
+
+  margin: var(--margin);
+
+  box-shadow: 0px 5px 5px var(--shadow);
+
+  padding: .5in;
+}
+
+.page header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: var(--margin);
+}
+
+.page header .logo {
+  max-width: 100%;
+}
+
+.page header .company-info {
+  text-align: right;
+  /* margin-left: auto; */
+  /* width: max-content; */
+}
+
+.page section {
+  margin: var(--margin-large) 0px;
+}
+
+.page .delivery {
+  margin-left: var(--margin-large);
+}
+
+/* HEADINGS ------ */
+.page .heading-section .title {
+  text-decoration: underline;
+  margin-bottom: var(--margin);
+}
+
+.page .heading-section .line-item {
+  /* margin-left: var(--margin-large); */
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* gap: var(--margin-large); */
+}
+
+.page .heading-section .line-item .item-qty {
+  display: inline-block;
+  text-align: right;
+  min-width: max-content;
+  width: calc(var(--margin-large) * 2);
+  /* margin-right: var(--margin); */
+}
+
+.page .heading-section .line-item .first-container {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr;
+  gap: var(--margin);
+}
+
+.page .heading-section .line-item .item_measure {
+  text-align: right;
+}
+
+.page .heading-section .line-item .item_description {
+  text-align: right;
+}
+
+.page .heading-section .total-price {
+  margin: var(--margin) 0px var(--margin-large);
+  text-align: right;
+}
+
+.page .field-weld {
+  text-align: right;
+}
+
+.page .sales-person {
+  color: var(--grey);
+}
+/* HEADINGS ------ */
+
+@media print {
+
+  .nav {
+    display: none;
+  }
+
+  footer {
+    display: none;
+  }
+
+  div.content-holder {
+    width: 100%;
+    height: 100%;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .tab-container {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .tab-label-container {
+    display: none;
+  }
+
+  .proposal-preview {
+    display: block;
+  }
+
+  .proposal-preview button {
+    display: none;
+  }
+  
+  .page {
+    width: 100%;
+    height: 100%;
+    min-height: 0px;
+    padding: 0px;
+    margin: 0px;
+    box-shadow: none;
+    color: black;
+  }
+}
