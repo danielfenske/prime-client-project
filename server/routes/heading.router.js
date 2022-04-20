@@ -150,8 +150,6 @@ router.post('/:id/item', (req, res) => {
 
         const valueArray = [req.params.id];
 
-        
-
         pool.query(sqlText, valueArray)
             .then((result) => {
                 res.sendStatus(201)
