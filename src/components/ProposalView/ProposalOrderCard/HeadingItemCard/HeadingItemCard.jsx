@@ -88,6 +88,22 @@ function HeadingItemCard({ lineItem }) {
     
   }, [lineItem])
 
+/////////////////////////////////////
+// Press Enter Key to add new Item
+/////////////////////////////////////
+
+const newItemEnter = (e) => {
+  // type:'POST_HEADING_ITEM', payload: props.id
+  if (e.key === 'Enter') {
+    // console.log('you clicked enter');
+    // console.log('itemid is:', lineItem.id);
+    dispatch({
+      type: 'POST_HEADING_ITEM',
+      payload: lineItem.heading_id
+    })
+  }
+}
+
   // useEffect(() => {
   //   console.log('ft is', ft);
   //   console.log('inches is', inches);
@@ -140,7 +156,7 @@ function HeadingItemCard({ lineItem }) {
       }
       
       <TextField id="outlined-basic" label="unit price" variant="outlined" value={pricePerPriceUnit} onChange={e => setPricePerPriceUnit(e.target.value)} />
-      <TextField id="outlined-basic" label="quantity" variant="outlined" value={qty} onChange={e => setQty(e.target.value)} />
+      <TextField id="outlined-basic" label="quantity" variant="outlined" value={qty} onChange={e => setQty(e.target.value)} onKeyPress={newItemEnter}/>
       <p> Single line item price: {lineItem.single_unit_price}</p>
       {/* <TextField id="outlined-basic" label="single item price" variant="outlined" value={singleUnitPrice} onChange={(e) => setSingleUnitPrice(e.target.value)} /> */}
       {/* <TextField id="outlined-basic" label="description" variant="outlined" value={lineItem.description} /> */}
