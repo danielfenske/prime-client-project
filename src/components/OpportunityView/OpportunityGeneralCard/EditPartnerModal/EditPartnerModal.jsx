@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid';
 import Modal from '../../../Miscellaneous/Modal/Modal';
 
 
-function AddPartnerModal() {
+function EditPartnerModal() {
 
     const [name, setName] = useState('');
     const [type, setType] = useState('');
@@ -153,4 +153,4 @@ function AddPartnerModal() {
     )
 
 }
-export default AddPartnerModal;
+export default EditPartnerModal;

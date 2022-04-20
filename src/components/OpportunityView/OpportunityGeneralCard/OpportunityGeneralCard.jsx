@@ -9,10 +9,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
-import IconButton from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 
 import EditContactModal from './EditContactModal/EditContactModal';
 import AddContactModal from './AddContactModal/AddContactModal';
+import AddPartnerModal from './EditPartnerModal/EditPartnerModal';
+import EditPartnerModal from './EditPartnerModal/EditPartnerModal';
 // component imports
 import ContactCard from './ContactCard';
 
@@ -71,17 +73,29 @@ function OpportunityGeneralCard() {
   const [partnerType, setPartnerType] = useState("");
   const [partnerPhoneNumber, setPartnerPhoneNumber] = useState("");
 
- // contact use states 
- const [contactName, setContactName] = useState('');
- const [contactPhoneNumber, setContactPhoneNumber] = useState('');
- const [contactEmail, setContactEmail] = useState('');
+  // contact use states 
+  const [contactName, setContactName] = useState('');
+  const [contactPhoneNumber, setContactPhoneNumber] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
 
 
   const [partner_id, setPartnerId] = useState(1);
   const [contact_id, setContactId] = useState(1);
 
+  const [partnerModalOpen, setPartnerModalOpen] = useState(false);
+  const [partnereditModalOpen, setPartnerEditModalOpen] = useState(false);
+
   const handleEditPartner = (thisPartner) => {
-    dispatch ({type: 'SET_EDIT_PARTNER', payload: thisPartner});
+    dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
+  }
+  const handlePartnerAdd = () => {
+    setPartnerModalOpen(true);
+    // somehow access the modal here
+  }
+  const handlePartnerEdit = () => {
+    setPartnerEditModalOpen(true);
+    // somehow accesss the edit modal here
+
   }
   const handleSubmit = () => {
     console.log('user submitted the form');
@@ -223,9 +237,9 @@ function OpportunityGeneralCard() {
                 size='small'
                 style={{ width: 200 }}
               >
-                {partners.map((thisPartner, i) => (                        
-                        <MenuItem onClick= {() => handleEditPartner(thisPartner)} key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>                        
-                        ))}
+                {partners.map((thisPartner, i) => (
+                  <MenuItem onClick={() => handleEditPartner(thisPartner)} key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>
+                ))}
               </Select>
             </FormControl>
 
@@ -238,8 +252,8 @@ function OpportunityGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-           
-             <TextField
+
+            <TextField
               id='outlined-basic'
               label='Phone Number'
               variant='outlined'
@@ -248,7 +262,13 @@ function OpportunityGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-           
+            <IconButton onClick={handlePartnerAdd}>
+              <AddIcon />
+            </IconButton>
+            <IconButton onClick={handlePartnerEdit}>
+              <EditIcon />
+            </IconButton>
+
 
             <FormControl>
               <InputLabel id='demo-simple-select-label'>Contact</InputLabel>
@@ -262,10 +282,10 @@ function OpportunityGeneralCard() {
                 style={{ width: 200 }}
               >
                 {/* <MenuItem value={1}>none</MenuItem> */}
-                {contacts.map((thisContact, i) => (                        
-                        <MenuItem key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>                        
-                        ))}
-                
+                {contacts.map((thisContact, i) => (
+                  <MenuItem key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>
+                ))}
+
               </Select>
             </FormControl>
             <TextField
@@ -295,12 +315,13 @@ function OpportunityGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-          {/* <IconButton >
-            <AddIcon />
-          </IconButton>
+            <IconButton >
+              <AddIcon />
+            </IconButton>
+
             <IconButton >
               <EditIcon />
-            </IconButton> */}
+            </IconButton>
 
           </div>
         </div>
