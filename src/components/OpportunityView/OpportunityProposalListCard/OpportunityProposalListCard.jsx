@@ -65,6 +65,22 @@ function OpportunityProposalListCard() {
           >
             <MenuItem value={1}>Bob</MenuItem>
           </Select>
+          <Select
+                    labelId="folder-label"
+                    id="folders"
+                    // open={open}
+                    // onClose={handleClose}
+                    // onOpen={handleOpen}
+                    value={folder}
+                    label="folder"
+                    onChange={testing}
+                    >
+                    
+                    {folders.map((thisFolder, i) => (                        
+                        <MenuItem key={i} value={thisFolder.id}> <em>{thisFolder.folder_name}</em> </MenuItem>                        
+                        ))}
+                        
+                    </Select>
         </FormControl>
 
         <FormControl>
