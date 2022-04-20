@@ -153,7 +153,7 @@ CREATE TABLE "item_heading"(
 	"measure_unit" DECIMAL (25, 2),
 	"rounded_measure_unit" DECIMAL (25, 2),
 	"qty" INT,
-	"total_item_price" DECIMAL (25, 2),
+	"total_item_price" DECIMAL (25, 2)
 	); 
 	
 
