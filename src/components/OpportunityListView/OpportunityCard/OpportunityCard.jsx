@@ -6,7 +6,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Modal from '../../Miscellaneous/Modal/Modal';
 import DeleteModal from '../../Miscellaneous/DeleteModal/DeleteModal';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 
 function OpportunityCard({ opportunity }) {
