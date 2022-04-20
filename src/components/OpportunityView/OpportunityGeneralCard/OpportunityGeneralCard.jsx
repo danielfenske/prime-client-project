@@ -68,8 +68,7 @@ function OpportunityGeneralCard() {
   const [tax_rate, setTaxRate] = useState('');
 
   // partner use states
-  const [partnerName, setPartnername] = useState("");
-  const [partnerAddress, setPartnerAddress] = useState("");
+  const [partnerType, setPartnerType] = useState("");
   const [partnerPhoneNumber, setPartnerPhoneNumber] = useState("");
 
  // contact use states 
@@ -232,29 +231,18 @@ function OpportunityGeneralCard() {
 
             <TextField
               id='outlined-basic'
-              label='Name'
+              label='Type'
               variant='outlined'
-              defaultValue={editablePartner.name}
-              value={partnerName}
-              onChange={(e) => setPartnername(e.target.value)}
+              value={partnerType}
+              onChange={(e) => setPartnerType(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
-            <TextField
-              id='outlined-basic'
-              label='Address'
-              variant='outlined'
-              defaultValue={editablePartner.address_line_1}
-              value={partnerAddress}
-              onChange={(e) => setPartnerAddress(e.target.value)}
-              size='small'
-              style={{ width: 200 }}
-            />
+           
              <TextField
               id='outlined-basic'
               label='Phone Number'
               variant='outlined'
-              defaultValue={editablePartner.phone_number}
               value={partnerPhoneNumber}
               onChange={(e) => setPartnerPhoneNumber(e.target.value)}
               size='small'
