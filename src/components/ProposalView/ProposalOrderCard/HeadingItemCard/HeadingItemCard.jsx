@@ -22,12 +22,13 @@ function HeadingItemCard({ lineItem }) {
 
 
   console.log('lineItem is', lineItem);
-  console.log('items are', items);
+  // console.log('items are', items);
 
   const handleItemSelect = (e) => {
     e.preventDefault();
     console.log('in handleItemSelect');
     setSelectedItem(e.target.value);
+   
   }
  
   const updateQtyMeasurementOrderPricePerPriceUnit= (e) => {
@@ -40,13 +41,21 @@ function HeadingItemCard({ lineItem }) {
                 measure_unit: 1, 
                 order: Number(order),
                 price_per_price_unit: Number(pricePerPriceUnit)}})
+    } else if(lineItem.measurement_unit === "FT") {
+      dispatch({type: 'UPDATE_HEADING_ITEM_FT_INCHES', 
+      payload: {heading_item_id: lineItem.id, 
+      qty:Number(qty), 
+      ft: Number(ft),
+      inches: Number(inches),
+      order: Number(order),
+      price_per_price_unit: Number(pricePerPriceUnit)}})
     } else {
       dispatch({type: 'UPDATE_HEADING_ITEM', 
                 payload: {heading_item_id: lineItem.id, 
-                qty:Number(qty), 
-                measure_unit:Number(measurement), 
-                order: Number(order),
-                price_per_price_unit: Number(pricePerPriceUnit)}})
+                          qty:Number(qty), 
+                          measure_unit:Number(measurement), 
+                          order: Number(order),
+                          price_per_price_unit: Number(pricePerPriceUnit)}})
             }
   }
 
@@ -68,29 +77,30 @@ function HeadingItemCard({ lineItem }) {
   }
 
   useEffect(() => {
-    if(selectedItem !== 'create new'){
+   
     dispatch({type:'UPDATE_HEADING_ITEM_ITEM_CODE', payload: {heading_item_id: lineItem.id, item_id: selectedItem }})
-    }
+    
   }, [selectedItem])
 
-  useEffect(() => {
-    console.log('ft is', ft);
-    console.log('inches is', inches);
-    let convertedMeasure = Number(ft) + Number(inches) * 0.0833333;
-    console.log(convertedMeasure);
-    setMeasurement(convertedMeasure);
-    console.log('measurement is', measurement);
-  }, [ft, inches])
+  // useEffect(() => {
+  //   console.log('ft is', ft);
+  //   console.log('inches is', inches);
+  //   let convertedMeasure = Number(ft) + Number(inches) * 0.0833333;
+  //   console.log(convertedMeasure);
+  //   setMeasurement(convertedMeasure);
+  //   console.log('measurement is', measurement);
+  // }, [ft, inches])
 
 
- console.log('items', items);
-//   console.log('selectedItem is', selectedItem);
-console.log('line item', lineItem);
+//  console.log('items', items);
+// //   console.log('selectedItem is', selectedItem);
+// console.log('line item', lineItem);
  
   return (
     <div className='heading-item-card'>
 
       <select value={selectedItem} onChange={handleItemSelect}>
+        <option>CREATE NEW</option>
         {items.map((item, index) => {
           return <option key={index} value={item.id}>{item.item_code}</option>;
         })}
