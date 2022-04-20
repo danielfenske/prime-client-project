@@ -18,7 +18,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
     // GET all opportunities for an admin
     if (access_level > 1) {
-        sqlText = `SELECT * FROM "opportunity" WHERE "disabled" = false;`;
+        sqlText = `SELECT * FROM "opportunity" WHERE "disabled" = false ORDER BY "id" DESC;`;
 
         pool.query(sqlText)
             .then((result) => {
@@ -61,11 +61,14 @@ router.get('/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', rejectUnauthenticated, async (req, res) => {
 
     const userId = req.user.id;
-    const sqlText = ` INSERT INTO "opportunity" ("user_id")
-    VALUES($1) RETURNING id;`;
+    const defaultOpportunityCode = 'AAA-2022-01';
+    const defaultName = 'new opportunity';
+
+    const sqlText = `INSERT INTO "opportunity" ("user_id", "opportunity_code", "name")
+    VALUES($1, $2, $3) RETURNING id;`;
 
     try {
-        const result = await pool.query(sqlText, [userId])
+        const result = await pool.query(sqlText, [userId, defaultOpportunityCode, defaultName])
 
         const opportunity_id = result.rows[0].id;
 
@@ -97,10 +100,11 @@ router.put('/:id', rejectUnauthenticated, (req, res) => {
     "city" = $8, 
     "state" = $9, 
     "zip" = $10, 
-    "tax_rate" = $11
-    WHERE "id" = $12;`;
+    "tax_rate" = $11,
+    "opportunity_code" = $12
+    WHERE "id" = $13;`;
 
-    pool.query(sqlText, [req.body.name, req.body.status, req.body.due_date, req.body.type, req.body.community_name, req.body.development_type, req.body.address_line_1, req.body.city, req.body.state, req.body.zip, req.body.tax_rate, opportunityCode])
+    pool.query(sqlText, [req.body.name, req.body.status, req.body.due_date, req.body.type, req.body.community_name, req.body.development_type, req.body.address_line_1, req.body.city, req.body.state, req.body.zip, req.body.tax_rate, req.body.opportunity_code, opportunityCode])
         .then(() => {
             res.sendStatus(200);
         }).catch((error) => {
