@@ -16,16 +16,16 @@ function EditPartnerModal({ open, setOpen }) {
     const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
     const editablePartnerID = useSelector((store) => store.partnerReducer.partnerEditReducer.id);
 
-    const [name, setName] = useState("");
-    const [type, setType] = useState("");
-    const [partner_code, setPartner_code] = useState("");
-    const [partner_discount, setPartner_discount] = useState("");
-    const [rounding_type, setRounding_type] = useState("");
-    const [phone_number, setPhone_number] = useState("");
-    const [address_line_1, setAddress_line_1] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [zip, setZip] = useState("");
+    const [name, setName] = useState(editablePartner.name);
+    const [type, setType] = useState(editablePartner.type);
+    const [partner_code, setPartner_code] = useState(editablePartner.partner_code);
+    const [partner_discount, setPartner_discount] = useState(editablePartner.partner_discount);
+    const [rounding_type, setRounding_type] = useState(editablePartner.rounding_type);
+    const [phone_number, setPhone_number] = useState(editablePartner.phone_number);
+    const [address_line_1, setAddress_line_1] = useState(editablePartner.address_line_1);
+    const [city, setCity] = useState(editablePartner.city);
+    const [state, setState] = useState(editablePartner.state);
+    const [zip, setZip] = useState(editablePartner.zip);
 
     // let StateArray = [
     //     AL, AK, AZ, AR, AS, CA, CO, CT

@@ -21,7 +21,7 @@ import ContactCard from './ContactCard';
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
-  // const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
+  const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
   const contacts = useSelector((store) => store.contactReducer);
   const { id } = useParams();
   const opportunity = useSelector((store) => store.opportunityReducer.specificOpportunityReducer);
@@ -53,8 +53,20 @@ function OpportunityGeneralCard() {
     setState(opportunity.state);
     setZip(opportunity.zip);
     setTaxRate(opportunity.tax_rate);
+    
+
+    if (opportunity.partner_id) {
+      handleEditPartner(partners.filter(p => p.id === opportunity.partner_id)[0]);
+      setPartnerId(opportunity.partner_id);
+      // handleEditPartner(editablePartner);
+    }
+    
   }, [opportunity]);
 
+  useEffect(() => {
+    setPartnerType(editablePartner.type);
+    setPartnerPhoneNumber(editablePartner.phone_number);
+  }, [editablePartner])
 
   const [name, setName] = useState('');
   const [opportunity_code, setOpportunityCode] = useState('');
@@ -85,7 +97,12 @@ function OpportunityGeneralCard() {
   const [partnerAddModalOpen, setPartnerAddModalOpen] = useState(false);
   const [partnerEditModalOpen, setPartnerEditModalOpen] = useState(false);
 
+  const handleEditContact = (thisContact) => {
+    // dispatch({ type: 'SET_CLEAR_EDIT_PARTNER', payload: []});
+    // dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
+  }
   const handleEditPartner = (thisPartner) => {
+    dispatch({ type: 'SET_CLEAR_EDIT_PARTNER', payload: []});
     dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
   }
   const handlePartnerAdd = () => {
@@ -98,8 +115,10 @@ function OpportunityGeneralCard() {
 
   const handleSubmit = () => {
     console.log('user submitted the form');
+    console.log('edit partner', editablePartner);
 
     let opportunitySubmission = {
+      partner_id: editablePartner.id,
       id: opportunity.id,
       name: name,
       opportunity_code: opportunity_code,
@@ -283,7 +302,7 @@ function OpportunityGeneralCard() {
               >
                 {/* <MenuItem value={1}>none</MenuItem> */}
                 {contacts.map((thisContact, i) => (
-                  <MenuItem key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>
+                  <MenuItem onClick={() => handleEditContact(thisContact)} key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>
                 ))}
 
               </Select>
