@@ -14,7 +14,6 @@ import { Button } from '@mui/material';
 import ProposalCard from './ProposalCard/ProposalCard';
 
 function OpportunityProposalListCard() {
-
   const [search, setSearch] = useState('');
   const [partner, setPartner] = useState(1);
   const [status, setStatus] = useState(1);
@@ -23,16 +22,17 @@ function OpportunityProposalListCard() {
   const history = useHistory();
   const { id } = useParams();
 
-  const proposal = useSelector((store) => store.proposalReducer.singleProposalReducer);
-  const proposalList = useSelector((store) => store.proposalReducer.proposalListReducer);
+  const proposalList = useSelector(
+    (store) => store.proposalReducer.proposalListReducer,
+  );
 
   const postProposal = () => {
     dispatch({ type: 'POST_PROPOSAL', payload: id });
-  }
+  };
 
   useEffect(() => {
     dispatch({ type: 'FETCH_PROPOSAL_LIST', payload: id });
-  }, [])
+  }, []);
 
   return (
     <>
@@ -42,7 +42,7 @@ function OpportunityProposalListCard() {
           Create New
         </Button>
       </div>
-      <div className="filter-container">
+      <div className='filter-container'>
         <TextField
           id='outlined-basic'
           label='Search Proposals'
@@ -86,9 +86,19 @@ function OpportunityProposalListCard() {
       </div>
       <div>
         {proposalList &&
-          proposalList.map((proposal, index) => {
-            return <ProposalCard key={index} proposal={proposal} />;
-          })}
+          proposalList
+            .filter((proposal) => {
+              return (
+                proposal.proposal_code
+                  .toUpperCase()
+                  .includes(search.toUpperCase()) &&
+                (!proposal.partner_id || proposal.partner_id == partner) &&
+                (!proposal.status || proposal.status == status)
+              );
+            })
+            .map((proposal, index) => {
+              return <ProposalCard key={index} proposal={proposal} />;
+            })}
       </div>
     </>
   );
