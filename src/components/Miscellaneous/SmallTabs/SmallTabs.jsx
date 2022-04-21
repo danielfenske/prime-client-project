@@ -51,16 +51,18 @@ function SmallTabs({ tabLabels, tabContents, tab_extras = <></> }) {
         </div>
         <div ref={tabContentContainer} className='tab-content-container'>
           {tabContents.map((tab, index) => {
-            return (
-              <span
-                key={index}
-                style={{
-                  display: index === selectedTab ? 'grid' : 'none',
-                }}
-              >
-                {tab}
-              </span>
-            );
+            if (index === selectedTab) {
+              return (
+                <span
+                  key={index}
+                  // style={{
+                  //   display: index === selectedTab ? 'grid' : 'none',
+                  // }}
+                >
+                  {tab}
+                </span>
+              );
+            }
           })}
         </div>
       </div>

@@ -152,6 +152,7 @@ function ProposalPreviewCard() {
                     return total;
                   }
                 }, [])
+                .sort((a, b) => a.id - b.id)
                 .map((heading, index) => {
                   if (!heading) return;
                   return (
@@ -164,6 +165,7 @@ function ProposalPreviewCard() {
                           .filter(
                             (line_item) => line_item?.heading_id === heading.id,
                           )
+                          .sort((a, b) => a.id - b.id)
                           .map((li, index) => {
                             const item = getItem(li.item_id);
                             return (

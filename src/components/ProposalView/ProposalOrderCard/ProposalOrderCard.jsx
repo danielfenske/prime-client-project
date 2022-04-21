@@ -33,10 +33,10 @@ function ProposalOrderCard() {
     <>
       <SmallTabs
         tabLabels={headings
-          .sort((a, b) => a.order - b.order)
+          // .sort((a, b) => a.order - b.order)
           .map((head) => head.name)}
         tabContents={headings
-          .sort((a, b) => a.order - b.order)
+          // .sort((a, b) => a.order - b.order)
           .map((head, index) => {
             return <HeadingCard key={index} {...head} />;
           })}

@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 
 function HeadingItemCard({ lineItem }) {
   const items = useSelector((store) => store.itemReducer);
+  const saveTrigger = useSelector((store) => store.triggerSave);
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(lineItem.item_id);
   const [qty, setQty] = useState(lineItem.qty);
@@ -23,6 +24,11 @@ function HeadingItemCard({ lineItem }) {
   const [pricePerPriceUnit, setPricePerPriceUnit] = useState(
     lineItem.override_price || lineItem.default_price,
   );
+
+  useEffect(() => {
+    console.log('Saving item');
+    updateQtyMeasurementOrderPricePerPriceUnit();
+  }, [saveTrigger]);
 
   const [open, setOpen] = useState(false);
 
@@ -36,7 +42,7 @@ function HeadingItemCard({ lineItem }) {
   };
 
   const updateQtyMeasurementOrderPricePerPriceUnit = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     console.log('in updateQtyAndMeasurement');
     if (lineItem.measurement_unit === 'EA') {
       dispatch({
@@ -224,9 +230,9 @@ function HeadingItemCard({ lineItem }) {
         {/* <TextField id="outlined-basic" label="description" variant="outlined" value={lineItem.description} /> */}
         <p> Total line item price: {lineItem.total_item_price}</p>
         {/* <TextField id="outlined-basic" label="total price" variant="outlined" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} /> */}
-        <button onClick={updateQtyMeasurementOrderPricePerPriceUnit}>
+        {/* <button onClick={updateQtyMeasurementOrderPricePerPriceUnit}>
           SAVE
-        </button>
+        </button> */}
         <button
           onClick={() => {
             setOpen(true);

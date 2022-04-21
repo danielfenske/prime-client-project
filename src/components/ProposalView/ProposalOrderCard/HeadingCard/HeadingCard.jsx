@@ -61,6 +61,12 @@ function HeadingCard(props) {
 
   const editHeading = () => {
     console.log('edit button clicked');
+
+    // this dispatch will trigger a save on all the items
+    dispatch({
+      type: 'TRIGGER_ITEM_SAVE',
+    });
+
     dispatch({
       type: 'UPDATE_HEADING',
       payload: {
@@ -150,6 +156,7 @@ function HeadingCard(props) {
           <div className='item-container'>
             {lineItemList
               .filter((lineItem) => props.id === lineItem.heading_id)
+              .sort((a, b) => a.id - b.id)
               .map((lineItem, index) => {
                 return (
                   <div key={index}>
