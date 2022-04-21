@@ -121,10 +121,13 @@ function HeadingCard(props) {
           <div className='heading-text-container'>
             <h1>Heading Information</h1>
             <div>
-              <IconButton>
-                <SaveOutlinedIcon sx={{ color: 'var(--grey-dark)' }} />
+              <IconButton onClick={deleteHeading}>
+                {/* <SaveOutlinedIcon sx={{ color: 'var(--grey-dark)' }} /> */}
+                <DeleteIcon />
               </IconButton>
-              <Button>Save Progress</Button>
+              <Button variant='contained' size='small' onClick={editHeading}>
+                Save Progress
+              </Button>
             </div>
           </div>
           <div className='form-container' id='heading-form-container'>
