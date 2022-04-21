@@ -34,16 +34,16 @@ function EditPartnerModal({ open, setOpen }) {
 
     useEffect(() => {
 
-        setName(editablePartner.name);
-        setType(editablePartner.type);
-        setPartner_code(editablePartner.partner_code);
-        setPartner_discount(editablePartner.partner_discount);
-        setRounding_type(editablePartner.rounding_type);
-        setPhone_number(editablePartner.phone_number);
-        setAddress_line_1(editablePartner.address_line_1);
-        setCity(editablePartner.city);
-        setState(editablePartner.state);
-        setZip(editablePartner.zip);
+        setName(editablePartner?.name);
+        setType(editablePartner?.type);
+        setPartner_code(editablePartner?.partner_code);
+        setPartner_discount(editablePartner?.partner_discount);
+        setRounding_type(editablePartner?.rounding_type);
+        setPhone_number(editablePartner?.phone_number);
+        setAddress_line_1(editablePartner?.address_line_1);
+        setCity(editablePartner?.city);
+        setState(editablePartner?.state);
+        setZip(editablePartner?.zip);
 
     }, [editablePartner]);
 

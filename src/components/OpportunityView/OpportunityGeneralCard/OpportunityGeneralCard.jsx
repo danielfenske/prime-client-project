@@ -13,7 +13,7 @@ import IconButton from '@mui/material/IconButton';
 
 import EditContactModal from './EditContactModal/EditContactModal';
 import AddContactModal from './AddContactModal/AddContactModal';
-import AddPartnerModal from './EditPartnerModal/EditPartnerModal';
+import AddPartnerModal from './AddPartnerModal/AddPartnerModal';
 import EditPartnerModal from './EditPartnerModal/EditPartnerModal';
 // component imports
 import ContactCard from './ContactCard';
@@ -22,7 +22,8 @@ function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
   const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
-  const contacts = useSelector((store) => store.contactReducer);
+  const contacts = useSelector((store) => store.contactReducer.contactReducer);
+  const editableContact = useSelector((store) => store.contactReducer.contactEditReducer);
   const { id } = useParams();
   const opportunity = useSelector(
     (store) => store.opportunityReducer.specificOpportunityReducer,
@@ -60,20 +61,27 @@ function OpportunityGeneralCard() {
     setState(opportunity.state);
     setZip(opportunity.zip);
     setTaxRate(opportunity.tax_rate);
-    
+
 
     if (opportunity.partner_id) {
       handleEditPartner(partners.filter(p => p.id === opportunity.partner_id)[0]);
       setPartnerId(opportunity.partner_id);
       // handleEditPartner(editablePartner);
     }
-    
+
   }, [opportunity]);
 
   useEffect(() => {
     setPartnerType(editablePartner.type);
     setPartnerPhoneNumber(editablePartner.phone_number);
   }, [editablePartner])
+
+  useEffect(() => {
+    setContactName(editableContact.name);
+    setContactPhoneNumber(editableContact.phone);
+    setContactEmail(editableContact.email);
+  }, [editableContact])
+
 
   const [name, setName] = useState('');
   const [opportunity_code, setOpportunityCode] = useState('');
@@ -97,19 +105,22 @@ function OpportunityGeneralCard() {
   const [contactPhoneNumber, setContactPhoneNumber] = useState('');
   const [contactEmail, setContactEmail] = useState('');
 
-
   const [partner_id, setPartnerId] = useState(1);
   const [contact_id, setContactId] = useState(1);
 
   const [partnerAddModalOpen, setPartnerAddModalOpen] = useState(false);
   const [partnerEditModalOpen, setPartnerEditModalOpen] = useState(false);
 
+  const [contactAddModalOpen, setContactAddModalOpen] = useState(false);
+  const [contactEditModalOpen, setContactEditModalOpen] = useState(false);
+
   const handleEditContact = (thisContact) => {
-    // dispatch({ type: 'SET_CLEAR_EDIT_PARTNER', payload: []});
-    // dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
+    dispatch({ type: 'SET_CLEAR_EDIT_CONTACT', payload: [] });
+    dispatch({ type: 'SET_EDIT_CONTACT', payload: thisContact });
   }
+
   const handleEditPartner = (thisPartner) => {
-    dispatch({ type: 'SET_CLEAR_EDIT_PARTNER', payload: []});
+    dispatch({ type: 'SET_CLEAR_EDIT_PARTNER', payload: [] });
     dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
   }
   const handlePartnerAdd = () => {
@@ -118,6 +129,13 @@ function OpportunityGeneralCard() {
 
   const handlePartnerEdit = () => {
     setPartnerEditModalOpen(true);
+  }
+  const handleContactAdd = () => {
+    setContactAddModalOpen(true);
+  }
+
+  const handleContactEdit = () => {
+    setContactEditModalOpen(true);
   }
 
   const handleSubmit = () => {
@@ -320,8 +338,8 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Name'
               variant='outlined'
-              value={opportunity_code}
-              onChange={(e) => setOpportunityCode(e.target.value)}
+              value={contactName}
+              onChange={(e) => setContactName(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
@@ -329,8 +347,8 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Phone Number'
               variant='outlined'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={contactPhoneNumber}
+              onChange={(e) => setContactPhoneNumber(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
@@ -338,16 +356,16 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Email'
               variant='outlined'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={contactEmail}
+              onChange={(e) => setContactEmail(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
-            <IconButton >
+            <IconButton onClick={handleContactAdd}>
               <AddIcon />
             </IconButton>
 
-            <IconButton >
+            <IconButton onClick={handleContactEdit}>
               <EditIcon />
             </IconButton>
 
@@ -409,8 +427,11 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
-      <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} /> 
-      <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} /> 
+      <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} />
+      <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
+      <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen}/>
+      <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen}/>
+
     </>
   );
 }
