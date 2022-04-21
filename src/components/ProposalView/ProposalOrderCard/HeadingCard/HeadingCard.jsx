@@ -14,6 +14,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import './HeadingCard.css';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
 import { LockTwoTone } from '@mui/icons-material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function HeadingCard(props) {
   const dispatch = useDispatch();
@@ -177,11 +178,13 @@ function HeadingCard(props) {
           <button onClick={addNewHeading}>SAVE</button>
           <button onClick={editHeading}>EDIT</button>
           <button onClick={deleteHeading}>DELETE</button>
-          <h2>Items</h2>
-
-
-          <button onClick={addNewLineItem}>Add New Line Item</button>
-          <button onClick={addNewItem}>Add New Item</button>
+          <div className="item-header-container">
+            <div className="item-header">
+              <h2>Items</h2>
+              <IconButton variant="contained" onClick={addNewLineItem}><AddCircleOutlineIcon style={{color: 'var(--orange)'}}/></IconButton>
+            </div>
+            <Button variant="contained"  size='small' onClick={addNewItem}>Create New Item</Button>
+          </div>
           <CreateItemModal open={createItemModalOpen} setOpen={setCreateItemModalOpen} />
           <div className='item-container'>
             {lineItemList.filter(lineItem => props.id === lineItem.heading_id).map((lineItem, index) => {
