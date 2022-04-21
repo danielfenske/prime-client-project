@@ -78,18 +78,16 @@ CREATE TABLE "proposal" (
     "plan_date" TIMESTAMP,
     "building_code" VARCHAR(80),
     "partner_discount" DECIMAL (25, 2),
-    "surcharge" DECIMAL (25, 2),
-    "surcharge_description" VARCHAR(250),
     "method" INT, -- will be a dropdown, we will simply target the INT or id
     "method_message" VARCHAR(250),
     "delivery_charge" DECIMAL (25, 2),
+    "delivery_message" VARCHAR(250),
     "field_weld_charge" DECIMAL (25, 2),
     "field_weld_message" VARCHAR(250),
-    "description" VARCHAR(250),
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
- INSERT INTO "proposal" ("date", "proposal_code", "opportunity_id", "house_type", "plan_identifier", "plan_date", "building_code", "partner_discount", "surcharge", "surcharge_description", "method", "method_message", "delivery_charge", "field_weld_charge", "field_weld_message", "description", "disabled")
- VALUES('2004-10-19 10:23:54+02', 'BRK', 1, 'Rambler', 'yayay', '2004-10-19 10:23:54+02', 'sdfsdfs', 3.33, 13.33, '2022 up-charge', 2, 'method message', 333.13, 23.13, 'Welded railing together', 'small house', false);
+ INSERT INTO "proposal" ("date", "proposal_code", "opportunity_id", "house_type", "plan_identifier", "plan_date", "building_code", "partner_discount", "method", "method_message", "delivery_charge", "delivery_message", "field_weld_charge", "field_weld_message", "disabled")
+ VALUES('2004-10-19 10:23:54+02', 'BRK', 1, 'Rambler', 'yayay', '2004-10-19 10:23:54+02', 'sdfsdfs', 2, 3, 'method message', 333.13, 'Leave on front steps', 23.13, 'Welded railing together', false);
 
 CREATE TABLE "heading" (
 	"id" SERIAL PRIMARY KEY,
