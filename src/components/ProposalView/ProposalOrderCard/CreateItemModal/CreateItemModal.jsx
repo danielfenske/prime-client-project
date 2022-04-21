@@ -55,6 +55,7 @@ function CreateItemModal({ open, setOpen }) {
   //dispatch unit_weight data along with the item object if unit_weight has a value,
   //dispatch 0.01 for unit_weight if the measurement unit is LBS and the pricing unit is CWT,
   //dispatch 1 for unit_weight if the measurement unit and the pricing unit are the same
+  //dispatch unit_weight * 0.01 if the pricing unit is CWT and the measurement unit is not LBS
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -122,10 +123,10 @@ function CreateItemModal({ open, setOpen }) {
     setOpen(false);
   };
 
-  console.log('unitTypeList is', unitTypeList);
-  console.log('unitInput is', unitInput);
-  console.log('values', values);
-  console.log('unitWeight', unitWeight);
+  // console.log('unitTypeList is', unitTypeList);
+  // console.log('unitInput is', unitInput);
+  // console.log('values', values);
+  // console.log('unitWeight', unitWeight);
   return (
     <Modal open={open}>
       <h1>Add New Item</h1>
@@ -143,13 +144,6 @@ function CreateItemModal({ open, setOpen }) {
           variant='outlined'
           value={values.name}
           onChange={(e) => handleInputChange('name', e)}
-        />
-        <TextField
-          id='outlined-basic'
-          label='description'
-          variant='outlined'
-          value={values.description}
-          onChange={(e) => handleInputChange('description', e)}
         />
         <FormControl fullWidth>
           <InputLabel id='demo-simple-select-label'>

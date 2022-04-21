@@ -1,7 +1,6 @@
 // import components here:
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import './ProposalGeneralCard.css';
 
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/

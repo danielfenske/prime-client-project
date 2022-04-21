@@ -110,18 +110,18 @@ router.get('/:id/item', (req, res) => {
 
 //get all line items and related item information
 router.get('/item_with_item_code/:id', (req, res) => {
-  console.log('in heading/item_with_item_code router GET route, req.params is');
+  // console.log('in heading/item_with_item_code router GET route');
 
   if (req.isAuthenticated()) {
 
     const sqlText =
-      `SELECT "item_heading"."id", "item_heading"."heading_id", "item_heading"."item_id", "item_heading"."order", "item_heading"."price_unit", "item_heading"."single_unit_price", "item_heading"."ft", "item_heading"."inches", "item_heading"."measure_unit", "item_heading"."rounded_measure_unit", "item_heading"."qty", "item_heading"."total_item_price", "item"."item_code", "item"."name", "item"."description", "item"."price_per_price_unit" AS "default_price", "unit_type"."measurement_unit", "unit_type"."pricing_unit", "item"."unit_weight", "item_heading"."price_per_price_unit" AS "override_price"
+      `SELECT "item_heading"."id", "item_heading"."heading_id", "item_heading"."item_id", "item_heading"."message", "item_heading"."order", "item_heading"."price_per_pricing_unit" AS "override_price", "item_heading"."ft", "item_heading"."inches", "item_heading"."measurement_per_unit", "item_heading"."rounded_measurement_per_unit", "item_heading"."rounded_measurement_per_unit_unit_weight", "item_heading"."qty", "item_heading"."single_item_price", "item_heading"."item_price_total", "item"."item_code", "item"."name", "item"."price_per_pricing_unit" AS "default_price", "item"."unit_weight", "unit_type"."measurement_unit", "unit_type"."pricing_unit"
+
          FROM "item_heading"
          JOIN "item"
          ON "item_heading"."item_id" = "item"."id"
          JOIN "unit_type"
-         ON "item"."unit_type_id" = "unit_type"."id"
-         ORDER BY "item_heading"."order";`;
+         ON "item"."unit_type_id" = "unit_type"."id";`;
 
     pool.query(sqlText)
       .then((result) => {
@@ -177,7 +177,7 @@ router.put('/item/item_code', (req, res) => {
       .then((result) => {
         res.sendStatus(200);
       }).catch((error) => {
-        console.log('error updating item code', error);
+        console.log('error updating item code in the line item', error);
         res.sendStatus(500);
       })
   } else {
@@ -198,23 +198,23 @@ router.put('/item/update', async (req, res) => {
 
       const sqlText =
         `UPDATE "item_heading"
-                 SET "measure_unit" = $1, "qty" = $2, "order" = $3, "price_per_price_unit" = $4
+                 SET "measurement_per_unit" = $1, "qty" = $2, "price_per_pricing_unit" = $3, "message" = $4
                  WHERE "id" = $5;`;
 
-      const valueArray = [req.body.measure_unit, req.body.qty, req.body.order, req.body.price_per_price_unit, req.body.heading_item_id];
+      const valueArray = [req.body.measurement_per_unit, req.body.qty, req.body.price_per_pricing_unit, req.body.message, req.body.heading_item_id];
 
       await connection.query(sqlText, valueArray);
 
-      // rounded_measure_unit gets updated based on the partner rounding type
+      // rounded_measure_per_unit gets updated based on the partner rounding type
       const sqlTextRounding =
         `UPDATE "item_heading"
-                SET "rounded_measure_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measure_unit"
-                                                  WHEN "partner"."rounding_type" = 2 THEN (SELECT CASE WHEN "item"."unit_type_id" = 1 THEN "measure_unit"
-                                                                                                       WHEN "item"."unit_type_id" != 1 THEN CEILING("measure_unit")
+                SET "rounded_measurement_per_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measurement_per_unit"
+                                                  WHEN "partner"."rounding_type" = 2 THEN (SELECT CASE WHEN "item"."unit_type_id" = 1 THEN "measurement_per_unit"
+                                                                                                       WHEN "item"."unit_type_id" != 1 THEN CEILING("measurement_per_unit")
                                                                                                   END)
                                                          
-                                                  WHEN "partner"."rounding_type" = 3 THEN (SELECT CASE WHEN "item"."unit_type_id" = 1 THEN "measure_unit"
-                                                                                                       WHEN "item"."unit_type_id" != 1 THEN CEILING("measure_unit"/5.0)*5
+                                                  WHEN "partner"."rounding_type" = 3 THEN (SELECT CASE WHEN "item"."unit_type_id" = 1 THEN "measurement_per_unit"
+                                                                                                       WHEN "item"."unit_type_id" != 1 THEN CEILING("measurement_per_unit"/5.0)*5
                                                                                                   END)
                                              END
                 FROM "item",
@@ -233,22 +233,22 @@ router.put('/item/update', async (req, res) => {
 
       await connection.query(sqlTextRounding, [req.body.heading_item_id]);
 
-      //calculate price_unit
+      //calculate rounded_measurement_per_unit_*_unit_weight
 
       const sqlTextPriceUnit =
         `UPDATE "item_heading"
-             SET "price_unit" = "rounded_measure_unit" * "item"."unit_weight"
+             SET "rounded_measurement_per_unit_unit_weight" = "rounded_measurement_per_unit" * "item"."unit_weight"
              FROM "item"
              WHERE "item_heading"."item_id" = "item"."id"
              AND "item_heading"."id" = $1;`;
 
       await connection.query(sqlTextPriceUnit, [req.body.heading_item_id]);
 
-      //calculate single_unit_price
+      //calculate single_item_price
 
       const sqlTextSingleUnitPrice =
         `UPDATE "item_heading"
-             SET "single_unit_price" = "price_unit"*"price_per_price_unit"
+             SET "single_item_price" = "rounded_measurement_per_unit_unit_weight"*"price_per_pricing_unit"
              WHERE "item_heading"."id" = $1;`;
 
       await connection.query(sqlTextSingleUnitPrice, [req.body.heading_item_id]);
@@ -257,14 +257,10 @@ router.put('/item/update', async (req, res) => {
 
       const sqlTextTotalItemPrice =
         `UPDATE "item_heading"
-             SET "total_item_price" = "single_unit_price"*"qty"
+             SET "item_price_total" = "single_item_price"*"qty"
              WHERE "item_heading"."id" = $1;`;
 
       await connection.query(sqlTextTotalItemPrice, [req.body.heading_item_id]);
-
-      //add total_item_price of all line items and update the heading table
-
-
 
       await connection.query('COMMIT;');
       res.sendStatus(200);
@@ -283,7 +279,7 @@ router.put('/item/update', async (req, res) => {
 // update a new line item with ft and inches (the user actually saves the information on the new line item or updates an existing line item)
 router.put('/item/update/ft_inches', async (req, res) => {
   // console.log('in heading/item/ft_inches router PUT route');
-  // console.log('req.body is', req.body);
+  console.log('req.body is', req.body);
   const connection = await pool.connect();
 
   if (req.isAuthenticated()) {
@@ -304,7 +300,7 @@ router.put('/item/update/ft_inches', async (req, res) => {
 
       const sqlTextConvert =
         `UPDATE "item_heading"
-             SET "measure_unit" = "ft" + "inches" * 0.0833333
+             SET "measurement_per_unit" = "ft" + "inches" * 0.0833333
              WHERE "id" = $1;`;
 
       await connection.query(sqlTextConvert, [req.body.heading_item_id]);
@@ -317,25 +313,25 @@ router.put('/item/update/ft_inches', async (req, res) => {
                                          WHEN "partner"."rounding_type" = 3 THEN CEILING("measure_unit"/5.0)*5
                                             END
         FROM "heading",
-             "proposal",
-             "opportunity",
-             "partner"
+        "proposal",
+        "opportunity",
+        "partner"
         WHERE "heading"."id" = "item_heading"."heading_id"
           AND "proposal"."id" = "heading"."proposal_id"
           AND "opportunity"."id" = "proposal"."opportunity_id"
           AND "partner"."id" = "opportunity"."partner_id"
-          AND "item_heading"."id" = $1;`;
+          AND "item_heading"."id" = $1; `;
 
       await connection.query(sqlTextRounding, [req.body.heading_item_id]);
 
-      //calculate price_unit
+      //calculate rounded_measurement_per_unit_*_unit_weight
 
       const sqlTextPriceUnit =
         `UPDATE "item_heading"
-             SET "price_unit" = "rounded_measure_unit" * "item"."unit_weight"
+             SET "rounded_measurement_per_unit_unit_weight" = "rounded_measurement_per_unit" * "item"."unit_weight"
              FROM "item"
              WHERE "item_heading"."item_id" = "item"."id"
-             AND "item_heading"."id" = $1;`;
+             AND "item_heading"."id" = $1; `;
 
       await connection.query(sqlTextPriceUnit, [req.body.heading_item_id]);
 
@@ -343,8 +339,8 @@ router.put('/item/update/ft_inches', async (req, res) => {
 
       const sqlTextSingleUnitPrice =
         `UPDATE "item_heading"
-             SET "single_unit_price" = "price_unit"*"price_per_price_unit"
-             WHERE "item_heading"."id" = $1;`;
+             SET "single_item_price" = "rounded_measurement_per_unit_unit_weight"*"price_per_pricing_unit"
+             WHERE "item_heading"."id" = $1; `;
 
       await connection.query(sqlTextSingleUnitPrice, [req.body.heading_item_id]);
 
@@ -352,8 +348,8 @@ router.put('/item/update/ft_inches', async (req, res) => {
 
       const sqlTextTotalItemPrice =
         `UPDATE "item_heading"
-             SET "total_item_price" = "single_unit_price"*"qty"
-             WHERE "item_heading"."id" = $1;`;
+             SET "total_item_price" = "single_unit_price" * "qty"
+             WHERE "item_heading"."id" = $1; `;
 
       await connection.query(sqlTextTotalItemPrice, [req.body.heading_item_id]);
 
@@ -373,103 +369,103 @@ router.put('/item/update/ft_inches', async (req, res) => {
   }
 });
 
-//update line item order (go down)
-router.put('/item/order_down', async (req, res) => {
-  // console.log('in heading/item/order_down router PUT route');
-  // console.log('req.body is', req.body);
-  const connection = await pool.connect();
+// //update line item order (go down)
+// router.put('/item/order_down', async (req, res) => {
+//     // console.log('in heading/item/order_down router PUT route');
+//     // console.log('req.body is', req.body);
+//     const connection = await pool.connect();
 
-  if (req.isAuthenticated()) {
-    try {
-      await connection.query('BEGIN;');
+//     if (req.isAuthenticated()) {
+//         try {
+//             await connection.query('BEGIN;');
 
-      const sqlText =
-        `UPDATE "item_heading"
-                 SET "order" = "order" + 1
-                 WHERE "heading_id" = $1 AND "order" = $2
-                 RETURNING "item_id", "order";`;
+//             const sqlText =
+//                 `UPDATE "item_heading"
+//                  SET "order" = "order" + 1
+//                  WHERE "heading_id" = $1 AND "order" = $2
+//                  RETURNING "item_id", "order";`;
 
-      const valueArray = [req.body.heading_id, req.body.order];
+//             const valueArray = [req.body.heading_id, req.body.order];
 
-      const response = await connection.query(sqlText, valueArray);
-      console.log('response is', response.rows[0].item_id);
+//             const response = await connection.query(sqlText, valueArray);
+//             console.log('response is', response.rows[0].item_id);
 
-      const idToUpdate = response.rows[0].item_id;
-      const orderToUpdate = response.rows[0].order;
-
-
-      // update the order value of the row that now has the same order
-      const sqlTextRounding =
-        `UPDATE "item_heading"
-            SET "order" = "order" - 1
-            WHERE "heading_id" = $1 AND "order" = $2 AND "item_id" != $3;`;
-
-      await connection.query(sqlTextRounding, [req.body.heading_id, orderToUpdate, idToUpdate]);
-      console.log('updated the second order');
+//             const idToUpdate = response.rows[0].item_id;
+//             const orderToUpdate = response.rows[0].order;
 
 
-      await connection.query('COMMIT;');
-      res.sendStatus(200);
-    } catch (error) {
-      await connection.query('ROLLBACK;');
-      console.log('Transaction Error', error);
-      res.sendStatus(500);
-    } finally {
-      connection.release();
-    }
-  } else {
-    res.sendStatus(403)
-  }
-});
+//             // update the order value of the row that now has the same order
+//             const sqlTextRounding =
+//             `UPDATE "item_heading"
+//             SET "order" = "order" - 1
+//             WHERE "heading_id" = $1 AND "order" = $2 AND "item_id" != $3;`;
 
-//update line item order (go up)
-router.put('/item/order_up', async (req, res) => {
-  // console.log('in heading/item/order_up router PUT route');
-  // console.log('req.body is', req.body);
-  const connection = await pool.connect();
-
-  if (req.isAuthenticated()) {
-    try {
-      await connection.query('BEGIN;');
-
-      const sqlText =
-        `UPDATE "item_heading"
-                 SET "order" = "order" - 1
-                 WHERE "heading_id" = $1 AND "order" = $2
-                 RETURNING "item_id", "order";`;
-
-      const valueArray = [req.body.heading_id, req.body.order];
-
-      const response = await connection.query(sqlText, valueArray);
-      console.log('response is', response.rows[0].item_id);
-
-      const idToUpdate = response.rows[0].item_id;
-      const orderToUpdate = response.rows[0].order;
+//             await connection.query(sqlTextRounding, [req.body.heading_id, orderToUpdate, idToUpdate]);
+//             console.log('updated the second order');
 
 
-      // update the order value of the row that now has the same order
-      const sqlTextRounding =
-        `UPDATE "item_heading"
-            SET "order" = "order" + 1
-            WHERE "heading_id" = $1 AND "order" = $2 AND "item_id" != $3;`;
+//             await connection.query('COMMIT;');
+//             res.sendStatus(200);
+//         } catch (error) {
+//             await connection.query('ROLLBACK;');
+//             console.log('Transaction Error', error);
+//             res.sendStatus(500);
+//         } finally {
+//             connection.release();
+//         }
+//     } else {
+//         res.sendStatus(403)
+//     }
+// });
 
-      await connection.query(sqlTextRounding, [req.body.heading_id, orderToUpdate, idToUpdate]);
-      console.log('updated the second order');
+// //update line item order (go up)
+// router.put('/item/order_up', async (req, res) => {
+//     // console.log('in heading/item/order_up router PUT route');
+//     // console.log('req.body is', req.body);
+//     const connection = await pool.connect();
+
+//     if (req.isAuthenticated()) {
+//         try {
+//             await connection.query('BEGIN;');
+
+//             const sqlText =
+//                 `UPDATE "item_heading"
+//                  SET "order" = "order" - 1
+//                  WHERE "heading_id" = $1 AND "order" = $2
+//                  RETURNING "item_id", "order";`;
+
+//             const valueArray = [req.body.heading_id, req.body.order];
+
+//             const response = await connection.query(sqlText, valueArray);
+//             console.log('response is', response.rows[0].item_id);
+
+//             const idToUpdate = response.rows[0].item_id;
+//             const orderToUpdate = response.rows[0].order;
 
 
-      await connection.query('COMMIT;');
-      res.sendStatus(200);
-    } catch (error) {
-      await connection.query('ROLLBACK;');
-      console.log('Transaction Error', error);
-      res.sendStatus(500);
-    } finally {
-      connection.release();
-    }
-  } else {
-    res.sendStatus(403)
-  }
-});
+//             // update the order value of the row that now has the same order
+//             const sqlTextRounding =
+//             `UPDATE "item_heading"
+//             SET "order" = "order" + 1
+//             WHERE "heading_id" = $1 AND "order" = $2 AND "item_id" != $3;`;
+
+//             await connection.query(sqlTextRounding, [req.body.heading_id, orderToUpdate, idToUpdate]);
+//             console.log('updated the second order');
+
+
+//             await connection.query('COMMIT;');
+//             res.sendStatus(200);
+//         } catch (error) {
+//             await connection.query('ROLLBACK;');
+//             console.log('Transaction Error', error);
+//             res.sendStatus(500);
+//         } finally {
+//             connection.release();
+//         }
+//     } else {
+//         res.sendStatus(403)
+//     }
+// });
 
 
 // delete a line item

@@ -29,6 +29,7 @@ function OpportunityListView() {
   const opportunityList = useSelector(
     (store) => store.opportunityReducer.opportunityListReducer,
   );
+  const partners = useSelector((store) => store.partnerReducer.partnerReducer);
 
   return (
     <>
@@ -59,7 +60,9 @@ function OpportunityListView() {
             size='small'
             style={{ width: 200 }}
           >
-            <MenuItem value={1}>Bob</MenuItem>
+            {partners.map((thisPartner, i) => (                        
+                        <MenuItem key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>                        
+                        ))}
           </Select>
         </FormControl>
 

@@ -39,6 +39,7 @@ function AddContactModal({ open, setOpen }) {
   };
 
   return (
+    <Modal open={open}>
     <div className="modal-container">
       <div className="modal-icon"><PersonAddIcon style={{ fontSize: 100 }} /></div>
       <div className="modal-form-container">
@@ -90,6 +91,7 @@ function AddContactModal({ open, setOpen }) {
         </Button>
       </div>
     </div>
+    </Modal>
   );
 }
 

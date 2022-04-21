@@ -38,10 +38,11 @@ router.post('/', (req, res) => {
   if (req.isAuthenticated()) {
 
     const sqlText =
-      `INSERT INTO "item" ("item_code", "name", "description", "price_per_price_unit", "unit_type_id", "unit_weight")
-            VALUES ($1, $2, $3, $4, $5, $6);`;
+      `INSERT INTO "item" ("item_code", "name", "price_per_pricing_unit", "unit_type_id", "unit_weight")
+            VALUES ($1, $2, $3, $4, $5);`;
 
-    const valueArray = [req.body.item_code, req.body.name, req.body.description, req.body.price_per_price_unit, req.body.unit_type_id, req.body.unit_weight];
+    const valueArray = [req.body.item_code, req.body.name, req.body.price_per_pricing_unit, req.body.unit_type_id, req.body.unit_weight];
+    
     pool.query(sqlText, valueArray)
       .then((result) => {
         res.sendStatus(200);

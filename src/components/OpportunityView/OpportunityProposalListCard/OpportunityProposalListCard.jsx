@@ -22,10 +22,13 @@ function OpportunityProposalListCard() {
   const history = useHistory();
   const { id } = useParams();
 
+  const proposal = useSelector(
+    (store) => store.proposalReducer.singleProposalReducer,
+  );
   const proposalList = useSelector(
     (store) => store.proposalReducer.proposalListReducer,
   );
-
+  const partners = useSelector((store) => store.partnerReducer.partnerReducer);
   const postProposal = () => {
     dispatch({ type: 'POST_PROPOSAL', payload: id });
   };
@@ -63,7 +66,13 @@ function OpportunityProposalListCard() {
             size='small'
             style={{ width: 200 }}
           >
-            <MenuItem value={1}>Bob</MenuItem>
+            {/* <MenuItem value={1}>In-Progress</MenuItem> */}
+            {partners.map((thisPartner, i) => (
+              <MenuItem key={i} value={thisPartner.id}>
+                {' '}
+                <em>{thisPartner.name}</em>{' '}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
 
