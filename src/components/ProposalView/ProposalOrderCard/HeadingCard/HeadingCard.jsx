@@ -26,7 +26,7 @@ function HeadingCard(props) {
 
 
   // console.log('props', props);
-  // console.log('props.id is', props.id);
+  console.log('props.id is', props.id);
 
   const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
   // console.log('lineItemList is', Number(lineItemList[0].total_item_price));

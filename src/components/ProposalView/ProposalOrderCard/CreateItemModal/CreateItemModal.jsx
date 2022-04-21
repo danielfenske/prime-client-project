@@ -25,8 +25,7 @@ function CreateItemModal( {open, setOpen}) {
   const initialValues = {
     item_code: "",
     name: "",
-    description: "",
-    price_per_price_unit: "",
+    price_per_pricing_unit: "",
     unit_type_id: ""
   }
 
@@ -58,6 +57,7 @@ function CreateItemModal( {open, setOpen}) {
   //dispatch unit_weight data along with the item object if unit_weight has a value, 
   //dispatch 0.01 for unit_weight if the measurement unit is LBS and the pricing unit is CWT,
   //dispatch 1 for unit_weight if the measurement unit and the pricing unit are the same
+  //dispatch unit_weight * 0.01 if the pricing unit is CWT and the measurement unit is not LBS
   const handleSubmit = (event) => {
     event.preventDefault();
     
@@ -125,17 +125,16 @@ function CreateItemModal( {open, setOpen}) {
     setUnitWeight('');
   }
 
-  console.log('unitTypeList is', unitTypeList);
-  console.log('unitInput is', unitInput);
-  console.log('values', values);
-  console.log('unitWeight', unitWeight);
+  // console.log('unitTypeList is', unitTypeList);
+  // console.log('unitInput is', unitInput);
+  // console.log('values', values);
+  // console.log('unitWeight', unitWeight);
   return (
     <Modal open={open}>
       <h1>Add New Item</h1>
       <form onSubmit={handleSubmit}>
         <TextField id="outlined-basic" label="item code" variant="outlined" value={values.item_code} onChange={(e) => handleInputChange("item_code", e)} />
         <TextField id="outlined-basic" label="name" variant="outlined" value={values.name} onChange={(e) => handleInputChange("name", e)} />
-        <TextField id="outlined-basic" label="description" variant="outlined" value={values.description} onChange={(e) => handleInputChange("description", e)} />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">measurement unit, pricing unit</InputLabel>
           <Select
@@ -164,7 +163,7 @@ function CreateItemModal( {open, setOpen}) {
 
         {/* render the pice per pricing unit input field if the unit_type_id is selected from the dropdown */}
         {unitInput !== "" &&
-          <TextField id="outlined-basic" label={`price per ${unitTypeList[unitInput]?.pricing_unit}`} variant="outlined" value={values.price_per_price_unit} onChange={(e) => handleInputChange("price_per_price_unit", e)} />
+          <TextField id="outlined-basic" label={`price per ${unitTypeList[unitInput]?.pricing_unit}`} variant="outlined" value={values.price_per_pricing_unit} onChange={(e) => handleInputChange("price_per_pricing_unit", e)} />
         }
 
         <button type="submit">Add Item</button>

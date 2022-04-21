@@ -7,23 +7,32 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
 
+import EditContactModal from './EditContactModal/EditContactModal';
+import AddContactModal from './AddContactModal/AddContactModal';
+import AddPartnerModal from './AddPartnerModal/AddPartnerModal';
+import EditPartnerModal from './EditPartnerModal/EditPartnerModal';
 // component imports
 import ContactCard from './ContactCard';
 
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
-  const contacts = useSelector((store) => store.contactReducer);
+  const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
+  const contacts = useSelector((store) => store.contactReducer.contactReducer);
+  const editableContact = useSelector((store) => store.contactReducer.contactEditReducer);
   const { id } = useParams();
   const opportunity = useSelector(
     (store) => store.opportunityReducer.specificOpportunityReducer,
   );
 
   useEffect(() => {
-    dispatch({
-      type: 'FETCH_PARTNER_LIST',
-    });
+    // dispatch({
+    //   type: 'FETCH_PARTNER_LIST',
+    // });
     dispatch({
       type: 'FETCH_CONTACT_LIST',
     });
@@ -52,7 +61,27 @@ function OpportunityGeneralCard() {
     setState(opportunity.state);
     setZip(opportunity.zip);
     setTaxRate(opportunity.tax_rate);
+
+
+    if (opportunity.partner_id) {
+      handleEditPartner(partners.filter(p => p.id === opportunity.partner_id)[0]);
+      setPartnerId(opportunity.partner_id);
+      // handleEditPartner(editablePartner);
+    }
+
   }, [opportunity]);
+
+  useEffect(() => {
+    setPartnerType(editablePartner.type);
+    setPartnerPhoneNumber(editablePartner.phone_number);
+  }, [editablePartner])
+
+  useEffect(() => {
+    setContactName(editableContact.name);
+    setContactPhoneNumber(editableContact.phone);
+    setContactEmail(editableContact.email);
+  }, [editableContact])
+
 
   const [name, setName] = useState('');
   const [opportunity_code, setOpportunityCode] = useState('');
@@ -67,13 +96,54 @@ function OpportunityGeneralCard() {
   const [zip, setZip] = useState('');
   const [tax_rate, setTaxRate] = useState('');
 
+  // partner use states
+  const [partnerType, setPartnerType] = useState("");
+  const [partnerPhoneNumber, setPartnerPhoneNumber] = useState("");
+
+  // contact use states 
+  const [contactName, setContactName] = useState('');
+  const [contactPhoneNumber, setContactPhoneNumber] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+
   const [partner_id, setPartnerId] = useState(1);
   const [contact_id, setContactId] = useState(1);
 
+  const [partnerAddModalOpen, setPartnerAddModalOpen] = useState(false);
+  const [partnerEditModalOpen, setPartnerEditModalOpen] = useState(false);
+
+  const [contactAddModalOpen, setContactAddModalOpen] = useState(false);
+  const [contactEditModalOpen, setContactEditModalOpen] = useState(false);
+
+  const handleEditContact = (thisContact) => {
+    dispatch({ type: 'SET_CLEAR_EDIT_CONTACT', payload: [] });
+    dispatch({ type: 'SET_EDIT_CONTACT', payload: thisContact });
+  }
+
+  const handleEditPartner = (thisPartner) => {
+    dispatch({ type: 'SET_CLEAR_EDIT_PARTNER', payload: [] });
+    dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
+  }
+  const handlePartnerAdd = () => {
+    setPartnerAddModalOpen(true);
+  }
+
+  const handlePartnerEdit = () => {
+    setPartnerEditModalOpen(true);
+  }
+  const handleContactAdd = () => {
+    setContactAddModalOpen(true);
+  }
+
+  const handleContactEdit = () => {
+    setContactEditModalOpen(true);
+  }
+
   const handleSubmit = () => {
     console.log('user submitted the form');
+    console.log('edit partner', editablePartner);
 
     let opportunitySubmission = {
+      partner_id: editablePartner.id,
       id: opportunity.id,
       name: name,
       opportunity_code: opportunity_code,
@@ -212,11 +282,40 @@ function OpportunityGeneralCard() {
                 size='small'
                 style={{ width: 200 }}
               >
-                <MenuItem value={1}>Heather</MenuItem>
-                <MenuItem value={2}>Dan</MenuItem>
-                <MenuItem value={3}>Dave</MenuItem>
+                {partners.map((thisPartner, i) => (
+                  <MenuItem onClick={() => handleEditPartner(thisPartner)} key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>
+                ))}
               </Select>
             </FormControl>
+
+            <TextField
+              id='outlined-basic'
+              label='Type'
+              variant='outlined'
+              value={partnerType}
+              onChange={(e) => setPartnerType(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+
+            <TextField
+              id='outlined-basic'
+              label='Phone Number'
+              variant='outlined'
+              value={partnerPhoneNumber}
+              onChange={(e) => setPartnerPhoneNumber(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+            <IconButton onClick={handlePartnerAdd}>
+              <AddIcon />
+            </IconButton>
+
+            <IconButton onClick={handlePartnerEdit}>
+              <EditIcon />
+            </IconButton>
+
+
             <FormControl>
               <InputLabel id='demo-simple-select-label'>Contact</InputLabel>
               <Select
@@ -228,11 +327,48 @@ function OpportunityGeneralCard() {
                 size='small'
                 style={{ width: 200 }}
               >
-                <MenuItem value={1}>Mark</MenuItem>
-                <MenuItem value={2}>Dave</MenuItem>
-                <MenuItem value={3}>Cam</MenuItem>
+                {/* <MenuItem value={1}>none</MenuItem> */}
+                {contacts.map((thisContact, i) => (
+                  <MenuItem onClick={() => handleEditContact(thisContact)} key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>
+                ))}
+
               </Select>
             </FormControl>
+            <TextField
+              id='outlined-basic'
+              label='Name'
+              variant='outlined'
+              value={contactName}
+              onChange={(e) => setContactName(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+            <TextField
+              id='outlined-basic'
+              label='Phone Number'
+              variant='outlined'
+              value={contactPhoneNumber}
+              onChange={(e) => setContactPhoneNumber(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+            <TextField
+              id='outlined-basic'
+              label='Email'
+              variant='outlined'
+              value={contactEmail}
+              onChange={(e) => setContactEmail(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+            <IconButton onClick={handleContactAdd}>
+              <AddIcon />
+            </IconButton>
+
+            <IconButton onClick={handleContactEdit}>
+              <EditIcon />
+            </IconButton>
+
           </div>
         </div>
         <div>
@@ -291,6 +427,11 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
+      <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} />
+      <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
+      <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen}/>
+      <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen}/>
+
     </>
   );
 }

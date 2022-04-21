@@ -23,10 +23,11 @@ function HeadingItemCard({ lineItem, addNewItem }) {
   const [selectedItem, setSelectedItem] = useState(lineItem.item_id);
   const [qty, setQty] = useState(lineItem.qty);
   const [measurement, setMeasurement] = useState(lineItem.measure_unit);
-  const [order, setOrder] = useState(lineItem.order);
+  // const [order, setOrder] = useState(lineItem.order);
   const [ft, setFt] = useState(lineItem.ft);
   const [inches, setInches] = useState(lineItem.inches);
-  const [pricePerPriceUnit, setPricePerPriceUnit] = useState(
+  const [message, setMessage] = useState(lineItem.message);
+  const [pricePerPricingUnit, setPricePerPricingUnit] = useState(
     lineItem.override_price || lineItem.default_price,
   );
 
@@ -41,21 +42,23 @@ function HeadingItemCard({ lineItem, addNewItem }) {
     setSelectedItem(e.target.value);
   };
 
-  const updateQtyMeasurementOrderPricePerPriceUnit = (e) => {
+  const updateLineItem = (e) => {
     e.preventDefault();
     console.log('in updateQtyAndMeasurement');
     if (lineItem.measurement_unit === 'EA') {
+      //dispatch 1 as measurement_per_unit when the measurement_unit is EA
       dispatch({
         type: 'UPDATE_HEADING_ITEM',
         payload: {
           heading_item_id: lineItem.id,
           qty: Number(qty),
-          measure_unit: 1,
-          order: Number(order),
-          price_per_price_unit: Number(pricePerPriceUnit),
+          measurement_per_unit: 1,
+          price_per_pricing_unit: Number(pricePerPricingUnit),
+          message: message
         },
       });
     } else if (lineItem.measurement_unit === 'FT') {
+      //dispatch ft and inches when the measurement_unit is FT
       dispatch({
         type: 'UPDATE_HEADING_ITEM_FT_INCHES',
         payload: {
@@ -63,8 +66,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           qty: Number(qty),
           ft: Number(ft),
           inches: Number(inches),
-          order: Number(order),
-          price_per_price_unit: Number(pricePerPriceUnit),
+          price_per_pricing_unit: Number(pricePerPricingUnit),
+          message: message
         },
       });
     } else {
@@ -73,9 +76,9 @@ function HeadingItemCard({ lineItem, addNewItem }) {
         payload: {
           heading_item_id: lineItem.id,
           qty: Number(qty),
-          measure_unit: Number(measurement),
-          order: Number(order),
-          price_per_price_unit: Number(pricePerPriceUnit),
+          measurement_per_unit: Number(measurement),
+          price_per_pricing_unit: Number(pricePerPricingUnit),
+          message: message
         },
       });
     }
@@ -112,7 +115,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
   }, [selectedItem]);
 
   useEffect(() => {
-    setPricePerPriceUnit(lineItem.override_price || lineItem.default_price);
+    setPricePerPricingUnit(lineItem.override_price || lineItem.default_price);
   }, [lineItem]);
 
   /////////////////////////////////////
@@ -131,18 +134,6 @@ function HeadingItemCard({ lineItem, addNewItem }) {
     }
   };
 
-  // useEffect(() => {
-  //   console.log('ft is', ft);
-  //   console.log('inches is', inches);
-  //   let convertedMeasure = Number(ft) + Number(inches) * 0.0833333;
-  //   console.log(convertedMeasure);
-  //   setMeasurement(convertedMeasure);
-  //   console.log('measurement is', measurement);
-  // }, [ft, inches])
-
-  //  console.log('items', items);
-  // //   console.log('selectedItem is', selectedItem);
-  // console.log('line item', lineItem);
 
   return (
     <>
