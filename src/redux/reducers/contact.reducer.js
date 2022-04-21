@@ -6,5 +6,14 @@ const contactReducer = (state=[], action) => {
     } 
     return state;
 }
-
+const contactEditReducer = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_EDIT_PARTNER': 
+            return action.payload;
+        case 'SET_CLEAR_EDIT_PARTNER':
+            return [];   
+        default:
+            return state;
+    }
+}
 export default contactReducer;
