@@ -183,22 +183,19 @@ router.put('/:id', (req, res) => {
     plan_date = $5, 
     building_code = $6,
     partner_discount = $7,
-    surcharge = $8,
-    surcharge_description = $9,
-    method = $10,
-    method_message = $11,
-    delivery_charge = $12,
-    delivery_message = $13,
-    field_weld_charge = $14,
-    field_weld_message = $15
+    method = $8,
+    method_message = $9,
+    delivery_charge = $10,
+    delivery_message = $11,
+    field_weld_charge = $12,
+    field_weld_message = $13
     
-    WHERE "id" = $16;`;
+    WHERE "id" = $14;`;
 
   if (req.isAuthenticated()) {
     pool.query(queryText,
       [date, proposal_code, house_type, plan_identifier, plan_date,
-        building_code, partner_discount, surcharge, surcharge_description,
-        method, method_message, delivery_charge, delivery_message, field_weld_charge,
+        building_code, partner_discount, method, method_message, delivery_charge, delivery_message, field_weld_charge,
         field_weld_message, proposalId
       ])
       .then((result) => {

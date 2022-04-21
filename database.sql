@@ -78,18 +78,16 @@ CREATE TABLE "proposal" (
     "plan_date" TIMESTAMP,
     "building_code" VARCHAR(80),
     "partner_discount" DECIMAL (25, 2),
-    "surcharge" DECIMAL (25, 2),
-    "surcharge_description" VARCHAR(250),
     "method" INT, -- will be a dropdown, we will simply target the INT or id
     "method_message" VARCHAR(250),
     "delivery_charge" DECIMAL (25, 2),
+    "delivery_message" VARCHAR(250),
     "field_weld_charge" DECIMAL (25, 2),
     "field_weld_message" VARCHAR(250),
-    "description" VARCHAR(250),
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
- INSERT INTO "proposal" ("date", "proposal_code", "opportunity_id", "house_type", "plan_identifier", "plan_date", "building_code", "partner_discount", "surcharge", "surcharge_description", "method", "method_message", "delivery_charge", "field_weld_charge", "field_weld_message", "description", "disabled")
- VALUES('2004-10-19 10:23:54+02', 'BRK', 1, 'Rambler', 'yayay', '2004-10-19 10:23:54+02', 'sdfsdfs', 3.33, 13.33, '2022 up-charge', 2, 'method message', 333.13, 23.13, 'Welded railing together', 'small house', false);
+ INSERT INTO "proposal" ("date", "proposal_code", "opportunity_id", "house_type", "plan_identifier", "plan_date", "building_code", "partner_discount", "method", "method_message", "delivery_charge", "delivery_message", "field_weld_charge", "field_weld_message", "disabled")
+ VALUES('2004-10-19 10:23:54+02', 'BRK', 1, 'Rambler', 'yayay', '2004-10-19 10:23:54+02', 'sdfsdfs', 2, 3, 'method message', 333.13, 'Leave on front steps', 23.13, 'Welded railing together', false);
 
 CREATE TABLE "heading" (
 	"id" SERIAL PRIMARY KEY,
@@ -102,11 +100,8 @@ CREATE TABLE "heading" (
 );
 
 
-INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
-VALUES ('frank', 'exterior staircase railing', 1, 3.33, 4, true );
-
-
-
+INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "taxable")
+VALUES ('frank', 'exterior staircase railing', 1, 3.33, true );
 
 	
 CREATE TABLE "unit_type" (
@@ -131,29 +126,30 @@ CREATE TABLE "item" (
 	"id" SERIAL PRIMARY KEY,
 	"item_code" VARCHAR (20),
 	"name" VARCHAR(80),
-	"description" VARCHAR (200),
-	"price_per_price_unit" DECIMAL (25, 2),
+	"price_per_pricing_unit" DECIMAL (25, 2),
 	"unit_type_id" INT,
 	"unit_weight" DECIMAL (25, 2), -- unit weight is the relationship between the mesure_unit and price_unit
 	"disabled" BOOLEAN NOT NULL DEFAULT FALSE 
-
 );
 
+INSERT INTO "item" ("item_code", "name", "price_per_pricing_unit", "unit_type_id", "unit_weight")
+VALUES ('821WF', 'WF Beam 8x21', 100, 2, 1);
 
 CREATE TABLE "item_heading"(
 	"id" SERIAL PRIMARY KEY,
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
+	"message" VARCHAR (200),
 	"order" INT,
-	"price_per_price_unit" DECIMAL (25, 2),
-	"price_unit" DECIMAL (25, 2),
-	"single_unit_price" DECIMAL (25, 2),
+	"price_per_pricing_unit" DECIMAL (25, 2),
 	"ft" INT,
 	"inches" INT,
-	"measure_unit" DECIMAL (25, 2),
-	"rounded_measure_unit" DECIMAL (25, 2),
+	"measurement_per_unit" DECIMAL (25,2),
+	"rounded_measurement_per_unit" DECIMAL (25, 2),
+	"rounded_measurement_per_unit_unit_weight" DECIMAL (25, 2),
 	"qty" INT,
-	"total_item_price" DECIMAL (25, 2)
+	"single_item_price" DECIMAL (25, 2),
+	"item_price_total" DECIMAL (25,2)
 	); 
 	
 
