@@ -153,6 +153,7 @@ function ProposalPreviewCard() {
                   }
                 }, [])
                 .map((heading, index) => {
+                  if (!heading) return;
                   return (
                     <section key={index} className='heading-section'>
                       <p className='title'>
