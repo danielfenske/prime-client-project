@@ -247,8 +247,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 label='Unit Price'
                 type='number'
                 variant='outlined'
-                value={pricePerPriceUnit}
-                onChange={(e) => setPricePerPriceUnit(e.target.value)}
+                value={pricePerPricingUnit}
+                onChange={(e) => setPricePerPricingUnit(e.target.value)}
                 size='small'
                 style={{ width: 125 }}
               />
