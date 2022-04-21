@@ -34,7 +34,7 @@ CREATE TABLE "partner" (
     "partner_code" VARCHAR(80),
     "partner_discount" DECIMAL (25, 2),
     "rounding_type" INT,
-    "phone_number" INT,
+    "phone_number" VARCHAR(20),
     "address_line_1" VARCHAR(250),
     "city" VARCHAR(80),
     "state" VARCHAR(2),
