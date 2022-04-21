@@ -52,7 +52,7 @@ function* updateProposal(action) {
   const updatedProposal = action.payload;
 
   try {
-    yield axios.put(`api/proposal/${proposalId}`, updatedProposal);
+    yield axios.put(`api/proposal/${proposalId}`, updatedProposal); //////////////////// Mark has a question /////////////////////////////////////////////////
 
     yield put({ type: 'FETCH_PROPOSAL', payload: proposalId });
   } catch (error) {

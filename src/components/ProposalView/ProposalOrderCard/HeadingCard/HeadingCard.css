@@ -1,0 +1,28 @@
+#heading-card-header {
+    align-items: flex-start;
+}
+
+.heading-header-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.heading-text-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#price-container {
+    align-items: flex-end;
+}
+
+#heading-form-container {
+    width: 100%;
+}
+
+.heading-price {
+    color: var(--very-light-grey);
+}

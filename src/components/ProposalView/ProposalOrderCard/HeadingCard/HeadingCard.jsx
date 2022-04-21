@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import HeadingItemCard from '../HeadingItemCard/HeadingItemCard';
+import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { Button } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import './HeadingCard.css';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
 import { LockTwoTone } from '@mui/icons-material';
 
@@ -94,6 +105,10 @@ function HeadingCard(props) {
     dispatch({ type: 'POST_HEADING_ITEM', payload: props.id });
   };
 
+  const saveHeadingInfo = () => {
+    console.log('in saveHeadingInfo');
+  };
+
   const addNewItem = () => {
     // console.log(('in addNewItem'));
     setCreateItemModalOpen(true);
@@ -101,36 +116,66 @@ function HeadingCard(props) {
 
   return (
     <>
-      <div className='heading-card'>
-        <div>
-          <h2>Heading Information</h2>
-
-          <input
-            type='text'
-            value={nameInput}
-            onChange={(e) => setNameInput(e.target.value)}
-            placeholder='Header Name'
-          />
-
-          <input
-            type='text'
-            value={messageInput}
-            onChange={(e) => setMessageInput(e.target.value)}
-            placeholder='Message'
-          />
-
-          <label htmlFor='surcharge'>
-            surcharge
-            <input
-              name='surcharge'
+      <div className='card-header' id='heading-card-header'>
+        <div className='heading-header-container'>
+          <div className='heading-text-container'>
+            <h1>Heading Information</h1>
+            <div>
+              <IconButton>
+                <SaveOutlinedIcon sx={{ color: 'var(--grey-dark)' }} />
+              </IconButton>
+              <Button>Save Progress</Button>
+            </div>
+          </div>
+          <div className='form-container' id='heading-form-container'>
+            <TextField
+              id='outlined-basic'
+              label='Heading Name'
+              variant='outlined'
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value)}
+              size='small'
+              style={{ width: 150 }}
+            />
+            <TextField
+              id='outlined-basic'
+              label='Heading Message'
+              variant='outlined'
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              size='small'
+              style={{ width: 225 }}
+            />
+            <TextField
               type='number'
+              id='outlined-basic'
+              label='Surcharge (%)'
+              variant='outlined'
               value={surchargeInput}
               onChange={(e) => setSurchargeInput(e.target.value)}
-              placeholder='Surcharge'
-            />{' '}
-            %
-          </label>
-
+              size='small'
+              style={{ width: 100 }}
+            />
+          </div>
+        </div>
+        <div className='heading-header-container' id='price-container'>
+          <h1>
+            <span className='heading-price'>Heading Price</span>
+          </h1>
+          <TextField
+            fullWidth
+            type='number'
+            id='outlined-basic'
+            label='Total Price ($)'
+            variant='outlined'
+            value={surchargeInput}
+            onChange={(e) => setSurchargeInput(e.target.value)}
+            size='small'
+          />
+        </div>
+      </div>
+      <div className='card-body'>
+        <div className='card-section'>
           <label>
             <input
               type='checkbox'
@@ -143,8 +188,6 @@ function HeadingCard(props) {
           <button onClick={editHeading}>SAVE</button>
           {/* <button onClick={editHeading}>EDIT</button> */}
           <button onClick={deleteHeading}>DELETE</button>
-        </div>
-        <div>
           <h2>Items</h2>
 
           <button onClick={addNewLineItem}>Add New Line Item</button>
