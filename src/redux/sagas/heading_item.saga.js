@@ -17,11 +17,11 @@ function* getHeadingItemList(action) {
 }
 
 //fetch all heading_items along with item code and related data 
-function* getHeadingItemWithItemCode() {
+function* getHeadingItemWithItemCode(action) {
     try {
-        console.log('in headingItemItemCodeList saga');
+        console.log('in headingItemItemCodeList saga, action.payload is', action.payload);
         
-        const response = yield axios.get(`/api/heading/item_with_item_code`);
+        const response = yield axios.get(`/api/heading/item_with_item_code/${action.payload}`);
         console.log('in headingItemItemCodeList saga response is', response);
 
         yield put({ type: 'SET_HEADING_ITEM_WITH_ITEM_CODE_LIST', payload: response.data })

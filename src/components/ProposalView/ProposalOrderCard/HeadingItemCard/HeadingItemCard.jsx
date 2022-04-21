@@ -24,8 +24,11 @@ function HeadingItemCard({ lineItem }) {
   const [pricePerPriceUnit, setPricePerPriceUnit] = useState(lineItem.override_price || lineItem.default_price);
 
 
+<<<<<<< HEAD
+=======
   const [open, setOpen] = useState(false);
 
+>>>>>>> master
   // console.log('lineItem is', lineItem);
   // console.log('items are', items);
 
@@ -105,6 +108,9 @@ function HeadingItemCard({ lineItem }) {
 
   }, [lineItem])
 
+<<<<<<< HEAD
+ 
+=======
   /////////////////////////////////////
   // Press Enter Key to add new Item
   /////////////////////////////////////
@@ -135,10 +141,27 @@ function HeadingItemCard({ lineItem }) {
   // //   console.log('selectedItem is', selectedItem);
   // console.log('line item', lineItem);
 
+>>>>>>> master
   return (
     <>
       <div className='heading-item-card'>
 
+<<<<<<< HEAD
+      <select value={selectedItem} onChange={handleItemSelect}>
+        {items.map((item, index) => {
+          return <option key={index} value={item.id}>{item.item_code}</option>;
+        })}
+      </select>
+      <button onClick={goUp}>upward arrow</button>
+      <button  onClick={goDown}>downward arrow</button>
+    
+      <TextField id="outlined-basic" label="order" variant="outlined" value={order}  onChange={e => setOrder(e.target.value)} />
+      {/* <TextField id="outlined-basic" label="item code" variant="outlined" value={lineItem.item_code} /> */}
+      <p>Item Code: {lineItem.item_code}</p>
+      {/* <TextField id="outlined-basic" label="item name" variant="outlined" value={lineItem.name} /> */}
+      <p>Item Name: {lineItem.name}</p>
+      <p>Item Description: {lineItem.description}</p>
+=======
         <select value={selectedItem} onChange={handleItemSelect}>
           <option>CREATE NEW</option>
           {items.map((item, index) => {
@@ -154,6 +177,7 @@ function HeadingItemCard({ lineItem }) {
         {/* <TextField id="outlined-basic" label="item name" variant="outlined" value={lineItem.name} /> */}
         <p>Item Name: {lineItem.name}</p>
         <p>Item Description: {lineItem.description}</p>
+>>>>>>> master
 
 
         {lineItem?.measurement_unit === 'EA' ?
