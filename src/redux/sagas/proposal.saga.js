@@ -4,7 +4,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 // GETs list of all proposals
 function* getProposalList(action) {
   try {
-    const proposalResponse = yield axios.get(`/api/proposal/${action.payload}`);
+    const proposalResponse = yield axios.get(`/api/proposal/list/${action.payload}`);
 
     // sends list to be stored in redux state
     yield put({ type: 'SET_PROPOSAL_LIST', payload: proposalResponse.data });

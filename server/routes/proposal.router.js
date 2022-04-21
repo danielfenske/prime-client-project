@@ -13,7 +13,7 @@ const {
 // #region ==== PROPOSAL ROUTES ====
 
 // get all proposals
-router.get('/:opportunity_id', rejectUnauthenticated, (req, res) => {
+router.get('/list/:opportunity_id', rejectUnauthenticated, (req, res) => {
   let disabled = false;
   let userId = req.user.id;
   let access_level = req.user.access_level;

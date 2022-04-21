@@ -77,12 +77,11 @@ function ProposalGeneralCard() {
   const [delivery_message, setDeliveryMessage] = useState('');
   const [field_weld_charge, setFieldWeldCharge] = useState('');
   const [field_weld_message, setFieldWeldMessage] = useState('');
-  
 
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    console.log('in handleSubmit');
+    console.log('in handleSubmit', proposal);
 
     const proposal_date = new Date(date).toISOString();
     const new_plan_date = new Date(plan_date).toISOString();
