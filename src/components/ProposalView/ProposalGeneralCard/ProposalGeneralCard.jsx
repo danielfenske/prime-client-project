@@ -95,8 +95,6 @@ function ProposalGeneralCard() {
       plan_date: new_plan_date,
       building_code: building_code,
       partner_discount: partner_discount,
-      surcharge: surcharge,
-      surcharge_description: surcharge_description,
       method: method,
       method_message: method_message,
       delivery_charge: delivery_charge,
