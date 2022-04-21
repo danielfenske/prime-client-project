@@ -21,7 +21,7 @@ function HeadingItemCard({ lineItem }) {
   const [pricePerPriceUnit, setPricePerPriceUnit] = useState(lineItem.override_price || lineItem.default_price);
 
 
-  console.log('lineItem is', lineItem);
+  // console.log('lineItem is', lineItem);
   // console.log('items are', items);
 
   const handleItemSelect = (e) => {
@@ -88,25 +88,11 @@ function HeadingItemCard({ lineItem }) {
     
   }, [lineItem])
 
-  // useEffect(() => {
-  //   console.log('ft is', ft);
-  //   console.log('inches is', inches);
-  //   let convertedMeasure = Number(ft) + Number(inches) * 0.0833333;
-  //   console.log(convertedMeasure);
-  //   setMeasurement(convertedMeasure);
-  //   console.log('measurement is', measurement);
-  // }, [ft, inches])
-
-
-//  console.log('items', items);
-// //   console.log('selectedItem is', selectedItem);
-// console.log('line item', lineItem);
  
   return (
     <div className='heading-item-card'>
 
       <select value={selectedItem} onChange={handleItemSelect}>
-        <option>CREATE NEW</option>
         {items.map((item, index) => {
           return <option key={index} value={item.id}>{item.item_code}</option>;
         })}

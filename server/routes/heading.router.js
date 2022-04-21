@@ -209,19 +209,28 @@ router.put('/item/update', async (req, res) => {
             // rounded_measure_unit gets updated based on the partner rounding type
             const sqlTextRounding =
                 `UPDATE "item_heading"
-        SET "rounded_measure_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measure_unit"
-                                         WHEN "partner"."rounding_type" = 2 THEN CEILING("measure_unit")
-                                         WHEN "partner"."rounding_type" = 3 THEN CEILING("measure_unit"/5.0)*5
-                                            END
-        FROM "heading",
-             "proposal",
-             "opportunity",
-             "partner"
-        WHERE "heading"."id" = "item_heading"."heading_id"
-          AND "proposal"."id" = "heading"."proposal_id"
-          AND "opportunity"."id" = "proposal"."opportunity_id"
-          AND "partner"."id" = "opportunity"."partner_id"
-          AND "item_heading"."id" = $1;`;
+                SET "rounded_measure_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measure_unit"
+                                                  WHEN "partner"."rounding_type" = 2 THEN (SELECT CASE WHEN "item"."unit_type_id" = 1 THEN "measure_unit"
+                                                                                                       WHEN "item"."unit_type_id" != 1 THEN CEILING("measure_unit")
+                                                                                                  END)
+                                                         
+                                                  WHEN "partner"."rounding_type" = 3 THEN (SELECT CASE WHEN "item"."unit_type_id" = 1 THEN "measure_unit"
+                                                                                                       WHEN "item"."unit_type_id" != 1 THEN CEILING("measure_unit"/5.0)*5
+                                                                                                  END)
+                                             END
+                FROM "item",
+                     "unit_type",
+                     "heading",
+                     "proposal",
+                     "opportunity",
+                     "partner"
+                WHERE "item"."unit_type_id" = "unit_type"."id"
+                  AND "item_heading"."item_id" = "item"."id"
+                  AND "heading"."id" = "item_heading"."heading_id"
+                  AND "proposal"."id" = "heading"."proposal_id"
+                  AND "opportunity"."id" = "proposal"."opportunity_id"
+                  AND "partner"."id" = "opportunity"."partner_id"
+                  AND "item_heading"."id" = $1;`;
 
             await connection.query(sqlTextRounding, [req.body.heading_item_id]);
 
@@ -254,6 +263,8 @@ router.put('/item/update', async (req, res) => {
             
              await connection.query(sqlTextTotalItemPrice, [req.body.heading_item_id]);
 
+             //add total_item_price of all line items and update the heading table
+             
 
 
             await connection.query('COMMIT;');

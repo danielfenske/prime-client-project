@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import HeadingItemCard from '../HeadingItemCard/HeadingItemCard';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
+import { LockTwoTone } from '@mui/icons-material';
 
 function HeadingCard(props) {
   const dispatch = useDispatch();
@@ -12,16 +13,35 @@ function HeadingCard(props) {
   const [createItemModalOpen, setCreateItemModalOpen] = useState(false);
   const [checked, setChecked] = useState(props.taxable);
 
-  console.log('props', props);
+
+  // console.log('props', props);
   // console.log('props.id is', props.id);
+  
+  const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+  // console.log('lineItemList is', Number(lineItemList[0].total_item_price));
+
+  // const sumLineItem = () => {
+  //   let result = 0;
+  //   for (let i = 0; i < lineItemList.length; i++){
+  //     result += Number(lineItemList[i].total_item_price);
+  //   }
+    
+  //   return result;
+  // }
+
+  // console.log('result is', sumLineItem());
 
   useEffect(() => {
     dispatch({type: 'FETCH_ITEM_LIST'});
     dispatch({type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: props.id})
+    // sumLineItem();
   }, []);
 
-  // const items = useSelector((store) => store.itemReducer);
-  const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+  // useEffect(() => {
+  //  sumLineItem();
+  // }, [lineItemList])
+
+
   const handleCheckbox = (e) => {
     console.log('checked is', checked);
     setChecked(!checked);
