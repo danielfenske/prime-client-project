@@ -162,7 +162,17 @@ h6 {
   margin: auto;
 }
 
-.filter-container  {
+.modal-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--padding-large);
+  margin: auto;
+}
+
+.filter-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -170,12 +180,13 @@ h6 {
   padding: 30px 0px;
 }
 
-.modal-container{
+.modal-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   padding: 20px;
+  gap: 30px;
 }
 
 .modal-btn-container {
@@ -184,4 +195,8 @@ h6 {
   align-items: center;
   flex-direction: row;
   gap: 15px;
+}
+
+.modal-icon {
+  color: var(--orange-light);
 }
