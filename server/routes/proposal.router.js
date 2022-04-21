@@ -170,9 +170,10 @@ router.put('/:id', (req, res) => {
   let method = req.body.method;
   let method_message = req.body.method_message;
   let delivery_charge = req.body.delivery_charge;
+  let delivery_message = req.body.delivery_message;
   let field_weld_charge = req.body.field_weld_charge;
   let field_weld_message = req.body.field_weld_message;
-  let description = req.body.description;
+
 
   let queryText = `UPDATE "proposal" SET 
     "date" = $1,
@@ -182,23 +183,20 @@ router.put('/:id', (req, res) => {
     plan_date = $5, 
     building_code = $6,
     partner_discount = $7,
-    surcharge = $8,
-    surcharge_description = $9,
-    method = $10,
-    method_message = $11,
-    delivery_charge = $12,
-    field_weld_charge = $13,
-    field_weld_message = $14,
-    description = $15 
+    method = $8,
+    method_message = $9,
+    delivery_charge = $10,
+    delivery_message = $11,
+    field_weld_charge = $12,
+    field_weld_message = $13
     
-    WHERE "id" = $16;`;
+    WHERE "id" = $14;`;
 
   if (req.isAuthenticated()) {
     pool.query(queryText,
       [date, proposal_code, house_type, plan_identifier, plan_date,
-        building_code, partner_discount, surcharge, surcharge_description,
-        method, method_message, delivery_charge, field_weld_charge,
-        field_weld_message, description, proposalId
+        building_code, partner_discount, method, method_message, delivery_charge, delivery_message, field_weld_charge,
+        field_weld_message, proposalId
       ])
       .then((result) => {
         res.sendStatus(200);
