@@ -25,7 +25,7 @@ function* getPartnerRows() {
 
   function* updatePartner(action) {
     try {
-      yield axios.put(`api/contact/${action.payload.id}`, action.payload);
+      yield axios.put(`api/partner/${action.payload.editablePartnerID}`, action.payload);
       yield put({type: 'FETCH_PARTNER_LIST'});
 
     } catch (error) {

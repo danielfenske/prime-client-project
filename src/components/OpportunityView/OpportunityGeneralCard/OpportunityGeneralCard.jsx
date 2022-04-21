@@ -21,7 +21,7 @@ import ContactCard from './ContactCard';
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
-  const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
+  // const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
   const contacts = useSelector((store) => store.contactReducer);
   const { id } = useParams();
   const opportunity = useSelector((store) => store.opportunityReducer.specificOpportunityReducer);
