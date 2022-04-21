@@ -161,10 +161,6 @@ function HeadingCard(props) {
             onChange={(e) => setSurchargeInput(e.target.value)}
             size='small'
           />
-        </div>
-      </div>
-      <div className='card-body'>
-        <div className="card-section">
           <label>
             <input
               type='checkbox'
@@ -174,25 +170,22 @@ function HeadingCard(props) {
             />
             Taxable
           </label>
-          <button onClick={addNewHeading}>SAVE</button>
-          <button onClick={editHeading}>EDIT</button>
-          <button onClick={deleteHeading}>DELETE</button>
-          <h2>Items</h2>
-
-
-          <button onClick={addNewLineItem}>Add New Line Item</button>
-          <button onClick={addNewItem}>Add New Item</button>
-          <CreateItemModal open={createItemModalOpen} setOpen={setCreateItemModalOpen} />
-          <div className='item-container'>
+        </div>
+      </div>
+      <div className='card-body'>
+        <div className="item-card-section">
+          <div className="item-header-container">
+              <h1>Proposal Items</h1>
+              <Button variant="contained" size='small' onClick={addNewLineItem}>Add Line Item</Button>
+          </div>
+          <div>
             {lineItemList.filter(lineItem => props.id === lineItem.heading_id).map((lineItem, index) => {
-              return <div key={index}>
-                <HeadingItemCard lineItem={lineItem} />
-              </div>
+              return <HeadingItemCard key={index} lineItem={lineItem} addNewItem={addNewItem} />;
             })}
-
           </div>
         </div>
       </div>
+      <CreateItemModal open={createItemModalOpen} setOpen={setCreateItemModalOpen} />
     </>
   );
 }

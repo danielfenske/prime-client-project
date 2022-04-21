@@ -93,6 +93,10 @@ h6 {
   align-items: center;
 }
 
+/* .list-card:hover {
+  background-color: var(--very-light-grey);
+} */
+
 .list-card .card-icon-container {
   display: flex;
   justify-content: center;

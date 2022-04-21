@@ -1,28 +1,42 @@
 #heading-card-header {
-    align-items: flex-start;
+  align-items: flex-start;
 }
 
 .heading-header-container {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .heading-text-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
 #price-container {
-    align-items: flex-end;
+  align-items: flex-end;
 }
 
 #heading-form-container {
-    width: 100%;
+  width: 100%;
 }
 
 .heading-price {
-    color: var(--very-light-grey);
+  color: var(--very-light-grey);
 }
+
+.item-card-section {
+  width: 100%;
+}
+
+.item-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding) var(--padding-large);
+  gap: 5px;
+}
+
+
