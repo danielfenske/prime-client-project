@@ -80,13 +80,13 @@ h6 {
 
 /* GLOBAL STYLING */
 .list-card {
-  padding: var(--padding);
+  padding: var(--padding-large);
 
   border: 2px solid var(--grey-light);
 
   border-radius: var(--border);
 
-  margin: var(--margin);
+  margin: var(--margin) var(--margin-large);
 
   display: flex;
   justify-content: space-between;
@@ -162,10 +162,42 @@ h6 {
   margin: auto;
 }
 
-.filter-container  {
+.modal-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--padding-large);
+  padding-bottom: var(--padding-large);
+  margin: auto;
+}
+
+.filter-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 50px;
   padding: 30px 0px;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  gap: 30px;
+}
+
+.modal-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.modal-icon {
+  color: var(--orange-light);
 }

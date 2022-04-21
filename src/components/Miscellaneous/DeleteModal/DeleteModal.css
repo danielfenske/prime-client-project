@@ -1,0 +1,15 @@
+.delete-modal {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+  height: 250px;
+}
+
+.warning-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

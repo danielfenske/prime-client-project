@@ -28,7 +28,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
             })
         // GET for all opportunities, associated with that user 
     } else {
-        sqlText = `SELECT * FROM "opportunity" WHERE "user_id" = $1 AND "disabled" = false;`;
+        sqlText = `SELECT * FROM "opportunity" WHERE "user_id" = $1 AND "disabled" = false ORDER BY "id" DESC;`;
 
         pool.query(sqlText, [userId])
             .then((result) => {

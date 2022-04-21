@@ -2,15 +2,15 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-// fetch all headings
-router.get('/', (req, res) => {
-    console.log('in heading router GET route');
+// fetch all headings per proposal
+router.get('/:id', (req, res) => {
+    console.log('in heading router GET route, req.params.id is', req.params.id);
 
     if (req.isAuthenticated()) {
 
-        const sqlText = `SELECT * FROM "heading";`;
+        const sqlText = `SELECT * FROM "heading" WHERE "heading"."proposal_id" = $1;`;
 
-        pool.query(sqlText)
+        pool.query(sqlText, [req.params.id])
             .then((result) => {
                 console.log('result.rows is', result.rows);
                 res.send(result.rows);
@@ -25,15 +25,15 @@ router.get('/', (req, res) => {
 
 // add a new heading
 router.post('/', (req, res) => {
-    console.log('in heading router POST route');
-    console.log('req.body is', req.body);
+    // console.log('in heading router POST route');
+    // console.log('req.body is', req.body);
     if (req.isAuthenticated()) {
 
         const sqlText =
-            `INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
-            VALUES ($1, $2, $3, $4, $5, $6);`;
+            `INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "taxable")
+            VALUES ($1, $2, $3, $4, $5);`;
 
-        const valueArray = [req.body.name, req.body.message, req.body.proposal_id, req.body.surcharge, req.body.order, req.body.taxable];
+        const valueArray = [req.body.name, req.body.message, req.body.proposal_id, req.body.surcharge, req.body.taxable];
 
         pool.query(sqlText, valueArray)
             .then((result) => {
@@ -49,15 +49,15 @@ router.post('/', (req, res) => {
 
 // update a heading
 router.put('/:id', (req, res) => {
-    console.log('in heading router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading router PUT route');
+    // console.log('req.body is', req.body);
     if (req.isAuthenticated()) {
         const sqlText =
             `UPDATE "heading" 
-         SET "name" = $1, "message" = $2, "proposal_id" = $3, "surcharge" = $4, "order" = $5, "taxable" = $6
-         WHERE "id" = $7;`
+         SET "name" = $1, "message" = $2, "proposal_id" = $3, "surcharge" = $4, "taxable" = $5
+         WHERE "id" = $6;`
 
-        const valueArray = [req.body.name, req.body.message, req.body.proposal_id, req.body.surcharge, req.body.order, req.body.taxable, req.params.id]
+        const valueArray = [req.body.name, req.body.message, req.body.proposal_id, req.body.surcharge, req.body.taxable, req.params.id]
 
         pool.query(sqlText, valueArray)
             .then((result) => {
@@ -73,7 +73,7 @@ router.put('/:id', (req, res) => {
 
 // delete a heading
 router.delete('/:id', (req, res) => {
-    console.log('in heading router DELETE route');
+    // console.log('in heading router DELETE route');
     if (req.isAuthenticated()) {
         const sqlText = `DELETE FROM "heading" WHERE "id" = $1`;
 
@@ -89,9 +89,9 @@ router.delete('/:id', (req, res) => {
     }
 });
 
-//get all line items
+//get all line items per heading
 router.get('/:id/item', (req, res) => {
-    console.log('in heading/item router GET route');
+    // console.log('in heading/item router GET route');
 
     if (req.isAuthenticated()) {
         const sqlText = `SELECT * FROM "item_heading" WHERE "heading_id" = $1;`
@@ -109,7 +109,7 @@ router.get('/:id/item', (req, res) => {
 });
 
 //get all line items and related item information
-router.get('/item_with_item_code', (req, res) => {
+router.get('/item_with_item_code/:id', (req, res) => {
     console.log('in heading/item_with_item_code router GET route, req.params is');
 
     if (req.isAuthenticated()) {
@@ -140,9 +140,8 @@ router.get('/item_with_item_code', (req, res) => {
 // add a new line item (this will create an empty item card)
 router.post('/:id/item', (req, res) => {
     console.log('in heading/item router POST route');
-    console.log('req.body is', req.body);
     console.log('req.params.id is', req.params.id);
-
+    
     if (req.isAuthenticated()) {
         const sqlText =
             `INSERT INTO "item_heading" ("heading_id", "item_id")
@@ -164,8 +163,8 @@ router.post('/:id/item', (req, res) => {
 
 //update the item code of a line item
 router.put('/item/item_code', (req, res) => {
-    console.log('in heading/item/item_code PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item/item_code PUT route');
+    // console.log('req.body is', req.body);
 
     if (req.isAuthenticated()) {
         const sqlText =
@@ -188,8 +187,8 @@ router.put('/item/item_code', (req, res) => {
 
 // update a new line item (the user actually saves the information on the new line item or updates an existing line item)
 router.put('/item/update', async (req, res) => {
-    console.log('in heading/item router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item router PUT route');
+    // console.log('req.body is', req.body);
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
@@ -209,19 +208,28 @@ router.put('/item/update', async (req, res) => {
             // rounded_measure_unit gets updated based on the partner rounding type
             const sqlTextRounding =
                 `UPDATE "item_heading"
-        SET "rounded_measure_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measure_unit"
-                                         WHEN "partner"."rounding_type" = 2 THEN CEILING("measure_unit")
-                                         WHEN "partner"."rounding_type" = 3 THEN CEILING("measure_unit"/5.0)*5
-                                            END
-        FROM "heading",
-             "proposal",
-             "opportunity",
-             "partner"
-        WHERE "heading"."id" = "item_heading"."heading_id"
-          AND "proposal"."id" = "heading"."proposal_id"
-          AND "opportunity"."id" = "proposal"."opportunity_id"
-          AND "partner"."id" = "opportunity"."partner_id"
-          AND "item_heading"."id" = $1;`;
+                SET "rounded_measure_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measure_unit"
+                                                  WHEN "partner"."rounding_type" = 2 THEN (SELECT CASE WHEN "item"."unit_type_id" = 1 THEN "measure_unit"
+                                                                                                       WHEN "item"."unit_type_id" != 1 THEN CEILING("measure_unit")
+                                                                                                  END)
+                                                         
+                                                  WHEN "partner"."rounding_type" = 3 THEN (SELECT CASE WHEN "item"."unit_type_id" = 1 THEN "measure_unit"
+                                                                                                       WHEN "item"."unit_type_id" != 1 THEN CEILING("measure_unit"/5.0)*5
+                                                                                                  END)
+                                             END
+                FROM "item",
+                     "unit_type",
+                     "heading",
+                     "proposal",
+                     "opportunity",
+                     "partner"
+                WHERE "item"."unit_type_id" = "unit_type"."id"
+                  AND "item_heading"."item_id" = "item"."id"
+                  AND "heading"."id" = "item_heading"."heading_id"
+                  AND "proposal"."id" = "heading"."proposal_id"
+                  AND "opportunity"."id" = "proposal"."opportunity_id"
+                  AND "partner"."id" = "opportunity"."partner_id"
+                  AND "item_heading"."id" = $1;`;
 
             await connection.query(sqlTextRounding, [req.body.heading_item_id]);
 
@@ -254,6 +262,8 @@ router.put('/item/update', async (req, res) => {
             
              await connection.query(sqlTextTotalItemPrice, [req.body.heading_item_id]);
 
+             //add total_item_price of all line items and update the heading table
+             
 
 
             await connection.query('COMMIT;');
@@ -272,8 +282,8 @@ router.put('/item/update', async (req, res) => {
 
 // update a new line item with ft and inches (the user actually saves the information on the new line item or updates an existing line item)
 router.put('/item/update/ft_inches', async (req, res) => {
-    console.log('in heading/item/ft_inches router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item/ft_inches router PUT route');
+    // console.log('req.body is', req.body);
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
@@ -365,8 +375,8 @@ router.put('/item/update/ft_inches', async (req, res) => {
 
 //update line item order (go down)
 router.put('/item/order_down', async (req, res) => {
-    console.log('in heading/item/order_down router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item/order_down router PUT route');
+    // console.log('req.body is', req.body);
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
@@ -414,8 +424,8 @@ router.put('/item/order_down', async (req, res) => {
 
 //update line item order (go up)
 router.put('/item/order_up', async (req, res) => {
-    console.log('in heading/item/order_up router PUT route');
-    console.log('req.body is', req.body);
+    // console.log('in heading/item/order_up router PUT route');
+    // console.log('req.body is', req.body);
     const connection = await pool.connect();
 
     if (req.isAuthenticated()) {
@@ -464,7 +474,7 @@ router.put('/item/order_up', async (req, res) => {
 
 // delete a line item
 router.delete('/item/:id', (req, res) => {
-    console.log('in heading/item router DELETE route', req.params.id);
+    // console.log('in heading/item router DELETE route', req.params.id);
     if (req.isAuthenticated()) {
         const sqlText = `DELETE FROM "item_heading" WHERE "id" = $1;`;
 
