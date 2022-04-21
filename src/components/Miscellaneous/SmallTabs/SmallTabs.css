@@ -13,6 +13,10 @@
   height: 40px;
 }
 
+.tab-extra {
+  padding: 0px var(--padding);
+}
+
 .small-tab.selected {
   color: var(--white);
 }
