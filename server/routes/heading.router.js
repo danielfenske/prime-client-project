@@ -30,10 +30,10 @@ router.post('/', (req, res) => {
     if (req.isAuthenticated()) {
 
         const sqlText =
-            `INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
-            VALUES ($1, $2, $3, $4, $5, $6);`;
+            `INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "taxable")
+            VALUES ($1, $2, $3, $4, $5);`;
 
-        const valueArray = [req.body.name, req.body.message, req.body.proposal_id, req.body.surcharge, req.body.order, req.body.taxable];
+        const valueArray = [req.body.name, req.body.message, req.body.proposal_id, req.body.surcharge, req.body.taxable];
 
         pool.query(sqlText, valueArray)
             .then((result) => {
@@ -54,10 +54,10 @@ router.put('/:id', (req, res) => {
     if (req.isAuthenticated()) {
         const sqlText =
             `UPDATE "heading" 
-         SET "name" = $1, "message" = $2, "proposal_id" = $3, "surcharge" = $4, "order" = $5, "taxable" = $6
-         WHERE "id" = $7;`
+         SET "name" = $1, "message" = $2, "proposal_id" = $3, "surcharge" = $4, "taxable" = $5
+         WHERE "id" = $6;`
 
-        const valueArray = [req.body.name, req.body.message, req.body.proposal_id, req.body.surcharge, req.body.order, req.body.taxable, req.params.id]
+        const valueArray = [req.body.name, req.body.message, req.body.proposal_id, req.body.surcharge, req.body.taxable, req.params.id]
 
         pool.query(sqlText, valueArray)
             .then((result) => {

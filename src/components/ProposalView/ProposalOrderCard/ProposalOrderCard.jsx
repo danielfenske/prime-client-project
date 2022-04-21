@@ -6,11 +6,11 @@ import {useParams} from 'react-router-dom';
 
 function ProposalOrderCard() {
 
-
   const dispatch = useDispatch();
   const store = useSelector((store) => store);
   const headings = store.headingReducer;
   const { id } = useParams();
+
   useEffect(() => {
     dispatch({ type: 'FETCH_HEADING_LIST', payload: id });
   }, []);
