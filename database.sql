@@ -38,7 +38,7 @@ CREATE TABLE "partner" (
     "address_line_1" VARCHAR(250),
     "city" VARCHAR(80),
     "state" VARCHAR(2),
-    "zip" INT,
+    "zip" VARCHAR,
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
  INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "disabled")
@@ -53,7 +53,7 @@ CREATE TABLE "opportunity" (
     "user_id" INT REFERENCES "user",
     "contact_id" INT REFERENCES "contact",
     "partner_id" INT REFERENCES "partner",
-    "due_date" TIMESTAMPTZ,
+    "due_date" TIMESTAMP,
     "type" VARCHAR(80),
     "community_name" VARCHAR(250),
     "development_type" VARCHAR(80),
@@ -70,12 +70,12 @@ CREATE TABLE "opportunity" (
 
 CREATE TABLE "proposal" (
     "id" SERIAL PRIMARY KEY,
-    "date" TIMESTAMPTZ,
+    "date" TIMESTAMP,
     "proposal_code" VARCHAR(80),
     "opportunity_id" INT REFERENCES "opportunity",
     "house_type" VARCHAR(80),
     "plan_identifier" VARCHAR(80),
-    "plan_date" TIMESTAMPTZ,
+    "plan_date" TIMESTAMP,
     "building_code" VARCHAR(80),
     "partner_discount" DECIMAL (25, 2),
     "surcharge" DECIMAL (25, 2),
@@ -145,15 +145,15 @@ CREATE TABLE "item_heading"(
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
 	"order" INT,
-	"price_per_price_unit" DECIMAL (5, 2),
-	"price_unit" DECIMAL (5, 2),
-	"single_unit_price" DECIMAL (5, 2),
+	"price_per_price_unit" DECIMAL (25, 2),
+	"price_unit" DECIMAL (25, 2),
+	"single_unit_price" DECIMAL (25, 2),
 	"ft" INT,
 	"inches" INT,
-	"measure_unit" DECIMAL (5,2),
-	"rounded_measure_unit" DECIMAL (5, 2),
+	"measure_unit" DECIMAL (25, 2),
+	"rounded_measure_unit" DECIMAL (25, 2),
 	"qty" INT,
-	"total_item_price" DECIMAL (5,2)
+	"total_item_price" DECIMAL (25, 2)
 	); 
 	
 
