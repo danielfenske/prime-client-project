@@ -51,7 +51,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-    dispatch({ type: 'FETCH_CONTACT_LIST' });
+    dispatch({ type: 'FETCH_PARTNER_LIST'});
   }, [dispatch]);
 
   return (

@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid';
 import Modal from '../../../Miscellaneous/Modal/Modal';
 
 
-function AddPartnerModal() {
+function AddPartnerModal({open, setOpen }) {
 
     const [name, setName] = useState('');
     const [type, setType] = useState('');
@@ -27,7 +27,7 @@ function AddPartnerModal() {
     // const handleOpen = () => setOpen(true);
     // const handleClose = () => setOpen(false);
 
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -63,13 +63,6 @@ function AddPartnerModal() {
 
     return (
         <>
-         <button
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          Open
-        </button>
             <Modal open={open}>
             <form onSubmit={handleSubmit}>
                     <TextField
