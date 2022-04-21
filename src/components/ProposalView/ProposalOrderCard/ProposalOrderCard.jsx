@@ -12,6 +12,19 @@ function ProposalOrderCard() {
   const headings = store.headingReducer;
   const { id } = useParams();
 
+  const addHeading = () => {
+    dispatch({
+      type: 'POST_HEADING',
+      payload: {
+        name: 'New Tab',
+        message: '',
+        proposal_id: id,
+        surcharge: 0.0,
+        taxable: true,
+      },
+    });
+  };
+
   useEffect(() => {
     dispatch({ type: 'FETCH_HEADING_LIST', payload: id });
   }, []);
@@ -35,7 +48,7 @@ function ProposalOrderCard() {
               alignItems: 'center',
             }}
           >
-            <IconButton>
+            <IconButton onClick={addHeading}>
               <AddIcon />
             </IconButton>
           </div>

@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Button, Select, InputLabel } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 
 // component imports
 import ContactCard from './ContactCard';
@@ -43,7 +41,7 @@ function OpportunityGeneralCard() {
       setDueDate(date);
     }
 
-    setStatus(opportunity.status);
+    setStatus(opportunity.status || 1);
     setType(opportunity.type);
     setCommunityName(opportunity.community_name);
     setDevelopmentType(opportunity.development_type);
@@ -146,7 +144,7 @@ function OpportunityGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-            <TextField
+            {/* <TextField
               id='outlined-basic'
               label='Status'
               type='number'
@@ -155,7 +153,25 @@ function OpportunityGeneralCard() {
               onChange={(e) => setStatus(e.target.value)}
               size='small'
               style={{ width: 200 }}
-            />
+            /> */}
+
+            <FormControl>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                label='Status'
+                variant='outlined'
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                size='small'
+                style={{ width: 200 }}
+              >
+                <MenuItem value={1}>In Progress</MenuItem>
+                <MenuItem value={2}>Complete</MenuItem>
+                <MenuItem value={3}>Archived</MenuItem>
+              </Select>
+            </FormControl>
+
             <TextField
               id='date'
               label='Proposal Date'

@@ -196,7 +196,7 @@ function ProposalPreviewCard() {
                       <div className='total-price'>
                         {calcHeadingTotal(
                           proposal?.line_items.reduce((total, item) => {
-                            if (item.heading_id === heading.id) {
+                            if (item?.heading_id === heading.id) {
                               return total + Number(item.total_item_price);
                             }
                             return total;
