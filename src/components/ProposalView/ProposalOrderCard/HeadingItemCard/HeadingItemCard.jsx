@@ -141,8 +141,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
         <div className="item-card-top">
           <p><strong>Code:</strong> {lineItem.item_code}</p>
           <p><strong>Name:</strong> {lineItem.name}</p>
-          <p> <strong>Price per item:</strong> $455</p>
-          <p><strong>Total price:</strong> $3500</p>
+          <p> <strong>Price per item:</strong> ${lineItem.single_item_price}</p>
+          <p><strong>Total price:</strong> ${lineItem.item_price_total}</p>
         </div>
 
         <div className="item-card-bottom">
@@ -181,7 +181,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                       <TextField
                         id='outlined-basic'
                         type="number"
-                        label='FT"'
+                        label="FT'"
                         variant='outlined'
                         value={ft}
                         onChange={(e) => setFt(e.target.value)}
@@ -192,7 +192,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                         <TextField
                           id='outlined-basic'
                           type="number"
-                          label="IN'"
+                          label='IN"'
                           variant='outlined'
                           value={inches}
                           onChange={(e) => setInches(e.target.value)}
@@ -226,8 +226,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 label='Unit Price'
                 type="number"
                 variant='outlined'
-                value={pricePerPriceUnit}
-                onChange={(e) => setPricePerPriceUnit(e.target.value)}
+                value={pricePerPricingUnit}
+                onChange={(e) => setPricePerPricingUnit(e.target.value)}
                 size='small'
                 style={{ width: 125 }}
               />
@@ -264,6 +264,9 @@ function HeadingItemCard({ lineItem, addNewItem }) {
             >
               <DeleteIcon />
             </IconButton>
+            <button onClick={updateLineItem}>
+              SAVE
+            </button>
           </div>
         </div>
         {/* <div className="item-arrows">
@@ -288,9 +291,6 @@ function HeadingItemCard({ lineItem, addNewItem }) {
         {/* <TextField id="outlined-basic" label="description" variant="outlined" value={lineItem.description} /> */}
         {/* <p> Total line item price: {lineItem.total_item_price}</p> */}
         {/* <TextField id="outlined-basic" label="total price" variant="outlined" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} /> */}
-        {/* <button onClick={updateQtyMeasurementOrderPricePerPriceUnit}>
-          SAVE
-        </button>*/}
       </div>
 
       <Modal open={open} className='modal-container'>
