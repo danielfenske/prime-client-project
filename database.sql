@@ -131,29 +131,30 @@ CREATE TABLE "item" (
 	"id" SERIAL PRIMARY KEY,
 	"item_code" VARCHAR (20),
 	"name" VARCHAR(80),
-	"description" VARCHAR (200),
-	"price_per_price_unit" DECIMAL (25, 2),
+	"price_per_pricing_unit" DECIMAL (25, 2),
 	"unit_type_id" INT,
 	"unit_weight" DECIMAL (25, 2), -- unit weight is the relationship between the mesure_unit and price_unit
 	"disabled" BOOLEAN NOT NULL DEFAULT FALSE 
-
 );
 
+INSERT INTO "item" ("item_code", "name", "price_per_pricing_unit", "unit_type_id", "unit_weight")
+VALUES ('821WF', 'WF Beam 8x21', 100, 2, 1);
 
 CREATE TABLE "item_heading"(
 	"id" SERIAL PRIMARY KEY,
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
+	"message" VARCHAR (200),
 	"order" INT,
-	"price_per_price_unit" DECIMAL (25, 2),
-	"price_unit" DECIMAL (25, 2),
-	"single_unit_price" DECIMAL (25, 2),
+	"price_per_pricing_unit" DECIMAL (25, 2),
 	"ft" INT,
 	"inches" INT,
-	"measure_unit" DECIMAL (25, 2),
-	"rounded_measure_unit" DECIMAL (25, 2),
+	"measurement_per_unit" DECIMAL (25,2),
+	"rounded_measurement_per_unit" DECIMAL (25, 2),
+	"rounded_measurement_per_unit_unit_weight" DECIMAL (25, 2),
 	"qty" INT,
-	"total_item_price" DECIMAL (25, 2)
+	"single_item_price" DECIMAL (25, 2),
+	"item_price_total" DECIMAL (25,2)
 	); 
 	
 
