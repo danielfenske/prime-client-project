@@ -20,7 +20,7 @@ function OpportunityCard({ opportunity }) {
         dispatch({ type: 'FETCH_OPPORTUNITY', payload: opportunity.id })
 
         //  not working 👇🏼
-        // history.push(`/opportunity/${opportunity.id}`);
+        history.push(`/opportunity/${opportunity.id}`);
     }
 
     const handleDelete = () => {
