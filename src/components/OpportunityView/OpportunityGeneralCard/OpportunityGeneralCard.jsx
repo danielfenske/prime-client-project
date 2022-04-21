@@ -16,7 +16,9 @@ function OpportunityGeneralCard() {
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
   const contacts = useSelector((store) => store.contactReducer);
   const { id } = useParams();
-  const opportunity = useSelector((store) => store.opportunityReducer.specificOpportunityReducer);
+  const opportunity = useSelector(
+    (store) => store.opportunityReducer.specificOpportunityReducer,
+  );
 
   useEffect(() => {
     dispatch({
@@ -32,10 +34,15 @@ function OpportunityGeneralCard() {
   }, []);
 
   useEffect(() => {
-
     setName(opportunity.name);
     setOpportunityCode(opportunity.opportunity_code);
-    setDueDate(opportunity.due_date);
+
+    if (opportunity.due_date) {
+      const date = new Date(opportunity.due_date).toISOString().split('T')[0];
+
+      setDueDate(date);
+    }
+
     setStatus(opportunity.status);
     setType(opportunity.type);
     setCommunityName(opportunity.community_name);
@@ -46,7 +53,6 @@ function OpportunityGeneralCard() {
     setZip(opportunity.zip);
     setTaxRate(opportunity.tax_rate);
   }, [opportunity]);
-
 
   const [name, setName] = useState('');
   const [opportunity_code, setOpportunityCode] = useState('');
@@ -71,7 +77,7 @@ function OpportunityGeneralCard() {
       id: opportunity.id,
       name: name,
       opportunity_code: opportunity_code,
-      due_date: due_date,
+      due_date: new Date(due_date).toISOString(),
       status: status,
       type: type,
       community_name: community_name,
@@ -80,18 +86,18 @@ function OpportunityGeneralCard() {
       city: city,
       state: state,
       zip: zip,
-      tax_rate: tax_rate
-    }
+      tax_rate: tax_rate,
+    };
 
     // dispatch to UPDATE with new values
     dispatch({
       type: 'UPDATE_OPPORTUNITY',
-      payload: opportunitySubmission
-    })
-  }
+      payload: opportunitySubmission,
+    });
+  };
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // API CODE             
+  // API CODE
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -100,26 +106,28 @@ function OpportunityGeneralCard() {
       // Saga for the API
       dispatch({
         type: 'FETCH_CITY_STATE',
-        payload: { zip: zip, opportunityId: opportunity.id }
+        payload: { zip: zip, opportunityId: opportunity.id },
       });
     }
-  }
+  };
 
   return (
     <>
       <div className='card-header'>
-        <div className="code-container">
+        <div className='code-container'>
           <h1>Single Opportunity</h1>
-          <span className="code"><h3>{opportunity.opportunity_code}</h3></span>
+          <span className='code'>
+            <h3>{opportunity.opportunity_code}</h3>
+          </span>
         </div>
         <Button onClick={handleSubmit} variant='contained' size='small'>
           Save Progress
         </Button>
       </div>
-      <div className="card-body">
-        <div className="card-section">
+      <div className='card-body'>
+        <div className='card-section'>
           <h2>General Information</h2>
-          <div className="form-container">
+          <div className='form-container'>
             <TextField
               id='outlined-basic'
               label='Opportunity Code'
@@ -141,7 +149,7 @@ function OpportunityGeneralCard() {
             <TextField
               id='outlined-basic'
               label='Status'
-              type="number"
+              type='number'
               variant='outlined'
               value={status}
               onChange={(e) => setStatus(e.target.value)}
@@ -188,9 +196,9 @@ function OpportunityGeneralCard() {
             />
           </div>
         </div>
-        <div className="card-section">
+        <div className='card-section'>
           <h2>Partner Information</h2>
-          <div className="form-container">
+          <div className='form-container'>
             {/* <PartnerCard partners={partners} />
             <ContactCard contacts={contacts} /> */}
             <FormControl>
@@ -228,13 +236,13 @@ function OpportunityGeneralCard() {
           </div>
         </div>
         <div>
-          <div className="card-section">
+          <div className='card-section'>
             <h2>Opportunity Type</h2>
-            <div className="form-container">
+            <div className='form-container'>
               <TextField
                 id='outlined-basic'
                 label='Zip'
-                type="number"
+                type='number'
                 variant='outlined'
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
