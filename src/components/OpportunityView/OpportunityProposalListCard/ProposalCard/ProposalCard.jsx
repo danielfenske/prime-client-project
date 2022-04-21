@@ -24,6 +24,7 @@ function ProposalCard({ proposal }) {
 
   const handleDelete = () => {
     console.log('in handleDelete', id);
+    setOpen(false);
     dispatch({ type: 'DELETE_PROPOSAL', payload: id });
   };
 

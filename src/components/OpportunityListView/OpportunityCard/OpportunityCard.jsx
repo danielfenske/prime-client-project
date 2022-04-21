@@ -25,7 +25,7 @@ function OpportunityCard({ opportunity }) {
 
     const handleDelete = () => {
         console.log('you clicked Delete');
-        setOpen(true);
+        setOpen(false);
         dispatch({ type: 'DELETE_OPPORTUNITY', payload: opportunity.id });
     }
 
