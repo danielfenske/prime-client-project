@@ -53,7 +53,7 @@ CREATE TABLE "opportunity" (
     "user_id" INT REFERENCES "user",
     "contact_id" INT REFERENCES "contact",
     "partner_id" INT REFERENCES "partner",
-    "due_date" TIMESTAMPTZ,
+    "due_date" TIMESTAMP,
     "type" VARCHAR(80),
     "community_name" VARCHAR(250),
     "development_type" VARCHAR(80),
@@ -70,12 +70,12 @@ CREATE TABLE "opportunity" (
 
 CREATE TABLE "proposal" (
     "id" SERIAL PRIMARY KEY,
-    "date" TIMESTAMPTZ,
+    "date" TIMESTAMP,
     "proposal_code" VARCHAR(80),
     "opportunity_id" INT REFERENCES "opportunity",
     "house_type" VARCHAR(80),
     "plan_identifier" VARCHAR(80),
-    "plan_date" TIMESTAMPTZ,
+    "plan_date" TIMESTAMP,
     "building_code" VARCHAR(80),
     "partner_discount" DECIMAL (25, 2),
     "method" INT, -- will be a dropdown, we will simply target the INT or id
