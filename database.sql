@@ -102,11 +102,8 @@ CREATE TABLE "heading" (
 );
 
 
-INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
-VALUES ('frank', 'exterior staircase railing', 1, 3.33, 4, true );
-
-
-
+INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "taxable")
+VALUES ('frank', 'exterior staircase railing', 1, 3.33, true );
 
 	
 CREATE TABLE "unit_type" (
