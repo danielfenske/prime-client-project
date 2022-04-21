@@ -183,7 +183,7 @@ function ProposalPreviewCard() {
                                     </>
                                   ) : (
                                     <>
-                                      {li.measure_unit}
+                                      {li.measurement_per_unit}
                                       {item?.measurement_unit === 'EA'
                                         ? ''
                                         : item?.measurement_unit.toLowerCase()}
@@ -191,7 +191,7 @@ function ProposalPreviewCard() {
                                   )}
                                 </span>
                                 <span className='item_description'>
-                                  {item?.description}
+                                  {li?.message}
                                 </span>
                               </p>
                             );
@@ -201,7 +201,7 @@ function ProposalPreviewCard() {
                         {calcHeadingTotal(
                           proposal?.line_items.reduce((total, item) => {
                             if (item?.heading_id === heading.id) {
-                              return total + Number(item.total_item_price);
+                              return total + Number(item.item_price_total);
                             }
                             return total;
                           }, 0),

@@ -289,7 +289,7 @@ router.put('/item/update/ft_inches', async (req, res) => {
 
       const sqlText =
         `UPDATE "item_heading"
-                 SET "ft" = $1, "inches" = $2, "qty" = $3, "order" = $4, "price_per_price_unit" = $5
+                 SET "ft" = $1, "inches" = $2, "qty" = $3, "order" = $4, "price_per_pricing_unit" = $5
                  WHERE "id" = $6;`;
 
       const valueArray = [req.body.ft, req.body.inches, req.body.qty, req.body.order, req.body.price_per_price_unit, req.body.heading_item_id];
@@ -308,9 +308,9 @@ router.put('/item/update/ft_inches', async (req, res) => {
       // rounded_measure_unit gets updated based on the partner rounding type
       const sqlTextRounding =
         `UPDATE "item_heading"
-        SET "rounded_measure_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measure_unit"
-                                         WHEN "partner"."rounding_type" = 2 THEN CEILING("measure_unit")
-                                         WHEN "partner"."rounding_type" = 3 THEN CEILING("measure_unit"/5.0)*5
+        SET "rounded_measurement_per_unit" = CASE WHEN "partner"."rounding_type" = 1 THEN "measurement_per_unit"
+                                         WHEN "partner"."rounding_type" = 2 THEN CEILING("measurement_per_unit")
+                                         WHEN "partner"."rounding_type" = 3 THEN CEILING("measurement_per_unit"/5.0)*5
                                             END
         FROM "heading",
         "proposal",
@@ -348,7 +348,7 @@ router.put('/item/update/ft_inches', async (req, res) => {
 
       const sqlTextTotalItemPrice =
         `UPDATE "item_heading"
-             SET "total_item_price" = "single_unit_price" * "qty"
+             SET "item_price_total" = "single_item_price" * "qty"
              WHERE "item_heading"."id" = $1; `;
 
       await connection.query(sqlTextTotalItemPrice, [req.body.heading_item_id]);

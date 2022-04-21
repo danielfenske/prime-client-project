@@ -50,7 +50,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
 
   const updateLineItem = (e) => {
     e?.preventDefault();
-    console.log('in updateQtyAndMeasurement');
+    console.log('in updateLineItem', lineItem);
     if (lineItem.measurement_unit === 'EA') {
       //dispatch 1 as measurement_per_unit when the measurement_unit is EA
       dispatch({
@@ -269,8 +269,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 id='outlined-basic'
                 label='Item Message'
                 variant='outlined'
-                // value={description}
-                // onChange={(e) => setDescription(e.target.value)}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 size='small'
                 fullWidth
               />
