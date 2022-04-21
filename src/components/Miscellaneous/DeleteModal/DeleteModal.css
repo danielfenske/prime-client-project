@@ -7,10 +7,6 @@
   height: 250px;
 }
 
-.warning-icon {
-  color: var(--orange-light);
-}
-
 .warning-text {
   display: flex;
   justify-content: center;
