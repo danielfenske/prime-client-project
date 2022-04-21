@@ -31,25 +31,25 @@ function ProposalGeneralCard() {
 
   useEffect(() => {
     // dates for inputs need to be in year-month-day format
-    const proposalDate = new Date(proposal.date); // get a date object of the date
-    const inputProposalDate = `${proposalDate.getFullYear()}-${proposalDate
-      .getMonth()
-      .toString()
-      .padStart(2, '0')}-${proposalDate.getDay().toString().padStart(2, '0')}`; // get the year month and day as strings
+    if (proposal.date) {
+      const proposalDate = new Date(proposal.date); // get a date object of the date
+      const inputProposalDate = proposalDate.toISOString().split('T')[0];
 
-    setDate(inputProposalDate);
+      setDate(inputProposalDate);
+    }
+
     setProposalCode(proposal.proposal_code);
     setHouseType(proposal.house_type);
     setPlanIdentifier(proposal.plan_identifier);
 
-    // get the plan date
-    const planDate = new Date(proposal.plan_date);
-    const inputPlanDate = `${planDate.getFullYear()}-${planDate
-      .getMonth()
-      .toString()
-      .padStart(2, '0')}-${planDate.getDay().toString().padStart(2, '0')}`;
+    if (proposal.plan_date) {
+      // get the plan date
+      const planDate = new Date(proposal.plan_date);
+      const inputPlanDate = planDate.toISOString().split('T')[0];
 
-    setPlanDate(inputPlanDate);
+      setPlanDate(inputPlanDate);
+    }
+
     setBuildingCode(proposal.building_code);
     setPartnerDiscount(proposal.partner_discount);
     setSurcharge(proposal.surcharge);
@@ -84,13 +84,16 @@ function ProposalGeneralCard() {
   const handleSubmit = () => {
     console.log('in handleSubmit');
 
+    const proposal_date = new Date(date).toISOString();
+    const new_plan_date = new Date(plan_date).toISOString();
+
     let proposalSubmission = {
       id: proposal.id,
-      date: date,
+      date: proposal_date,
       proposal_code: proposal_code,
       house_type: house_type,
       plan_identifier: plan_identifier,
-      plan_date: plan_date,
+      plan_date: new_plan_date,
       building_code: building_code,
       partner_discount: partner_discount,
       surcharge: surcharge,
@@ -113,19 +116,21 @@ function ProposalGeneralCard() {
   return (
     <>
       <div className='card-header'>
-        <div className="code-container">
+        <div className='code-container'>
           <h1>Single Proposal</h1>
-          <span className="code"><h3>{proposal.proposal_code}</h3></span>
+          <span className='code'>
+            <h3>{proposal.proposal_code}</h3>
+          </span>
         </div>
         <Button onClick={handleSubmit} variant='contained' size='small'>
           Save Progress
         </Button>
       </div>
-      <div className="card-body">
+      <div className='card-body'>
         <div className='card-section'>
           <h2>General Info</h2>
           {/* GENERAL INFORMATION */}
-          <div className="form-container">
+          <div className='form-container'>
             <TextField
               id='outlined-basic'
               label='Proposal Code'

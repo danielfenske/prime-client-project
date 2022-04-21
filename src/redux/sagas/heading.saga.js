@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-//fetch all headings
-function* getHeadingList() {
+//fetch all headings per proposal
+function* getHeadingList(action) {
     try {
-        const headingResponse = yield axios.get(`/api/heading`);
+        console.log('in getHeadingList saga, action.payload is', action.payload);
+        
+        const headingResponse = yield axios.get(`/api/heading/${action.payload}`);
         console.log('in headingSaga getHeadingList, headingResponse is', headingResponse);
         
 
@@ -21,7 +23,7 @@ function* postHeading (action) {
     
     try {
         yield axios.post(`/api/heading`, action.payload);
-        yield put({type:'FETCH_HEADING_LIST'});
+        yield put({type:'FETCH_HEADING_LIST', payload: action.payload.proposal_id});
     } catch (error) {
         console.log('Error POSTing a new heading', error);
     }
@@ -32,8 +34,8 @@ function* updateHeading (action) {
     console.log('in headingSaga updateHeading, action.payload is', action.payload);
     
     try {
-        yield axios.put(`/api/heading/${action.payload.id}`, action.payload);
-        yield put({type:'FETCH_HEADING_LIST'});
+        yield axios.put(`/api/heading/${action.payload.heading_id}`, action.payload);
+        yield put({type:'FETCH_HEADING_LIST', payload: action.payload.proposal_id});
     } catch (error) {
         console.log('Error UPDATing a heading', error);
     }
@@ -44,8 +46,8 @@ function* deleteHeading (action) {
     console.log('in headingSaga deleteHeading');
     
     try {
-        yield axios.put(`/api/heading/${action.payload.id}`);
-        yield put({type:'FETCH_HEADING_LIST'});
+        yield axios.delete(`/api/heading/${action.payload.heading_id}`);
+        yield put({type:'FETCH_HEADING_LIST', payload: action.payload.proposal_id});
     } catch (error) {
         console.log('Error DELETing a heading', error);
     }

@@ -20,41 +20,56 @@ function ProposalCard({ proposal }) {
     console.log('in handleEdit', id);
     dispatch({ type: 'FETCH_PROPOSAL', payload: id });
     history.push(`/proposal/${id}`);
-  }
+  };
 
   const handleDelete = () => {
     console.log('in handleDelete', id);
+    setOpen(false);
     dispatch({ type: 'DELETE_PROPOSAL', payload: id });
-  }
+  };
 
   const [open, setOpen] = useState(false);
-
 
   return (
     <>
       <div className='list-card'>
         <div className='card-info-container'>
           <h1>{proposal.proposal_code}</h1>
-          <p><strong>Description: </strong>{new Date(proposal.date).toLocaleDateString()}</p>
-          <p><strong>Due date: </strong>{proposal.description}</p>
+          <p>
+            <strong>Description: </strong>
+            {proposal.description}
+          </p>
+          <p>
+            <strong>Due date: </strong>
+            {new Date(proposal.date).toLocaleDateString()}
+          </p>
         </div>
         <div className='card-icon-container'>
           <IconButton onClick={handleEdit}>
             <EditIcon />
           </IconButton>
-          <IconButton onClick={() => { setOpen(true); }}>
+          <IconButton
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
             <DeleteIcon />
           </IconButton>
         </div>
       </div>
 
-      <Modal open={open} className="modal-container">
+      <Modal open={open} className='modal-container'>
         <DeleteModal />
-        <div className="modal-btn-container">
-          <Button onClick={() => { setOpen(false); }} variant="outlined">
+        <div className='modal-btn-container'>
+          <Button
+            onClick={() => {
+              setOpen(false);
+            }}
+            variant='outlined'
+          >
             Cancel
           </Button>
-          <Button onClick={handleDelete} variant="contained">
+          <Button onClick={handleDelete} variant='contained'>
             Delete
           </Button>
         </div>

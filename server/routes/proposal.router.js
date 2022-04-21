@@ -40,7 +40,7 @@ router.get('/', (req, res) => {
             
             FROM "opportunity"
             JOIN "proposal" ON "proposal"."opportunity_id" = "opportunity"."id"
-            WHERE "opportunity"."user_id" = $1 AND "proposal"."disabled" = $2;`;
+            WHERE "opportunity"."user_id" = $1 AND "proposal"."disabled" = $2 ORDER BY "id" DESC;;`;
 
       pool.query(queryText, [userId, disabled])
         .then((result) => {

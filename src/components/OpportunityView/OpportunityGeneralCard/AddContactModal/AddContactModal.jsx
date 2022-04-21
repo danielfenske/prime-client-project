@@ -4,9 +4,10 @@ import { useState } from 'react';
 import Modal from '../../../Miscellaneous/Modal/Modal';
 import { useDispatch } from 'react-redux';
 import TextField from '@mui/material/TextField';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Button from '@mui/material/Button';
 
 function AddContactModal({ open, setOpen }) {
-  // const [open, setOpen] = useState(false);
 
   // local state for text fields when adding new contacts
   const [name, setName] = useState('');
@@ -38,50 +39,57 @@ function AddContactModal({ open, setOpen }) {
   };
 
   return (
-    <>
-      <Modal open={open}>
-        <h1>Add New Contact</h1>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            id='outlined-basic'
-            label='Name'
-            variant='outlined'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            id='outlined-basic'
-            label='Email'
-            variant='outlined'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            id='outlined-basic'
-            label='Phone'
-            variant='outlined'
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-          <TextField
-            id='outlined-basic'
-            label='Work Phone'
-            variant='outlined'
-            value={work_phone}
-            onChange={(e) => setWorkPhone(e.target.value)}
-          />
-          <button type='submit'>Add</button>
-        </form>
-
-        <button
+    <div className="modal-container">
+      <div className="modal-icon"><PersonAddIcon style={{ fontSize: 100 }} /></div>
+      <div className="modal-form-container">
+        <h2>Add New Contact</h2>
+        <TextField
+          id='outlined-basic'
+          label='Name'
+          variant='outlined'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          size='small'
+        />
+        <TextField
+          id='outlined-basic'
+          label='Email'
+          variant='outlined'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          size='small'
+        />
+        <TextField
+          id='outlined-basic'
+          label='Phone'
+          variant='outlined'
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          size='small'
+        />
+        <TextField
+          id='outlined-basic'
+          label='Work Phone'
+          variant='outlined'
+          value={work_phone}
+          onChange={(e) => setWorkPhone(e.target.value)}
+          size='small'
+        />
+      </div>
+      <div className='modal-btn-container'>
+        <Button
           onClick={() => {
             setOpen(false);
           }}
+          variant='outlined'
         >
           Cancel
-        </button>
-      </Modal>
-    </>
+        </Button>
+        <Button onClick={handleSubmit} variant='contained'>
+          Add
+        </Button>
+      </div>
+    </div>
   );
 }
 

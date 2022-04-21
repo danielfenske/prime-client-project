@@ -45,12 +45,13 @@ function UserCard({ user }) {
       <div className='userCard'>
         <p>User Id: {id}</p>
 
-        <div>
+        <div className="admin-form-container">
           <TextField
             label='Username'
             value={usernameInput}
             onChange={(e) => setUsernameInput(e.target.value)}
             size='small'
+            style={{ width: 200}}
           />
 
           <TextField
@@ -58,6 +59,7 @@ function UserCard({ user }) {
             value={firstInput}
             onChange={(e) => setFirstInput(e.target.value)}
             size='small'
+            style={{ width: 200}}
           />
 
           <TextField
@@ -65,12 +67,14 @@ function UserCard({ user }) {
             value={lastInput}
             onChange={(e) => setLastInput(e.target.value)}
             size='small'
+            style={{ width: 200}}
           />
 
           <Select
             value={accessInput}
             onChange={(e) => setAccessInput(e.target.value)}
             size='small'
+            style={{ width: 200}}
           >
             {access_levels.map((lvl, index) => {
               if (index !== 0) {
@@ -89,10 +93,10 @@ function UserCard({ user }) {
             first_name !== firstInput ||
             last_name !== lastInput ||
             access_level !== accessInput) && (
-            <Button onClick={handlePut}  variant='contained' color='secondary'>
-              Save
-            </Button>
-          )}
+              <Button onClick={handlePut} variant='contained' color='secondary'>
+                Save
+              </Button>
+            )}
           <IconButton onClick={handleDisable}>
             <DeleteIcon />
           </IconButton>

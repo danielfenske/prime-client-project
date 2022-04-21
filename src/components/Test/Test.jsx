@@ -6,6 +6,7 @@ import CreateItemModal from '../ProposalView/ProposalOrderCard/CreateItemModal/C
 import DeleteModal from '../Miscellaneous/DeleteModal/DeleteModal';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
+import EditContactModal from '../OpportunityView/OpportunityGeneralCard/EditContactModal/EditContactModal';
 
 // link to the autocomplete
 // https://mui.com/material-ui/react-autocomplete/
@@ -55,26 +56,9 @@ function Test() {
         </ul> */}
       </div>
 
-
       <Modal open={open} className="modal-container">
         {/* <h1>Hello World</h1> */}
-        <DeleteModal />
-        <ButtonGroup variant="contained" aria-label="outlined primary button group">
-          <Button
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            Delete
-          </Button>
-        </ButtonGroup>
+        <EditContactModal />
       </Modal>
 
     </>
