@@ -57,9 +57,9 @@ function ProposalGeneralCard() {
     setMethod(proposal.method || 1);
     setMethodMessage(proposal.method_message);
     setDeliveryCharge(proposal.delivery_charge);
+    setDeliveryMessage(proposal.delivery_message);
     setFieldWeldCharge(proposal.field_weld_charge);
     setFieldWeldMessage(proposal.field_weld_message);
-    setDescription(proposal.description);
   }, [proposal]);
 
   const [date, setDate] = useState('');
@@ -74,9 +74,10 @@ function ProposalGeneralCard() {
   const [method, setMethod] = useState(1);
   const [method_message, setMethodMessage] = useState('');
   const [delivery_charge, setDeliveryCharge] = useState('');
+  const [delivery_message, setDeliveryMessage] = useState('');
   const [field_weld_charge, setFieldWeldCharge] = useState('');
   const [field_weld_message, setFieldWeldMessage] = useState('');
-  const [description, setDescription] = useState('');
+  
 
   const dispatch = useDispatch();
 
@@ -97,9 +98,9 @@ function ProposalGeneralCard() {
       method: method,
       method_message: method_message,
       delivery_charge: delivery_charge,
+      delivery_message: delivery_message,
       field_weld_charge: field_weld_charge,
       field_weld_message: field_weld_message,
-      description: description,
     };
 
     dispatch({ type: 'UPDATE_PROPOSAL', payload: proposalSubmission });
@@ -252,6 +253,17 @@ function ProposalGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
+            {/* delivery message goes here 👇🏼 ////////////////////////////////////////////////////////////////////////////////////////////////// */}
+            <TextField
+              id='outlined-basic'
+              label='Delivery Message'
+              variant='outlined'
+              value={delivery_message}
+              onChange={(e) => setDeliveryMessage(e.target.value)}
+              size='small'
+              style={{ width: 200 }}
+            />
+            {/* delivery message goes here 👆🏼 ////////////////////////////////////////////////////////////////////////////////////////////////// */}
             <TextField
               id='outlined-basic'
               label='Field Weld Charge'
@@ -271,7 +283,7 @@ function ProposalGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-            <TextField
+            {/* <TextField
               id='outlined-basic'
               label='Description'
               variant='outlined'
@@ -281,7 +293,7 @@ function ProposalGeneralCard() {
               style={{ width: 200 }}
               multiline
               rows={4}
-            />
+            /> */}
           </div>
         </div>
       </div>
