@@ -184,7 +184,9 @@ function ProposalPreviewCard() {
                                   ) : (
                                     <>
                                       {li.measure_unit}
-                                      {item?.measurement_unit}
+                                      {item?.measurement_unit === 'EA'
+                                        ? ''
+                                        : item?.measurement_unit.toLowerCase()}
                                     </>
                                   )}
                                 </span>
