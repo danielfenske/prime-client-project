@@ -24,6 +24,9 @@ function HeadingCard(props) {
   const [createItemModalOpen, setCreateItemModalOpen] = useState(false);
   const [checked, setChecked] = useState(props.taxable);
 
+  const allProposal = useSelector((store) => store.proposalEverything);
+  const { id } = useParams();
+
   // console.log('props', props);
   // console.log('props.id is', props.id);
 
@@ -44,6 +47,11 @@ function HeadingCard(props) {
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
     dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: props.id });
+
+    dispatch({
+      type: 'GET_PROPOSAL_EVERYTHING',
+      payload: id,
+    });
     // sumLineItem();
   }, []);
 
