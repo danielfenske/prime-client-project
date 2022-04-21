@@ -27,19 +27,16 @@
   color: var(--very-light-grey);
 }
 
+.item-card-section {
+  width: 100%;
+}
+
 .item-header-container {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-  padding: var(--padding) 0px;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding) var(--padding-large);
   gap: 5px;
 }
 
-.item-header {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: row;
-  gap: var(--padding);
-}
+

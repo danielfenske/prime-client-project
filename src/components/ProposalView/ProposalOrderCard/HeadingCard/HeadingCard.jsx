@@ -14,7 +14,6 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import './HeadingCard.css';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
 import { LockTwoTone } from '@mui/icons-material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function HeadingCard(props) {
   const dispatch = useDispatch();
@@ -162,10 +161,6 @@ function HeadingCard(props) {
             onChange={(e) => setSurchargeInput(e.target.value)}
             size='small'
           />
-        </div>
-      </div>
-      <div className='card-body'>
-        <div className="card-section">
           <label>
             <input
               type='checkbox'
@@ -175,27 +170,22 @@ function HeadingCard(props) {
             />
             Taxable
           </label>
-          <button onClick={addNewHeading}>SAVE</button>
-          <button onClick={editHeading}>EDIT</button>
-          <button onClick={deleteHeading}>DELETE</button>
+        </div>
+      </div>
+      <div className='card-body'>
+        <div className="item-card-section">
           <div className="item-header-container">
-            <div className="item-header">
-              <h2>Items</h2>
-              <IconButton variant="contained" onClick={addNewLineItem}><AddCircleOutlineIcon style={{color: 'var(--orange)'}}/></IconButton>
-            </div>
-            <Button variant="contained"  size='small' onClick={addNewItem}>Create New Item</Button>
+              <h1>Proposal Items</h1>
+              <Button variant="contained" size='small' onClick={addNewLineItem}>Add Line Item</Button>
           </div>
-          <CreateItemModal open={createItemModalOpen} setOpen={setCreateItemModalOpen} />
-          <div className='item-container'>
+          <div>
             {lineItemList.filter(lineItem => props.id === lineItem.heading_id).map((lineItem, index) => {
-              return <div key={index}>
-                <HeadingItemCard lineItem={lineItem} />
-              </div>
+              return <HeadingItemCard key={index} lineItem={lineItem} addNewItem={addNewItem} />;
             })}
-
           </div>
         </div>
       </div>
+      <CreateItemModal open={createItemModalOpen} setOpen={setCreateItemModalOpen} />
     </>
   );
 }
