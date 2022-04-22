@@ -5,7 +5,7 @@ import './SmallTabs.css';
 import { Button } from '@mui/material';
 
 // tabLabels and tabContents should have corresponding indexes
-function SmallTabs({ tabLabels, tabContents }) {
+function SmallTabs({ tabLabels, tabContents, tab_extras = <></> }) {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const tabContentContainer = useRef();
@@ -47,19 +47,22 @@ function SmallTabs({ tabLabels, tabContents }) {
               </Button>
             );
           })}
+          <div className='tab-extra'>{tab_extras}</div>
         </div>
         <div ref={tabContentContainer} className='tab-content-container'>
           {tabContents.map((tab, index) => {
-            return (
-              <span
-                key={index}
-                style={{
-                  display: index === selectedTab ? 'grid' : 'none',
-                }}
-              >
-                {tab}
-              </span>
-            );
+            if (index === selectedTab) {
+              return (
+                <span
+                  key={index}
+                  // style={{
+                  //   display: index === selectedTab ? 'grid' : 'none',
+                  // }}
+                >
+                  {tab}
+                </span>
+              );
+            }
           })}
         </div>
       </div>

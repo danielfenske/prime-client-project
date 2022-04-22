@@ -29,6 +29,7 @@ function OpportunityListView() {
   const opportunityList = useSelector(
     (store) => store.opportunityReducer.opportunityListReducer,
   );
+  const partners = useSelector((store) => store.partnerReducer.partnerReducer);
 
   return (
     <>
@@ -38,7 +39,7 @@ function OpportunityListView() {
           Create New
         </Button>
       </div>
-      <div className="filter-container">
+      <div className='filter-container'>
         <TextField
           id='outlined-basic'
           label='Search Opportunities'
@@ -59,7 +60,9 @@ function OpportunityListView() {
             size='small'
             style={{ width: 200 }}
           >
-            <MenuItem value={1}>Bob</MenuItem>
+            {partners.map((thisPartner, i) => (                        
+                        <MenuItem key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>                        
+                        ))}
           </Select>
         </FormControl>
 
@@ -83,14 +86,14 @@ function OpportunityListView() {
       <div>
         {opportunityList
           .filter((o) => {
-            if (o.name === null || o.partner_id === null || o.status === null) {
-              return true;
-            }
+            // if (o.name === null || o.partner_id === null || o.status === null) {
+            //   return true;
+            // }
 
             return (
               o.name.toUpperCase().includes(search.toUpperCase()) &&
-              o.partner_id == partner &&
-              o.status == status
+              (!o.partner_id || o.partner_id == partner) &&
+              (!o.status || o.status == status)
             );
           })
           .map((opportunity, i) => {

@@ -34,7 +34,7 @@ CREATE TABLE "partner" (
     "partner_code" VARCHAR(80),
     "partner_discount" DECIMAL (25, 2),
     "rounding_type" INT,
-    "phone_number" INT,
+    "phone_number" VARCHAR(20),
     "address_line_1" VARCHAR(250),
     "city" VARCHAR(80),
     "state" VARCHAR(2),
@@ -100,11 +100,8 @@ CREATE TABLE "heading" (
 );
 
 
-INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
-VALUES ('frank', 'exterior staircase railing', 1, 3.33, 4, true );
-
-
-
+INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "taxable")
+VALUES ('frank', 'exterior staircase railing', 1, 3.33, true );
 
 	
 CREATE TABLE "unit_type" (
