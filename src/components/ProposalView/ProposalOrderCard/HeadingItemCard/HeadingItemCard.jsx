@@ -269,8 +269,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 id='outlined-basic'
                 label='Item Message'
                 variant='outlined'
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                // value={description}
+                // onChange={(e) => setDescription(e.target.value)}
                 size='small'
                 fullWidth
               />
