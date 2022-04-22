@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import OpportunityCard from './OpportunityCard/OpportunityCard';
 import React, { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
+import { Button, MenuItem, Select } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 
 function OpportunityListView() {
   const [search, setSearch] = useState('');
@@ -62,8 +60,7 @@ function OpportunityListView() {
           >
             {partners.map((thisPartner, i) => (
               <MenuItem key={i} value={thisPartner.id}>
-                {' '}
-                <em>{thisPartner.name}</em>{' '}
+                {thisPartner.name}
               </MenuItem>
             ))}
           </Select>
@@ -74,7 +71,7 @@ function OpportunityListView() {
           <Select
             labelId='demo-simple-select-label'
             id='demo-simple-select'
-            label='Method'
+            label='status'
             value={status}
             onChange={(e) => setStatus(e.target.value)}
             size='small'

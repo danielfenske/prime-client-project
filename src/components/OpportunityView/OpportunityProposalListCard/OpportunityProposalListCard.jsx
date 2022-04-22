@@ -55,7 +55,8 @@ function OpportunityProposalListCard() {
           size='small'
           style={{ width: 300 }}
         />
-        <FormControl>
+        {/* NOT NEEDED FOR FILTERING */}
+        {/* <FormControl>
           <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
           <Select
             labelId='demo-simple-select-label'
@@ -66,11 +67,9 @@ function OpportunityProposalListCard() {
             size='small'
             style={{ width: 200 }}
           >
-            {/* <MenuItem value={1}>In-Progress</MenuItem> */}
             {partners.map((thisPartner, i) => (
               <MenuItem key={i} value={thisPartner.id}>
-                {' '}
-                <em>{thisPartner.name}</em>{' '}
+                {thisPartner.name}
               </MenuItem>
             ))}
           </Select>
@@ -91,19 +90,15 @@ function OpportunityProposalListCard() {
             <MenuItem value={2}>Complete</MenuItem>
             <MenuItem value={3}>Archived</MenuItem>
           </Select>
-        </FormControl>
+        </FormControl> */}
       </div>
       <div>
         {proposalList &&
           proposalList
             .filter((proposal) => {
-              return (
-                proposal.proposal_code
-                  .toUpperCase()
-                  .includes(search.toUpperCase()) &&
-                (!proposal.partner_id || proposal.partner_id == partner) &&
-                (!proposal.status || proposal.status == status)
-              );
+              return proposal.proposal_code
+                .toUpperCase()
+                .includes(search.toUpperCase());
             })
             .map((proposal, index) => {
               return <ProposalCard key={index} proposal={proposal} />;

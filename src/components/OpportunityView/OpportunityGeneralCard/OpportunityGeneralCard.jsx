@@ -288,7 +288,7 @@ function OpportunityGeneralCard() {
         </div>
         <div className='card-section'>
           <h2>Contact Information</h2>
-          <div className="form-container">
+          <div className='form-container'>
             <div className='contact-container'>
               <FormControl>
                 <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
@@ -303,23 +303,32 @@ function OpportunityGeneralCard() {
                 >
                   {/* <MenuItem value={1}>none</MenuItem> */}
                   {partners.map((thisPartner, i) => (
-                    <MenuItem onClick={() => handleEditPartner(thisPartner)} key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>
+                    <MenuItem
+                      onClick={() => handleEditPartner(thisPartner)}
+                      key={i}
+                      value={thisPartner.id}
+                    >
+                      {thisPartner.name}
+                    </MenuItem>
                   ))}
-
                 </Select>
               </FormControl>
 
               <div>
-                <p><strong>Type:</strong></p>
+                <p>
+                  <strong>Type:</strong>
+                </p>
                 <p>{partnerType ? partnerType : 'N/A'}</p>
               </div>
 
               <div>
-                <p><strong>Phone Number:</strong></p>
+                <p>
+                  <strong>Phone Number:</strong>
+                </p>
                 {partnerPhoneNumber ? partnerPhoneNumber : <p>N/A</p>}
               </div>
 
-              <div className="icon-container">
+              <div className='icon-container'>
                 <IconButton onClick={handlePartnerEdit}>
                   <EditIcon />
                 </IconButton>
@@ -342,28 +351,39 @@ function OpportunityGeneralCard() {
                   style={{ width: 200 }}
                 >
                   {contacts.map((thisContact, i) => (
-                    <MenuItem onClick={() => handleEditContact(thisContact)} key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>
+                    <MenuItem
+                      onClick={() => handleEditContact(thisContact)}
+                      key={i}
+                      value={thisContact.id}
+                    >
+                      {thisContact.name}
+                    </MenuItem>
                   ))}
-
                 </Select>
               </FormControl>
 
               <div>
-                <p><strong>Name:</strong></p>
+                <p>
+                  <strong>Name:</strong>
+                </p>
                 <p>{contactName ? contactName : 'N/A'}</p>
               </div>
 
               <div>
-                <p><strong>Phone Number:</strong></p>
+                <p>
+                  <strong>Phone Number:</strong>
+                </p>
                 <p>{contactPhoneNumber ? contactPhoneNumber : 'N/A'}</p>
               </div>
 
               <div>
-                <p><strong>Email:</strong></p>
+                <p>
+                  <strong>Email:</strong>
+                </p>
                 <p>{contactEmail ? contactEmail : 'N/A'}</p>
               </div>
 
-              <div className="icon-container">
+              <div className='icon-container'>
                 <IconButton onClick={handleContactEdit}>
                   <EditIcon />
                 </IconButton>
@@ -430,10 +450,22 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
-      <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} />
-      <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
-      <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen} />
-      <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen} />
+      <AddPartnerModal
+        open={partnerAddModalOpen}
+        setOpen={setPartnerAddModalOpen}
+      />
+      <EditPartnerModal
+        open={partnerEditModalOpen}
+        setOpen={setPartnerEditModalOpen}
+      />
+      <AddContactModal
+        open={contactAddModalOpen}
+        setOpen={setContactAddModalOpen}
+      />
+      <EditContactModal
+        open={contactEditModalOpen}
+        setOpen={setContactEditModalOpen}
+      />
     </>
   );
 }
