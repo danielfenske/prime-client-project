@@ -6,10 +6,11 @@ import { FormControl } from '@mui/material';
 import Select from '@mui/material/Select';
 import { InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import { SettingsPowerRounded } from '@mui/icons-material';
+import { PropaneSharp, SettingsPowerRounded } from '@mui/icons-material';
 import Modal from '../../../Miscellaneous/Modal/Modal';
 import DeleteModal from '../../../Miscellaneous/DeleteModal/DeleteModal';
 import Button from '@mui/material/Button';
+import { useParams } from 'react-router-dom';
 
 function HeadingItemCard({ lineItem }) {
   const items = useSelector((store) => store.itemReducer);
@@ -24,10 +25,10 @@ function HeadingItemCard({ lineItem }) {
   const [pricePerPricingUnit, setPricePerPricingUnit] = useState(
     lineItem.override_price || lineItem.default_price,
   );
-
   const [open, setOpen] = useState(false);
+  const { id } = useParams
 
-  // console.log('lineItem is', lineItem);
+  console.log('lineItem is', lineItem);
   // console.log('items are', items);
 
   const handleItemSelect = (e) => {
@@ -48,7 +49,8 @@ function HeadingItemCard({ lineItem }) {
           qty: Number(qty),
           measurement_per_unit: 1,
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
+          heading_id: lineItem.heading_id
         },
       });
     } else if (lineItem.measurement_unit === 'FT') {
@@ -61,7 +63,8 @@ function HeadingItemCard({ lineItem }) {
           ft: Number(ft),
           inches: Number(inches),
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
+          heading_id: lineItem.heading_id
         },
       });
     } else {
@@ -72,7 +75,8 @@ function HeadingItemCard({ lineItem }) {
           qty: Number(qty),
           measurement_per_unit: Number(measurement),
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
+          heading_id: lineItem.heading_id
         },
       });
     }

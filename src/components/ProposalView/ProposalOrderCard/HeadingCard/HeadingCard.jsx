@@ -23,28 +23,38 @@ function HeadingCard(props) {
   const [surchargeInput, setSurchargeInput] = useState(props.surcharge);
   const [createItemModalOpen, setCreateItemModalOpen] = useState(false);
   const [checked, setChecked] = useState(props.taxable);
+  const { id } = useParams();
 
 
   // console.log('props', props);
-  console.log('props.id is', props.id);
+  //props.id is heading id
+  // console.log('props.id is', props.id);
 
   const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
-  // console.log('lineItemList is', Number(lineItemList[0].total_item_price));
+  console.log('lineItemList is', lineItemList);
+
+
+  const lineItemListPerHeading = lineItemList.filter(item => item.heading_id = props.id);
+  console.log('lineItemPerHeading is', lineItemListPerHeading);
 
   // const sumLineItem = () => {
   //   let result = 0;
   //   for (let i = 0; i < lineItemList.length; i++){
-  //     result += Number(lineItemList[i].total_item_price);
+  //     result += Number(lineItemList[i].item_price_total);
   //   }
 
   //   return result;
   // }
 
+  // let initialValue = 0;
+  // let total = lineItem.reduce(lineItem.item_price_total)
+
+
   // console.log('result is', sumLineItem());
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
-    dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: props.id })
+    dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: id })
     // sumLineItem();
   }, []);
 
@@ -151,6 +161,7 @@ function HeadingCard(props) {
         </div>
         <div className="heading-header-container" id="price-container">
           <h1><span className="heading-price">Heading Price</span></h1>
+
           <TextField
             fullWidth
             type="number"
@@ -161,6 +172,8 @@ function HeadingCard(props) {
             onChange={(e) => setSurchargeInput(e.target.value)}
             size='small'
           />
+
+
         </div>
       </div>
       <div className='card-body'>
