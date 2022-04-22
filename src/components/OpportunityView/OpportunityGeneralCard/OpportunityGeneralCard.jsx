@@ -204,6 +204,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Opportunity Code'
               variant='outlined'
+              autoComplete="off"
               value={opportunity_code}
               onChange={(e) => setOpportunityCode(e.target.value)}
               size='small'
@@ -213,6 +214,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Opportunity Name'
               variant='outlined'
+              autoComplete="off"
               value={name}
               onChange={(e) => setName(e.target.value)}
               size='small'
@@ -223,6 +225,7 @@ function OpportunityGeneralCard() {
               label='Status'
               type='number'
               variant='outlined'
+              autoComplete="off"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               size='small'
@@ -261,6 +264,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Type'
               variant='outlined'
+              autoComplete="off"
               value={type}
               onChange={(e) => setType(e.target.value)}
               size='small'
@@ -270,6 +274,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Community Name'
               variant='outlined'
+              autoComplete="off"
               value={community_name ? community_name : name}
               onChange={(e) => setCommunityName(e.target.value)}
               size='small'
@@ -279,6 +284,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Development Type'
               variant='outlined'
+              autoComplete="off"
               value={development_type}
               onChange={(e) => setDevelopmentType(e.target.value)}
               size='small'
@@ -383,6 +389,7 @@ function OpportunityGeneralCard() {
                 label='Zip'
                 type='number'
                 variant='outlined'
+                autoComplete="off"
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -393,6 +400,7 @@ function OpportunityGeneralCard() {
                 id='outlined-basic'
                 label='City'
                 variant='outlined'
+                autoComplete="off"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 size='small'
@@ -402,6 +410,7 @@ function OpportunityGeneralCard() {
                 id='outlined-basic'
                 label='State'
                 variant='outlined'
+                autoComplete="off"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 size='small'
@@ -411,6 +420,7 @@ function OpportunityGeneralCard() {
                 id='outlined-basic'
                 label='Address'
                 variant='outlined'
+                autoComplete="off"
                 value={address_line_1}
                 onChange={(e) => setAddress(e.target.value)}
                 size='small'
@@ -421,6 +431,7 @@ function OpportunityGeneralCard() {
                 label='Tax Rate'
                 type='number'
                 variant='outlined'
+                autoComplete="off"
                 value={tax_rate}
                 onChange={(e) => setTaxRate(e.target.value)}
                 size='small'
