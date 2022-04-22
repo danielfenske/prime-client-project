@@ -3,17 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import HeadingItemCard from '../HeadingItemCard/HeadingItemCard';
 import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import './HeadingCard.css';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
-import { LockTwoTone } from '@mui/icons-material';
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 
 function HeadingCard(props) {
   const dispatch = useDispatch();
@@ -24,11 +19,16 @@ function HeadingCard(props) {
   const [createItemModalOpen, setCreateItemModalOpen] = useState(false);
   const [checked, setChecked] = useState(props.taxable);
 
+  const allProposal = useSelector((store) => store.proposalEverything);
+  const { id } = useParams();
 
   // console.log('props', props);
   console.log('props.id is', props.id);
 
-  const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+  // const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+  const lineItemList = useSelector(
+    (store) => store.headingItemReducer.headingItemWithItemCodeReducer,
+  );
   // console.log('lineItemList is', Number(lineItemList[0].total_item_price));
 
   // const sumLineItem = () => {
@@ -44,7 +44,12 @@ function HeadingCard(props) {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
-    dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: props.id })
+    dispatch({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: props.id });
+
+    dispatch({
+      type: 'GET_PROPOSAL_EVERYTHING',
+      payload: id,
+    });
     // sumLineItem();
   }, []);
 
@@ -52,11 +57,10 @@ function HeadingCard(props) {
   //  sumLineItem();
   // }, [lineItemList])
 
-
   const handleCheckbox = (e) => {
     console.log('checked is', checked);
     setChecked(!checked);
-  }
+  };
 
   const addNewHeading = () => {
     console.log('save button clicked');
@@ -67,13 +71,19 @@ function HeadingCard(props) {
         message: messageInput,
         proposal_id: props.proposal_id,
         surcharge: surchargeInput,
-        taxable: checked
-      }
-    })
-  }
+        taxable: checked,
+      },
+    });
+  };
 
   const editHeading = () => {
     console.log('edit button clicked');
+
+    // this dispatch will trigger a save on all the items
+    dispatch({
+      type: 'TRIGGER_ITEM_SAVE',
+    });
+
     dispatch({
       type: 'UPDATE_HEADING',
       payload: {
@@ -82,43 +92,52 @@ function HeadingCard(props) {
         proposal_id: props.proposal_id,
         surcharge: surchargeInput,
         taxable: checked,
-        heading_id: props.id
-      }
-    })
-  }
+        heading_id: props.id,
+      },
+    });
+  };
 
   const deleteHeading = () => {
     console.log('delete button clicked');
-    dispatch({ type: 'DELETE_HEADING', payload: { heading_id: props.id, proposal_id: props.proposal_id } })
-  }
+    dispatch({
+      type: 'DELETE_HEADING',
+      payload: { heading_id: props.id, proposal_id: props.proposal_id },
+    });
+  };
 
   const addNewLineItem = () => {
     // console.log('in addNewLineItem');
     // console.log('itemID is', itemId);
-    dispatch({ type: 'POST_HEADING_ITEM', payload: props.id })
-  }
+    dispatch({ type: 'POST_HEADING_ITEM', payload: props.id });
+  };
 
   const saveHeadingInfo = () => {
     console.log('in saveHeadingInfo');
-  }
+  };
 
   const addNewItem = () => {
     // console.log(('in addNewItem'));
     setCreateItemModalOpen(true);
-  }
+  };
 
   return (
     <>
-      <div className="card-header" id='heading-card-header'>
-        <div className="heading-header-container">
-          <div className="heading-text-container">
-            <h1>Heading Information</h1>
-            <div>
-              <IconButton><SaveOutlinedIcon sx={{ color: 'var(--grey-dark)' }} /></IconButton>
-              <Button>Save Progress</Button>
-            </div>
+      <div className='heading-container' id='heading-card-header'>
+        <div className='heading-text-container'>
+          <h1>Heading Information</h1>
+          <IconButton onClick={deleteHeading}>
+            {/* <SaveOutlinedIcon sx={{ color: 'var(--grey-dark)' }} /> */}
+            <DeleteIcon />
+          </IconButton>
+
+          <div className='save-button-container'>
+            <Button variant='contained' size='small' onClick={editHeading}>
+              Save Progress
+            </Button>
           </div>
-          <div className="form-container" id="heading-form-container">
+        </div>
+        <div className='input-container'>
+          <div className='left-inputs'>
             <TextField
               id='outlined-basic'
               label='Heading Name'
@@ -138,7 +157,7 @@ function HeadingCard(props) {
               style={{ width: 225 }}
             />
             <TextField
-              type="number"
+              type='number'
               id='outlined-basic'
               label='Surcharge (%)'
               variant='outlined'
@@ -148,12 +167,9 @@ function HeadingCard(props) {
               style={{ width: 100 }}
             />
           </div>
-        </div>
-        <div className="heading-header-container" id="price-container">
-          <h1><span className="heading-price">Heading Price</span></h1>
           <TextField
-            fullWidth
-            type="number"
+            // fullWidth
+            type='number'
             id='outlined-basic'
             label='Total Price ($)'
             variant='outlined'
@@ -161,31 +177,58 @@ function HeadingCard(props) {
             onChange={(e) => setSurchargeInput(e.target.value)}
             size='small'
           />
-          <label>
-            <input
-              type='checkbox'
-              defaultChecked={checked}
-              value={checked}
-              onChange={handleCheckbox}
-            />
-            Taxable
-          </label>
         </div>
+
+        <FormGroup className='checkbox'>
+          <FormControlLabel
+            control={
+              <Checkbox
+                defaultChecked={checked}
+                value={checked}
+                onChange={handleCheckbox}
+              />
+            }
+            label='Taxable'
+          />
+        </FormGroup>
+        {/* <label>
+          <input
+            type='checkbox'
+            defaultChecked={checked}
+            value={checked}
+            onChange={handleCheckbox}
+          />
+          Taxable
+        </label> */}
       </div>
       <div className='card-body'>
-        <div className="item-card-section">
-          <div className="item-header-container">
-              <h1>Proposal Items</h1>
-              <Button variant="contained" size='small' onClick={addNewLineItem}>Add Line Item</Button>
+        <div className='item-card-section'>
+          <div className='item-header-container'>
+            <h1>Proposal Items</h1>
+            <Button variant='contained' size='small' onClick={addNewLineItem}>
+              Add Line Item
+            </Button>
           </div>
           <div>
-            {lineItemList.filter(lineItem => props.id === lineItem.heading_id).map((lineItem, index) => {
-              return <HeadingItemCard key={index} lineItem={lineItem} addNewItem={addNewItem} />;
-            })}
+            {lineItemList
+              .filter((lineItem) => props.id === lineItem.heading_id)
+              .sort((a, b) => a.id - b.id)
+              .map((lineItem, index) => {
+                return (
+                  <HeadingItemCard
+                    key={index}
+                    lineItem={lineItem}
+                    addNewItem={addNewItem}
+                  />
+                );
+              })}
           </div>
         </div>
       </div>
-      <CreateItemModal open={createItemModalOpen} setOpen={setCreateItemModalOpen} />
+      <CreateItemModal
+        open={createItemModalOpen}
+        setOpen={setCreateItemModalOpen}
+      />
     </>
   );
 }
