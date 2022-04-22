@@ -72,8 +72,8 @@ function ProposalPreviewCard() {
 
     return (
       <>
-        {/* <p>Heading: ${numbers.heading}</p>
-        <p>Tax: ${numbers.tax}</p> */}
+        <p>Sub Total: ${numbers.heading}</p>
+        <p>Tax: ${numbers.tax}</p>
         <p>Total: ${numbers.total}</p>
       </>
     );
