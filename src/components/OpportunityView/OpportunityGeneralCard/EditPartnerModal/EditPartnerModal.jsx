@@ -1,39 +1,28 @@
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { useState, useEffect } from "react";
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-// import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 import Modal from '../../../Miscellaneous/Modal/Modal';
-
-
+import PersonIcon from '@mui/icons-material/Person';
 
 function EditPartnerModal({ open, setOpen }) {
 
     const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
     const editablePartnerID = useSelector((store) => store.partnerReducer.partnerEditReducer.id);
 
-    const [name, setName] = useState(editablePartner.name);
-    const [type, setType] = useState(editablePartner.type);
-    const [partner_code, setPartner_code] = useState(editablePartner.partner_code);
-    const [partner_discount, setPartner_discount] = useState(editablePartner.partner_discount);
-    const [rounding_type, setRounding_type] = useState(editablePartner.rounding_type);
-    const [phone_number, setPhone_number] = useState(editablePartner.phone_number);
-    const [address_line_1, setAddress_line_1] = useState(editablePartner.address_line_1);
-    const [city, setCity] = useState(editablePartner.city);
-    const [state, setState] = useState(editablePartner.state);
-    const [zip, setZip] = useState(editablePartner.zip);
-
-    // let StateArray = [
-    //     AL, AK, AZ, AR, AS, CA, CO, CT
-    // ];
-    // const [open, setOpen] = useState(false);
+    const [name, setName] = useState('');
+    const [type, setType] = useState('');
+    const [partner_code, setPartner_code] = useState('');
+    const [partner_discount, setPartner_discount] = useState('');
+    const [rounding_type, setRounding_type] = useState('');
+    const [phone_number, setPhone_number] = useState('');
+    const [address_line_1, setAddress_line_1] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [zip, setZip] = useState('');
 
     useEffect(() => {
-
         setName(editablePartner?.name);
         setType(editablePartner?.type);
         setPartner_code(editablePartner?.partner_code);
@@ -84,101 +73,98 @@ function EditPartnerModal({ open, setOpen }) {
 
     return (
         <>
-            {/* <button
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          Open
-        </button> */}
             <Modal open={open}>
-                <form onSubmit={handleSubmit}>
-                    <TextField
-                        sx={{ mt: 2 }}
-                        label="Name"
-                        defaultValue={editablePartner.name}
-                        value={name}
-                        onChange={(event) => setName(event.target.value)}
-                    />
-                    <TextField
-                        sx={{ mt: 2 }}
-                        label="Type"
-                        value={type}
-                        onChange={(event) => setType(event.target.value)}
-                    />
-                    <TextField
-                        sx={{ mt: 2 }}
-                        label="Partner Code"
-                        value={partner_code}
-                        onChange={(event) => setPartner_code(event.target.value)}
-                    />
-                    <TextField
-                        sx={{ mt: 2 }}
-                        label="Partner Discount"
-                        value={partner_discount}
-                        onChange={(event) => setPartner_discount(event.target.value)}
-                    />
-                    <TextField
-                        sx={{ mt: 2 }}
-                        label="Rounding Type"
-                        value={rounding_type}
-                        onChange={(event) => setRounding_type(event.target.value)}
-                    />
-                    <TextField
-                        sx={{ mt: 2 }}
-
-                        label="Phone Number"
-                        value={phone_number}
-                        onChange={(event) => setPhone_number(event.target.value)}
-                    />
-                    <TextField
-                        sx={{ mt: 2 }}
-
-                        label="Address"
-                        value={address_line_1}
-                        onChange={(event) => setAddress_line_1(event.target.value)}
-                    />
-                    <TextField
-                        sx={{ mt: 2 }}
-
-                        label="City"
-                        value={city}
-                        onChange={(event) => setCity(event.target.value)}
-                    />
-                    {/* <Select
-                        label='State'
-                        value={state}
-                        onChange={(event) => setState(event.target.value)}
-                        size='small'
-                        style={{ width: 200 }}
-                    >
-                    
-                        
-                    </Select> */}
-                        <TextField 
-                        sx={{ mt: 2 }}
-                        
-                        label="State"
-                        value={state}
-                        onChange={(event) => setState(event.target.value)}
-                    />
+                <div className="modal-container">
+                    <div className="modal-icon"><PersonIcon style={{ fontSize: 100 }} /></div>
+                    <h2>Add New Partner</h2>
+                    <div className="modal-form-container">
                         <TextField
-                            sx={{ mt: 2 }}
-
+                            id='outlined-basic'
+                            label="Name"
+                            value={name}
+                            onChange={(event) => setName(event.target.value)}
+                            size='small'
+                        />
+                        <TextField
+                            id='outlined-basic'
+                            label="Partner Type"
+                            value={type}
+                            onChange={(event) => setType(event.target.value)}
+                            size='small'
+                        />
+                        <TextField
+                            id='outlined-basic'
+                            label="Partner Code"
+                            value={partner_code}
+                            onChange={(event) => setPartner_code(event.target.value)}
+                            size='small'
+                        />
+                        <TextField // im confused as to what this is again, maybe i forgot
+                            id='outlined-basic'
+                            type="number"
+                            required
+                            label="Partner Discount"
+                            value={partner_discount}
+                            onChange={(event) => setPartner_discount(event.target.value)}
+                            size='small'
+                        />
+                        <TextField // im confused as to what this is again, maybe i forgot
+                            id='outlined-basic'
+                            required
+                            label="Rounding Type"
+                            value={rounding_type}
+                            onChange={(event) => setRounding_type(event.target.value)}
+                            size='small'
+                        />
+                        <TextField
+                            id='outlined-basic'
+                            label="Phone Number"
+                            value={phone_number}
+                            onChange={(event) => setPhone_number(event.target.value)}
+                            size='small'
+                        />
+                        <TextField
+                            id='outlined-basic'
+                            label="Address"
+                            value={address_line_1}
+                            onChange={(event) => setAddress_line_1(event.target.value)}
+                            size='small'
+                        />
+                        <TextField
+                            id='outlined-basic'
+                            label="City"
+                            value={city}
+                            onChange={(event) => setCity(event.target.value)}
+                            size='small'
+                        />
+                        <TextField // should we just make a dropdown with a list of 2 letter states? or?
+                            id='outlined-basic'
+                            label="State"
+                            value={state}
+                            onChange={(event) => setState(event.target.value)}
+                            size='small'
+                        />
+                        <TextField
+                            id='outlined-basic'
                             label="Zip Code"
                             value={zip}
                             onChange={(event) => setZip(event.target.value)}
+                            size='small'
                         />
-                        <button type="submit">Submit Edited Partner</button>
-                </form>
-                <button
-                    onClick={() => {
-                        setOpen(false);
-                    }}
-                >
-                    Close
-                </button>
-
+                    </div>
+                    <div className="modal-btn-container">
+                        <Button
+                            onClick={() => {
+                                setOpen(false);
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button onClick={handleSubmit} variant='contained'>
+                            Add
+                        </Button>
+                    </div>
+                </div>
             </Modal>
         </>
     )

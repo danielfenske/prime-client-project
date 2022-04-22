@@ -431,7 +431,6 @@ function OpportunityGeneralCard() {
       <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
       <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen}/>
       <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen}/>
-
     </>
   );
 }
