@@ -215,8 +215,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                     <>
                       <TextField
                         id='outlined-basic'
-                        type='number'
-                        label='FT"'
+                        type="number"
+                        label="FT'"
                         variant='outlined'
                         value={ft}
                         onChange={(e) => setFt(e.target.value)}
@@ -226,8 +226,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                       <div className='measurement-container'>
                         <TextField
                           id='outlined-basic'
-                          type='number'
-                          label="IN'"
+                          type="number"
+                          label='IN"'
                           variant='outlined'
                           value={inches}
                           onChange={(e) => setInches(e.target.value)}

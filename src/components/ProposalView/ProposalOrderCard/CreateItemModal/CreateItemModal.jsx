@@ -6,6 +6,9 @@ import { FormControl } from '@mui/material';
 import Select from '@mui/material/Select';
 import { InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 function CreateItemModal({ open, setOpen }) {
   // const [open, setOpen] = useState(true);
@@ -114,6 +117,8 @@ function CreateItemModal({ open, setOpen }) {
       });
       setValues(initialValues);
     }
+
+    setOpen(false);
   };
 
   //set all values to empty strings when the user clicks on the cancel button
@@ -129,112 +134,64 @@ function CreateItemModal({ open, setOpen }) {
   // console.log('unitWeight', unitWeight);
   return (
     <Modal open={open}>
-      <h1>Add New Item</h1>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          id='outlined-basic'
-          label='item code'
-          variant='outlined'
-          value={values.item_code}
-          onChange={(e) => handleInputChange('item_code', e)}
-        />
-        <TextField
-          id='outlined-basic'
-          label='name'
-          variant='outlined'
-          value={values.name}
-          onChange={(e) => handleInputChange('name', e)}
-        />
-        <FormControl fullWidth>
-          <InputLabel id='demo-simple-select-label'>
-            measurement unit, pricing unit
-          </InputLabel>
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            value={unitInput}
-            onChange={handleTwoCalls}
+      <div className="modal-container">
+        <div className="modal-icon"><AddCircleOutlineIcon style={{ fontSize: 100 }} /></div>
+        <h2>Create New Item</h2>
+        <div className="modal-form-container">
+          <TextField fullWidth id="outlined-basic" label="Item Code" variant="outlined" size='small' value={values.item_code} onChange={(e) => handleInputChange("item_code", e)} />
+          <TextField fullWidth id="outlined-basic" label="Name" variant="outlined" size='small' value={values.name} onChange={(e) => handleInputChange("name", e)} />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Measurement Unit & Pricing Unit</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              label="Measurement Unit & Pricing Unit"
+              id="demo-simple-select" value={unitInput} onChange={handleTwoCalls}>
+              <MenuItem>
+                <ButtonGroup size="small" variant="text"><Button disabled style={{ color: 'var(--orange)' }}>Measuring Unit</Button><Button disabled style={{ color: 'var(--orange)' }}>Pricing Unit</Button></ButtonGroup>
+              </MenuItem>
+              {unitTypeList.map((type, index) => {
+                return (
+                  <MenuItem key={index} value={type.id}>
+                    <ButtonGroup variant="outlined"><Button disabled style={{ color: 'var(--orange)' }}>{type.measurement_unit}</Button><Button disabled style={{ color: 'var(--orange)' }}>{type.pricing_unit}</Button></ButtonGroup>
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+
+          {/* render the unit weight input field if the unit_type_id is 3 or 4 or 8 or 9 */}
+          {unitInput === 3 &&
+            <TextField fullWidth id="outlined-basic" type="number" label="Unit Weight LBS" variant="outlined" size='small' value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
+          }
+          {unitInput === 4 &&
+            <TextField fullWidth id="outlined-basic" type="number" label="Unit Weight LBS" variant="outlined" size='small' value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
+          }
+          {unitInput === 8 &&
+            <TextField fullWidth id="outlined-basic" type="number" label="Unit Weight LBS" variant="outlined" size='small' value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
+          }
+          {unitInput === 9 &&
+            <TextField fullWidth id="outlined-basic" type="number" label="Unit Weight LBS" variant="outlined" size='small' value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
+          }
+
+          {/* render the pice per pricing unit input field if the unit_type_id is selected from the dropdown */}
+          {unitInput !== "" &&
+            <TextField fullWidth id="outlined-basic" type="number" size='small' label={`Price Per ${unitTypeList[unitInput]?.pricing_unit}`} variant="outlined" value={values.price_per_pricing_unit} onChange={(e) => handleInputChange("price_per_pricing_unit", e)} />
+          }
+        </div>
+        <div className='modal-btn-container'>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setOpen(false);
+            }}
           >
-            {unitTypeList.map((type, index) => {
-              return (
-                <MenuItem key={index} value={type.id}>
-                  {type.measurement_unit} {type.pricing_unit}
-                </MenuItem>
-              );
-            })}
-          </Select>
-          <br></br>
-        </FormControl>
-        <br></br>
-
-        {/* render the unit weight input field if the unit_type_id is 3 or 4 or 8 or 9 */}
-        {unitInput === 3 && (
-          <TextField
-            id='outlined-basic'
-            label='unit weight LBS'
-            variant='outlined'
-            value={unitWeight}
-            onChange={(event) => {
-              setUnitWeight(event.target.value);
-            }}
-          />
-        )}
-        {unitInput === 4 && (
-          <TextField
-            id='outlined-basic'
-            label='unit weight LBS'
-            variant='outlined'
-            value={unitWeight}
-            onChange={(event) => {
-              setUnitWeight(event.target.value);
-            }}
-          />
-        )}
-        {unitInput === 8 && (
-          <TextField
-            id='outlined-basic'
-            label='unit weight LBS'
-            variant='outlined'
-            value={unitWeight}
-            onChange={(event) => {
-              setUnitWeight(event.target.value);
-            }}
-          />
-        )}
-        {unitInput === 9 && (
-          <TextField
-            id='outlined-basic'
-            label='unit weight LBS'
-            variant='outlined'
-            value={unitWeight}
-            onChange={(event) => {
-              setUnitWeight(event.target.value);
-            }}
-          />
-        )}
-
-        {/* render the pice per pricing unit input field if the unit_type_id is selected from the dropdown */}
-        {unitInput !== '' && (
-          <TextField
-            id='outlined-basic'
-            label={`price per ${unitTypeList[unitInput]?.pricing_unit}`}
-            variant='outlined'
-            value={values.price_per_price_unit}
-            onChange={(e) => handleInputChange('price_per_price_unit', e)}
-          />
-        )}
-
-        <button type='submit'>Add Item</button>
-      </form>
-      <button onClick={handleClick}>Cancel</button>
-
-      {/* <button
-        onClick={() => {
-          setOpen(false);
-        }}
-      >
-        Close
-      </button> */}
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} variant='contained'>
+            Create
+          </Button>
+        </div>
+      </div>
     </Modal>
   );
 }

@@ -15,6 +15,7 @@ import AddPartnerModal from './AddPartnerModal/AddPartnerModal';
 import EditPartnerModal from './EditPartnerModal/EditPartnerModal';
 // component imports
 import ContactCard from './ContactCard';
+import './OpportunityGeneralCard.css';
 
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
@@ -286,119 +287,91 @@ function OpportunityGeneralCard() {
           </div>
         </div>
         <div className='card-section'>
-          <h2>Partner Information</h2>
-          <div className='form-container'>
-            {/* <PartnerCard partners={partners} />
-            <ContactCard contacts={contacts} /> */}
-            <FormControl>
-              <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                label='Method'
-                value={partner_id}
-                onChange={(e) => setPartnerId(e.target.value)}
-                size='small'
-                style={{ width: 200 }}
-              >
-                {partners.map((thisPartner, i) => (
-                  <MenuItem
-                    onClick={() => handleEditPartner(thisPartner)}
-                    key={i}
-                    value={thisPartner.id}
-                  >
-                    {' '}
-                    <em>{thisPartner.name}</em>{' '}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <h2>Contact Information</h2>
+          <div className="form-container">
+            <div className='contact-container'>
+              <FormControl>
+                <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  label='Partner'
+                  value={partner_id}
+                  onChange={(e) => setPartnerId(e.target.value)}
+                  size='small'
+                  style={{ width: 200 }}
+                >
+                  {/* <MenuItem value={1}>none</MenuItem> */}
+                  {partners.map((thisPartner, i) => (
+                    <MenuItem onClick={() => handleEditPartner(thisPartner)} key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>
+                  ))}
 
-            <TextField
-              id='outlined-basic'
-              label='Type'
-              variant='outlined'
-              value={partnerType}
-              onChange={(e) => setPartnerType(e.target.value)}
-              size='small'
-              style={{ width: 200 }}
-            />
+                </Select>
+              </FormControl>
 
-            <TextField
-              id='outlined-basic'
-              label='Phone Number'
-              variant='outlined'
-              value={partnerPhoneNumber}
-              onChange={(e) => setPartnerPhoneNumber(e.target.value)}
-              size='small'
-              style={{ width: 200 }}
-            />
-            <IconButton onClick={handlePartnerAdd}>
-              <AddIcon />
-            </IconButton>
+              <div>
+                <p><strong>Type:</strong></p>
+                <p>{partnerType ? partnerType : 'N/A'}</p>
+              </div>
 
-            <IconButton onClick={handlePartnerEdit}>
-              <EditIcon />
-            </IconButton>
+              <div>
+                <p><strong>Phone Number:</strong></p>
+                {partnerPhoneNumber ? partnerPhoneNumber : <p>N/A</p>}
+              </div>
 
-            <FormControl>
-              <InputLabel id='demo-simple-select-label'>Contact</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                label='Contact'
-                value={contact_id}
-                onChange={(e) => setContactId(e.target.value)}
-                size='small'
-                style={{ width: 200 }}
-              >
-                {/* <MenuItem value={1}>none</MenuItem> */}
-                {contacts.map((thisContact, i) => (
-                  <MenuItem
-                    onClick={() => handleEditContact(thisContact)}
-                    key={i}
-                    value={thisContact.id}
-                  >
-                    {' '}
-                    <em>{thisContact.name}</em>{' '}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              id='outlined-basic'
-              label='Name'
-              variant='outlined'
-              value={contactName}
-              onChange={(e) => setContactName(e.target.value)}
-              size='small'
-              style={{ width: 200 }}
-            />
-            <TextField
-              id='outlined-basic'
-              label='Phone Number'
-              variant='outlined'
-              value={contactPhoneNumber}
-              onChange={(e) => setContactPhoneNumber(e.target.value)}
-              size='small'
-              style={{ width: 200 }}
-            />
-            <TextField
-              id='outlined-basic'
-              label='Email'
-              variant='outlined'
-              value={contactEmail}
-              onChange={(e) => setContactEmail(e.target.value)}
-              size='small'
-              style={{ width: 200 }}
-            />
-            <IconButton onClick={handleContactAdd}>
-              <AddIcon />
-            </IconButton>
+              <div className="icon-container">
+                <IconButton onClick={handlePartnerEdit}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={handlePartnerAdd}>
+                  <AddIcon />
+                </IconButton>
+              </div>
+            </div>
 
-            <IconButton onClick={handleContactEdit}>
-              <EditIcon />
-            </IconButton>
+            <div className='contact-container'>
+              <FormControl>
+                <InputLabel id='demo-simple-select-label'>Contact</InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  label='Contact'
+                  value={contact_id}
+                  onChange={(e) => setContactId(e.target.value)}
+                  size='small'
+                  style={{ width: 200 }}
+                >
+                  {contacts.map((thisContact, i) => (
+                    <MenuItem onClick={() => handleEditContact(thisContact)} key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>
+                  ))}
+
+                </Select>
+              </FormControl>
+
+              <div>
+                <p><strong>Name:</strong></p>
+                <p>{contactName ? contactName : 'N/A'}</p>
+              </div>
+
+              <div>
+                <p><strong>Phone Number:</strong></p>
+                <p>{contactPhoneNumber ? contactPhoneNumber : 'N/A'}</p>
+              </div>
+
+              <div>
+                <p><strong>Email:</strong></p>
+                <p>{contactEmail ? contactEmail : 'N/A'}</p>
+              </div>
+
+              <div className="icon-container">
+                <IconButton onClick={handleContactEdit}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={handleContactAdd}>
+                  <AddIcon />
+                </IconButton>
+              </div>
+            </div>
           </div>
         </div>
         <div>
@@ -457,22 +430,10 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
-      <AddPartnerModal
-        open={partnerAddModalOpen}
-        setOpen={setPartnerAddModalOpen}
-      />
-      <EditPartnerModal
-        open={partnerEditModalOpen}
-        setOpen={setPartnerEditModalOpen}
-      />
-      <AddContactModal
-        open={contactAddModalOpen}
-        setOpen={setContactAddModalOpen}
-      />
-      <EditContactModal
-        open={contactEditModalOpen}
-        setOpen={setContactEditModalOpen}
-      />
+      <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} />
+      <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
+      <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen} />
+      <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen} />
     </>
   );
 }
