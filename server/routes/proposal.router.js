@@ -32,7 +32,7 @@ router.get('/list/:opportunity_id', rejectUnauthenticated, (req, res) => {
       
       FROM "opportunity"
       JOIN "proposal" ON "proposal"."opportunity_id" = "opportunity"."id"
-      WHERE "proposal"."disabled" = $1 AND "proposal"."opportunity_id" = $2;`;
+      WHERE "proposal"."disabled" = $1 AND "proposal"."opportunity_id" = $2 ORDER BY "proposal"."id" DESC;`;
     queryOptions = [disabled, opportunity_id]
   } else {
     queryText = `
@@ -40,7 +40,7 @@ router.get('/list/:opportunity_id', rejectUnauthenticated, (req, res) => {
       
       FROM "opportunity"
       JOIN "proposal" ON "proposal"."opportunity_id" = "opportunity"."id"
-      WHERE "opportunity"."user_id" = $1 AND "proposal"."disabled" = $2 AND "proposal"."opportunity_id" = $3;`;
+      WHERE "opportunity"."user_id" = $1 AND "proposal"."disabled" = $2 AND "proposal"."opportunity_id" = $3 ORDER BY "proposal"."id" DESC;`;
     queryOptions = [req.user.id, disabled, opportunity_id]
   }
 
@@ -215,6 +215,8 @@ router.delete('/:id', (req, res) => {
   let disabled = true;
   let id = req.params.id;
 
+  console.log('proposal delete id', id);
+  
   let queryText = `UPDATE "proposal" SET "disabled" = $1 WHERE "id" = $2;`;
 
   if (req.isAuthenticated()) {

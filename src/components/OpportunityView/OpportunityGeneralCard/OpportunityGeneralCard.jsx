@@ -28,6 +28,7 @@ function OpportunityGeneralCard() {
     (store) => store.contactReducer.contactEditReducer,
   );
   const { id } = useParams();
+
   const opportunity = useSelector(
     (store) => store.opportunityReducer.specificOpportunityReducer,
   );
@@ -204,17 +205,21 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Opportunity Code'
               variant='outlined'
+              autoComplete="off"
               value={opportunity_code}
               onChange={(e) => setOpportunityCode(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
             <TextField
-              id='outlined-basic'
-              label='Opportunity Name'
-              variant='outlined'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              id='date'
+              label='Date Created'
+              type='date'
+              autoComplete="off"
+              defaultValue='2022-04-16'
+              value={due_date}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) => setDueDate(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
@@ -223,6 +228,7 @@ function OpportunityGeneralCard() {
               label='Status'
               type='number'
               variant='outlined'
+              autoComplete="off"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
               size='small'
@@ -245,22 +251,20 @@ function OpportunityGeneralCard() {
                 <MenuItem value={3}>Archived</MenuItem>
               </Select>
             </FormControl>
-
             <TextField
-              id='date'
-              label='Proposal Date'
-              type='date'
-              defaultValue='2022-04-16'
-              value={due_date}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e) => setDueDate(e.target.value)}
+              id='outlined-basic'
+              label='Opportunity Name'
+              variant='outlined'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
-              label='Type'
+              label='Opportunity Type'
               variant='outlined'
+              autoComplete="off"
               value={type}
               onChange={(e) => setType(e.target.value)}
               size='small'
@@ -270,6 +274,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Community Name'
               variant='outlined'
+              autoComplete="off"
               value={community_name ? community_name : name}
               onChange={(e) => setCommunityName(e.target.value)}
               size='small'
@@ -279,6 +284,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Development Type'
               variant='outlined'
+              autoComplete="off"
               value={development_type}
               onChange={(e) => setDevelopmentType(e.target.value)}
               size='small'
@@ -376,37 +382,8 @@ function OpportunityGeneralCard() {
         </div>
         <div>
           <div className='card-section'>
-            <h2>Opportunity Type</h2>
+            <h2>Location Information</h2>
             <div className='form-container'>
-              <TextField
-                id='outlined-basic'
-                label='Zip'
-                type='number'
-                variant='outlined'
-                value={zip}
-                onChange={(e) => setZip(e.target.value)}
-                onKeyPress={handleKeyPress}
-                size='small'
-                style={{ width: 200 }}
-              />
-              <TextField
-                id='outlined-basic'
-                label='City'
-                variant='outlined'
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                size='small'
-                style={{ width: 200 }}
-              />
-              <TextField
-                id='outlined-basic'
-                label='State'
-                variant='outlined'
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                size='small'
-                style={{ width: 200 }}
-              />
               <TextField
                 id='outlined-basic'
                 label='Address'
@@ -418,9 +395,42 @@ function OpportunityGeneralCard() {
               />
               <TextField
                 id='outlined-basic'
+                label='Zip (hit ENTER to autofill)'
+                type='number'
+                variant='outlined'
+                autoComplete="off"
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+                onKeyPress={handleKeyPress}
+                size='small'
+                style={{ width: 200 }}
+              />
+              <TextField
+                id='outlined-basic'
+                label='City'
+                variant='outlined'
+                autoComplete="off"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                size='small'
+                style={{ width: 200 }}
+              />
+              <TextField
+                id='outlined-basic'
+                label='State'
+                variant='outlined'
+                autoComplete="off"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                size='small'
+                style={{ width: 200 }}
+              />
+              <TextField
+                id='outlined-basic'
                 label='Tax Rate'
                 type='number'
                 variant='outlined'
+                autoComplete="off"
                 value={tax_rate}
                 onChange={(e) => setTaxRate(e.target.value)}
                 size='small'
