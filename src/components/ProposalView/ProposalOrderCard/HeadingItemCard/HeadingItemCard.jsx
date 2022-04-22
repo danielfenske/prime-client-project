@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
 import TextField from '@mui/material/TextField';
@@ -18,12 +18,13 @@ import './HeadingItemCard.css';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function HeadingItemCard({ lineItem, addNewItem }) {
+  console.log('Line Item is', lineItem);
   const items = useSelector((store) => store.itemReducer);
   const saveTrigger = useSelector((store) => store.triggerSave);
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(lineItem.item_id);
   const [qty, setQty] = useState(lineItem.qty);
-  const [measurement, setMeasurement] = useState(lineItem.measure_unit);
+  const [measurement, setMeasurement] = useState(lineItem.measurement_per_unit);
   // const [order, setOrder] = useState(lineItem.order);
   const [ft, setFt] = useState(lineItem.ft);
   const [inches, setInches] = useState(lineItem.inches);
@@ -32,7 +33,14 @@ function HeadingItemCard({ lineItem, addNewItem }) {
     lineItem.override_price || lineItem.default_price,
   );
 
+  const isInitialMount = useRef(true);
   useEffect(() => {
+    // this will stop the hook from running on the initial mount
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
     console.log('Saving item');
     updateLineItem();
   }, [saveTrigger]);
@@ -113,7 +121,13 @@ function HeadingItemCard({ lineItem, addNewItem }) {
   //   });
   // };
 
+  const secondInitialMount = useRef(true);
   useEffect(() => {
+    if (secondInitialMount.current) {
+      secondInitialMount.current = false;
+      return;
+    }
+
     dispatch({
       type: 'UPDATE_HEADING_ITEM_ITEM_CODE',
       payload: { heading_item_id: lineItem.id, item_id: selectedItem },
@@ -152,11 +166,10 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           </p>
           <p>
             {' '}
-            <strong>Price per item:</strong> $
-            {lineItem.pricePerPricingUnit || 0}
+            <strong>Price per item:</strong> ${lineItem.single_item_price || 0}
           </p>
           <p>
-            <strong>Total price:</strong> ${lineItem.totalPrice || 0}
+            <strong>Total price:</strong> ${lineItem.item_price_total || 0}
           </p>
         </div>
 
@@ -272,6 +285,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 variant='outlined'
                 // value={description}
                 // onChange={(e) => setDescription(e.target.value)}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 size='small'
                 fullWidth
               />

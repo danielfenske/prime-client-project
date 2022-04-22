@@ -3,17 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import HeadingItemCard from '../HeadingItemCard/HeadingItemCard';
 import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import './HeadingCard.css';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
-import { LockTwoTone } from '@mui/icons-material';
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 
 function HeadingCard(props) {
   const dispatch = useDispatch();
@@ -30,7 +25,10 @@ function HeadingCard(props) {
   // console.log('props', props);
   console.log('props.id is', props.id);
 
-  const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+  // const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+  const lineItemList = useSelector(
+    (store) => store.headingItemReducer.headingItemWithItemCodeReducer,
+  );
   // console.log('lineItemList is', Number(lineItemList[0].total_item_price));
 
   // const sumLineItem = () => {
@@ -124,19 +122,22 @@ function HeadingCard(props) {
 
   return (
     <>
-      <div className='card-header' id='heading-card-header'>
-        <div className='heading-header-container'>
-          <div className='heading-text-container'>
-            <h1>Heading Information</h1>
-            <div>
-              <IconButton onClick={deleteHeading}>
-                {/* <SaveOutlinedIcon sx={{ color: 'var(--grey-dark)' }} /> */}
-                <DeleteIcon />
-              </IconButton>
-              <Button onClick={editHeading}>Save Progress</Button>
-            </div>
+      <div className='heading-container' id='heading-card-header'>
+        <div className='heading-text-container'>
+          <h1>Heading Information</h1>
+          <IconButton onClick={deleteHeading}>
+            {/* <SaveOutlinedIcon sx={{ color: 'var(--grey-dark)' }} /> */}
+            <DeleteIcon />
+          </IconButton>
+
+          <div className='save-button-container'>
+            <Button variant='contained' size='small' onClick={editHeading}>
+              Save Progress
+            </Button>
           </div>
-          <div className='form-container' id='heading-form-container'>
+        </div>
+        <div className='input-container'>
+          <div className='left-inputs'>
             <TextField
               id='outlined-basic'
               label='Heading Name'
@@ -166,13 +167,8 @@ function HeadingCard(props) {
               style={{ width: 100 }}
             />
           </div>
-        </div>
-        <div className='heading-header-container' id='price-container'>
-          <h1>
-            <span className='heading-price'>Heading Price</span>
-          </h1>
           <TextField
-            fullWidth
+            // fullWidth
             type='number'
             id='outlined-basic'
             label='Total Price ($)'
@@ -181,16 +177,29 @@ function HeadingCard(props) {
             onChange={(e) => setSurchargeInput(e.target.value)}
             size='small'
           />
-          <label>
-            <input
-              type='checkbox'
-              defaultChecked={checked}
-              value={checked}
-              onChange={handleCheckbox}
-            />
-            Taxable
-          </label>
         </div>
+
+        <FormGroup className='checkbox'>
+          <FormControlLabel
+            control={
+              <Checkbox
+                defaultChecked={checked}
+                value={checked}
+                onChange={handleCheckbox}
+              />
+            }
+            label='Taxable'
+          />
+        </FormGroup>
+        {/* <label>
+          <input
+            type='checkbox'
+            defaultChecked={checked}
+            value={checked}
+            onChange={handleCheckbox}
+          />
+          Taxable
+        </label> */}
       </div>
       <div className='card-body'>
         <div className='item-card-section'>
@@ -203,6 +212,7 @@ function HeadingCard(props) {
           <div>
             {lineItemList
               .filter((lineItem) => props.id === lineItem.heading_id)
+              .sort((a, b) => a.id - b.id)
               .map((lineItem, index) => {
                 return (
                   <HeadingItemCard

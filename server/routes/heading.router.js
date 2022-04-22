@@ -130,6 +130,7 @@ router.get('/item_with_item_code/:id', (req, res) => {
         "item_heading"."qty",
         "item_heading"."single_item_price",
         "item_heading"."item_price_total",
+        "item_heading"."message",
         "item"."item_code",
         "item"."name",
         "item"."price_per_pricing_unit" AS "default_price",
