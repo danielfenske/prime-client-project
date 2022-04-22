@@ -19,16 +19,15 @@ function HeadingCard(props) {
   const [surchargeInput, setSurchargeInput] = useState(props.surcharge);
   const [createItemModalOpen, setCreateItemModalOpen] = useState(false);
   const [checked, setChecked] = useState(props.taxable);
-  
 
   const allProposal = useSelector((store) => store.proposalEverything);
   const { id } = useParams();
-  // console.log('param id is', id);
 
-  console.log('props', props);
-  console.log('proposal id is', props.proposal_id);
-  console.log('heading id is',props.id);
-  // const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+
+  // console.log('props', props);
+  // console.log('proposal id is', props.proposal_id);
+  // console.log('heading id is',props.id);
+ 
   const lineItemList = useSelector(
     (store) => store.headingItemReducer.headingItemWithItemCodeReducer,
   );
@@ -55,7 +54,6 @@ function HeadingCard(props) {
       type: 'GET_PROPOSAL_EVERYTHING',
       payload: id,
     });
-    // sumLineItem();
   }, []);
 
   useEffect(() => {
