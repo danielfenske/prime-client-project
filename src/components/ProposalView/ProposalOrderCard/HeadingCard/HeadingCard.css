@@ -1,28 +1,73 @@
-#heading-card-header {
-    align-items: flex-start;
+/* #heading-card-header {
+  align-items: flex-start;
 }
 
 .heading-header-container {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .heading-text-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  justify-content: space-between;
 }
 
 #price-container {
-    align-items: flex-end;
+  align-items: flex-end;
 }
 
 #heading-form-container {
-    width: 100%;
+  width: 100%;
 }
 
 .heading-price {
-    color: var(--very-light-grey);
+  color: var(--very-light-grey);
+} */
+
+.item-card-section {
+  width: 100%;
+}
+
+.item-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding) var(--padding-large);
+  gap: 5px;
+}
+
+.heading-container {
+  padding: 20px;
+  background-color: #eee;
+  background-color: var(--very-light-grey);
+}
+
+.heading-container .heading-text-container {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr;
+  align-items: center;
+
+  margin-bottom: var(--margin);
+}
+
+.heading-container .heading-text-container .save-button-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.heading-container .input-container {
+  display: flex;
+  justify-content: space-between;
+
+  margin: var(--margin-large) 0px 0px;
+}
+
+.heading-container .input-container .left-inputs {
+  display: flex;
+  gap: var(--margin);
 }

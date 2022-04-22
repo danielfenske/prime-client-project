@@ -49,57 +49,57 @@ function EditContactModal({ open, setOpen }) {
   // console.log('Edit Contact Selected', editableContact);
   return (
     <Modal open={open}>
-    <div className="modal-container">
-      <div className="modal-icon"><PersonIcon style={{ fontSize: 100 }} /></div>
-      <div className="modal-form-container">
+      <div className="modal-container">
+        <div className="modal-icon"><PersonIcon style={{ fontSize: 100 }} /></div>
         <h2>Update Contact</h2>
-        <TextField
-          id='outlined-basic'
-          label='Name'
-          variant='outlined'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          size='small'
-        />
-        <TextField
-          id='outlined-basic'
-          label='Email'
-          variant='outlined'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          size='small'
-        />
-        <TextField
-          id='outlined-basic'
-          label='Phone'
-          variant='outlined'
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          size='small'
-        />
-        <TextField
-          id='outlined-basic'
-          label='Work Phone'
-          variant='outlined'
-          value={work_phone}
-          onChange={(e) => setWorkPhone(e.target.value)}
-          size='small'
-        />
+        <div className="modal-form-container">
+          <TextField
+            id='outlined-basic'
+            label='Name'
+            variant='outlined'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Email'
+            variant='outlined'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Phone'
+            variant='outlined'
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            size='small'
+          />
+          <TextField
+            id='outlined-basic'
+            label='Work Phone'
+            variant='outlined'
+            value={work_phone}
+            onChange={(e) => setWorkPhone(e.target.value)}
+            size='small'
+          />
+        </div>
+        <div className='modal-btn-container'>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} variant='contained'>
+            Update
+          </Button>
+        </div>
       </div>
-      <div className='modal-btn-container'>
-        <Button
-          onClick={() => {
-            setOpen(false);
-          }}
-          variant='outlined'
-        >
-          Cancel
-        </Button>
-        <Button onClick={handleSubmit} variant='contained'>
-          Update
-        </Button>
-      </div>
-    </div>
     </Modal>
   );
 }
