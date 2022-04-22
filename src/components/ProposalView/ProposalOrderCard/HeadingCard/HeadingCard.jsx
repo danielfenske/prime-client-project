@@ -142,6 +142,7 @@ function HeadingCard(props) {
               id='outlined-basic'
               label='Heading Name'
               variant='outlined'
+              autoComplete="off"
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               size='small'
@@ -151,6 +152,7 @@ function HeadingCard(props) {
               id='outlined-basic'
               label='Heading Message'
               variant='outlined'
+              autoComplete="off"
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
               size='small'
@@ -161,6 +163,7 @@ function HeadingCard(props) {
               id='outlined-basic'
               label='Surcharge (%)'
               variant='outlined'
+              autoComplete="off"
               value={surchargeInput}
               onChange={(e) => setSurchargeInput(e.target.value)}
               size='small'
@@ -173,6 +176,7 @@ function HeadingCard(props) {
             id='outlined-basic'
             label='Total Price ($)'
             variant='outlined'
+            autoComplete="off"
             value={surchargeInput}
             onChange={(e) => setSurchargeInput(e.target.value)}
             size='small'
