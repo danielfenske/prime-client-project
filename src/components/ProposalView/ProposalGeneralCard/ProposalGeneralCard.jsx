@@ -82,8 +82,10 @@ function ProposalGeneralCard() {
   const handleSubmit = () => {
     console.log('in handleSubmit', proposal);
 
-    const proposal_date = new Date(date).toISOString();
-    const new_plan_date = new Date(plan_date).toISOString();
+    const proposal_date = proposal_date ? new Date(date).toISOString() : null;
+    const new_plan_date = new_plan_date
+      ? new Date(plan_date).toISOString()
+      : null;
 
     let proposalSubmission = {
       id: proposal.id,

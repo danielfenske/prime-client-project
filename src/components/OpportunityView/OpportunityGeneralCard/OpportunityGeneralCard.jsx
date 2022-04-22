@@ -146,10 +146,11 @@ function OpportunityGeneralCard() {
 
     let opportunitySubmission = {
       partner_id: editablePartner.id,
+      contact_id: editableContact.id,
       id: opportunity.id,
       name: name,
       opportunity_code: opportunity_code,
-      due_date: new Date(due_date).toISOString(),
+      due_date: due_date ? new Date(due_date).toISOString() : null,
       status: status,
       type: type,
       community_name: community_name,
@@ -182,6 +183,14 @@ function OpportunityGeneralCard() {
       });
     }
   };
+
+  useEffect(() => {
+    setPartnerId(editablePartner.id);
+  }, [editablePartner]);
+
+  useEffect(() => {
+    setContactId(editableContact.id);
+  }, [editableContact]);
 
   return (
     <>
@@ -400,6 +409,15 @@ function OpportunityGeneralCard() {
             <div className='form-container'>
               <TextField
                 id='outlined-basic'
+                label='Address'
+                variant='outlined'
+                value={address_line_1}
+                onChange={(e) => setAddress(e.target.value)}
+                size='small'
+                style={{ width: 200 }}
+              />
+              <TextField
+                id='outlined-basic'
                 label='Zip'
                 type='number'
                 variant='outlined'
@@ -424,15 +442,6 @@ function OpportunityGeneralCard() {
                 variant='outlined'
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                size='small'
-                style={{ width: 200 }}
-              />
-              <TextField
-                id='outlined-basic'
-                label='Address'
-                variant='outlined'
-                value={address_line_1}
-                onChange={(e) => setAddress(e.target.value)}
                 size='small'
                 style={{ width: 200 }}
               />
