@@ -94,7 +94,7 @@ router.get('/:id/item', (req, res) => {
   // console.log('in heading/item router GET route');
 
   if (req.isAuthenticated()) {
-    const sqlText = `SELECT * FROM "item_heading" WHERE "heading_id" = $1;`
+    const sqlText = `SELECT * FROM "item_heading" WHERE "heading_id" = $1 ORDER BY "id";`
     pool.query(sqlText, [req.params.id])
       .then((result) => {
         console.log('result.rows is', result.rows);
@@ -115,13 +115,33 @@ router.get('/item_with_item_code/:id', (req, res) => {
   if (req.isAuthenticated()) {
 
     const sqlText =
-      `SELECT "item_heading"."id", "item_heading"."heading_id", "item_heading"."item_id", "item_heading"."message", "item_heading"."order", "item_heading"."price_per_pricing_unit" AS "override_price", "item_heading"."ft", "item_heading"."inches", "item_heading"."measurement_per_unit", "item_heading"."rounded_measurement_per_unit", "item_heading"."rounded_measurement_per_unit_unit_weight", "item_heading"."qty", "item_heading"."single_item_price", "item_heading"."item_price_total", "item"."item_code", "item"."name", "item"."price_per_pricing_unit" AS "default_price", "item"."unit_weight", "unit_type"."measurement_unit", "unit_type"."pricing_unit"
-
-         FROM "item_heading"
-         JOIN "item"
-         ON "item_heading"."item_id" = "item"."id"
-         JOIN "unit_type"
-         ON "item"."unit_type_id" = "unit_type"."id";`;
+      `SELECT
+        "item_heading"."id",
+        "item_heading"."heading_id",
+        "item_heading"."item_id",
+        "item_heading"."message",
+        "item_heading"."order",
+        "item_heading"."price_per_pricing_unit" AS "override_price",
+        "item_heading"."ft",
+        "item_heading"."inches",
+        "item_heading"."measurement_per_unit",
+        "item_heading"."rounded_measurement_per_unit",
+        "item_heading"."rounded_measurement_per_unit_unit_weight",
+        "item_heading"."qty",
+        "item_heading"."single_item_price",
+        "item_heading"."item_price_total",
+        "item"."item_code",
+        "item"."name",
+        "item"."price_per_pricing_unit" AS "default_price",
+        "item"."unit_weight",
+        "unit_type"."measurement_unit",
+        "unit_type"."pricing_unit"
+      FROM "item_heading"
+      JOIN "item"
+      ON "item_heading"."item_id" = "item"."id"
+      JOIN "unit_type"
+      ON "item"."unit_type_id" = "unit_type"."id";
+    `;
 
     pool.query(sqlText)
       .then((result) => {
@@ -162,16 +182,26 @@ router.post('/:id/item', (req, res) => {
 });
 
 //update the item code of a line item
-router.put('/item/item_code', (req, res) => {
+router.put('/item/item_code', async (req, res) => {
   // console.log('in heading/item/item_code PUT route');
   // console.log('req.body is', req.body);
 
   if (req.isAuthenticated()) {
+
+    // use this to get the item so we can update its information
+    const itemSqlText = `SELECT * FROM "item" WHERE "id" = $1;`;
+    const itemSqlOptions = [req.body.item_id];
+    const item = await pool.query(itemSqlText, itemSqlOptions);
+
     const sqlText =
       `UPDATE "item_heading"
-             SET "item_id" = $1 WHERE "id" = $2;`;
+        SET 
+          "item_id" = $1,
+          "price_per_pricing_unit" = $2
+        WHERE "id" = $3;
+      `;
 
-    const valueArray = [req.body.item_id, req.body.heading_item_id]
+    const valueArray = [req.body.item_id, item.price_per_pricing_unit, req.body.heading_item_id]
 
     pool.query(sqlText, valueArray)
       .then((result) => {

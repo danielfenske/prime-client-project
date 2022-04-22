@@ -152,10 +152,11 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           </p>
           <p>
             {' '}
-            <strong>Price per item:</strong> $455
+            <strong>Price per item:</strong> $
+            {lineItem.pricePerPricingUnit || 0}
           </p>
           <p>
-            <strong>Total price:</strong> $3500
+            <strong>Total price:</strong> ${lineItem.totalPrice || 0}
           </p>
         </div>
 
