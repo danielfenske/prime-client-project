@@ -54,7 +54,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           qty: Number(qty),
           measurement_per_unit: 1,
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
         },
       });
     } else if (lineItem.measurement_unit === 'FT') {
@@ -67,7 +67,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           ft: Number(ft),
           inches: Number(inches),
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
         },
       });
     } else {
@@ -78,7 +78,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           qty: Number(qty),
           measurement_per_unit: Number(measurement),
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
         },
       });
     }
@@ -134,19 +134,27 @@ function HeadingItemCard({ lineItem, addNewItem }) {
     }
   };
 
-
   return (
     <>
       <div className='heading-item-card'>
-        <div className="item-card-top">
-          <p><strong>Code:</strong> {lineItem.item_code}</p>
-          <p><strong>Name:</strong> {lineItem.name}</p>
-          <p> <strong>Price per item:</strong> $455</p>
-          <p><strong>Total price:</strong> $3500</p>
+        <div className='item-card-top'>
+          <p>
+            <strong>Code:</strong> {lineItem.item_code}
+          </p>
+          <p>
+            <strong>Name:</strong> {lineItem.name}
+          </p>
+          <p>
+            {' '}
+            <strong>Price per item:</strong> $455
+          </p>
+          <p>
+            <strong>Total price:</strong> $3500
+          </p>
         </div>
 
-        <div className="item-card-bottom">
-          <div className="bottom-left">
+        <div className='item-card-bottom'>
+          <div className='bottom-left'>
             <FormControl>
               <InputLabel id='demo-simple-select-label'>Item List</InputLabel>
               <Select
@@ -167,11 +175,18 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 })}
               </Select>
             </FormControl>
-            <Button variant="text" size='small' className="add-item-btn" onClick={addNewItem}>New Item <AddCircleOutlineIcon fontSize="small" /></Button>
+            <Button
+              variant='text'
+              size='small'
+              className='add-item-btn'
+              onClick={addNewItem}
+            >
+              New Item <AddCircleOutlineIcon fontSize='small' />
+            </Button>
           </div>
 
-          <div className="bottom-middle">
-            <div className="item-measurements">
+          <div className='bottom-middle'>
+            <div className='item-measurements'>
               {lineItem?.measurement_unit === 'EA' ? (
                 <></>
               ) : (
@@ -180,7 +195,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                     <>
                       <TextField
                         id='outlined-basic'
-                        type="number"
+                        type='number'
                         label='FT"'
                         variant='outlined'
                         value={ft}
@@ -188,10 +203,10 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                         size='small'
                         style={{ width: 75 }}
                       />
-                      <div className="measurement-container">
+                      <div className='measurement-container'>
                         <TextField
                           id='outlined-basic'
-                          type="number"
+                          type='number'
                           label="IN'"
                           variant='outlined'
                           value={inches}
@@ -204,10 +219,10 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                     </>
                   ) : (
                     <>
-                      <div className="measurement-container">
+                      <div className='measurement-container'>
                         <TextField
                           id='outlined-basic'
-                          type="number"
+                          type='number'
                           label={'LBS'}
                           variant='outlined'
                           value={measurement}
@@ -224,17 +239,17 @@ function HeadingItemCard({ lineItem, addNewItem }) {
               <TextField
                 id='outlined-basic'
                 label='Unit Price'
-                type="number"
+                type='number'
                 variant='outlined'
-                value={pricePerPriceUnit}
-                onChange={(e) => setPricePerPriceUnit(e.target.value)}
+                value={pricePerPricingUnit}
+                onChange={(e) => setpricePerPricingUnit(e.target.value)}
                 size='small'
                 style={{ width: 125 }}
               />
               <TextField
                 id='outlined-basic'
                 label='QTY'
-                type="number"
+                type='number'
                 variant='outlined'
                 value={qty}
                 onChange={(e) => setQty(e.target.value)}
@@ -243,7 +258,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 style={{ width: 125 }}
               />
             </div>
-            <div className="item-message">
+            <div className='item-message'>
               <TextField
                 id='outlined-basic'
                 label='Item Message'
@@ -256,7 +271,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
             </div>
           </div>
 
-          <div className="bottom-right">
+          <div className='bottom-right'>
             <IconButton
               onClick={() => {
                 setOpen(true);
@@ -288,7 +303,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
         {/* <TextField id="outlined-basic" label="description" variant="outlined" value={lineItem.description} /> */}
         {/* <p> Total line item price: {lineItem.total_item_price}</p> */}
         {/* <TextField id="outlined-basic" label="total price" variant="outlined" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} /> */}
-        {/* <button onClick={updateQtyMeasurementOrderPricePerPriceUnit}>
+        {/* <button onClick={updateQtyMeasurementOrderpricePerPricingUnit}>
           SAVE
         </button>*/}
       </div>
