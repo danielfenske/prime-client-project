@@ -289,10 +289,15 @@ router.put('/item/update/ft_inches', async (req, res) => {
 
       const sqlText =
         `UPDATE "item_heading"
-                 SET "ft" = $1, "inches" = $2, "qty" = $3, "order" = $4, "price_per_pricing_unit" = $5
-                 WHERE "id" = $6;`;
+          SET "ft" = $1,
+          "inches" = $2,
+          "qty" = $3,
+          "order" = $4,
+          "price_per_pricing_unit" = $5,
+          "message" = $6
+          WHERE "id" = $7;`;
 
-      const valueArray = [req.body.ft, req.body.inches, req.body.qty, req.body.order, req.body.price_per_price_unit, req.body.heading_item_id];
+      const valueArray = [req.body.ft, req.body.inches, req.body.qty, req.body.order, req.body.price_per_pricing_unit, req.body.message, req.body.heading_item_id];
 
       await connection.query(sqlText, valueArray);
 
