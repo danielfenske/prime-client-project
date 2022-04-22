@@ -71,8 +71,41 @@ CREATE TABLE "opportunity" (
     "tax_rate" DECIMAL(25, 2),
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
+-- Marks Dummy Data //////////////////////////////////////////////////////////////////////////////////////////////////
+INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Housing Development', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', 'Building', 'Palm Springs', 'Building', '123 main street', 'Bloomington', 'MN', 55437, 7.25, false);
+
  INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
- VALUES('housing development', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', 'building', 'palm springs', 'building', '123 main street', 'saint paul', 'MN', 55119, 7.25, false);
+ VALUES('City View Apartments', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', 'Building', 'City View Apartments', 'building', '476 Burlington ave', 'Minneapolis', 'MN', 55455, 7.25, false);
+
+ INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Rambler House', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', 'House', 'Carter House', 'building', '3333 Turnville Ave', 'Saint Paul', 'MN', 55119, 7.25, false);
+
+ INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Capella Tower', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', 'building', 'Capella Tower', 'building', '1313 5th Ave', 'Minneapolis', 'MN', 55437, 7.25, false);
+
+ INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Griffen Cabin', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', '3 Story Cabin', 'Griffen Cabin', 'building', '1993 No Name Lane', 'Waskish', 'MN', 55119, 7.25, false);
+
+  INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Brookshire', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', 'Housing Development', 'Brookshire Commons', 'Houses', '1993 No Name Lane', 'Waskish', 'MN', 55119, 7.25, false);
+
+  INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Brookview Manor', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', '3 Story Cabin', 'Griffen Cabin', 'building', '1993 No Name Lane', 'Waskish', 'MN', 55119, 7.25, false);
+
+  INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Broward Hills', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', '3 Story Cabin', 'Griffen Cabin', 'building', '1993 No Name Lane', 'Waskish', 'MN', 55119, 7.25, false);
+
+  INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Applewood Hills', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', '3 Story Cabin', 'Griffen Cabin', 'building', '1993 No Name Lane', 'Waskish', 'MN', 55119, 7.25, false);
+
+  INSERT INTO "opportunity" ("name", "opportunity_code", "status", "user_id", "contact_id", "partner_id", "due_date", "type", "community_name", "development_type", "address_line_1", "city", "state", "zip", "tax_rate", "disabled")
+ VALUES('Waskish Mansion', 1, 1, 1, 1, 1, '2004-10-19 10:23:54+02', '3 Story Cabin', 'Griffen Cabin', 'building', '1993 No Name Lane', 'Waskish', 'MN', 55119, 7.25, false);
+-- Marks Dummy Data //////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 
 CREATE TABLE "proposal" (
