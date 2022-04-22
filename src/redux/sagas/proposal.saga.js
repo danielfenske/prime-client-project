@@ -62,7 +62,11 @@ function* updateProposal(action) {
 
 // DELETE (disable) existing proposal within DB
 function* deleteProposal(action) {
-  const { id, opportunity_id } = action.payload;
+  const id = action.payload.id;
+  const opportunity_id = action.payload.opportunity_id;
+
+  console.log('proposal id', id);
+  console.log('oppp id', opportunity_id);
 
   try {
     yield axios.delete(`api/proposal/${id}`);

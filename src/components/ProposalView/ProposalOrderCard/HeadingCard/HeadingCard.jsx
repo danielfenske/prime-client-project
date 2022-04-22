@@ -10,7 +10,6 @@ import './HeadingCard.css';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 
-
 function HeadingCard(props) {
   const dispatch = useDispatch();
   const store = useSelector((store) => store);
@@ -147,6 +146,7 @@ function HeadingCard(props) {
               id='outlined-basic'
               label='Heading Name'
               variant='outlined'
+              autoComplete="off"
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
               size='small'
@@ -156,6 +156,7 @@ function HeadingCard(props) {
               id='outlined-basic'
               label='Heading Message'
               variant='outlined'
+              autoComplete="off"
               value={messageInput}
               onChange={(e) => setMessageInput(e.target.value)}
               size='small'
@@ -166,6 +167,7 @@ function HeadingCard(props) {
               id='outlined-basic'
               label='Surcharge (%)'
               variant='outlined'
+              autoComplete="off"
               value={surchargeInput}
               onChange={(e) => setSurchargeInput(e.target.value)}
               size='small'
@@ -178,8 +180,9 @@ function HeadingCard(props) {
             id='outlined-basic'
             label='Total Price ($)'
             variant='outlined'
-            value={headingTotal}
-            // onChange={(e) => setSurchargeInput(e.target.value)}
+            autoComplete="off"
+            value={surchargeInput}
+            onChange={(e) => setSurchargeInput(e.target.value)}
             size='small'
           />
         </div>
