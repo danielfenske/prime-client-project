@@ -47,6 +47,7 @@ function OpportunityProposalListCard() {
           id='outlined-basic'
           label='Search Proposals'
           variant='outlined'
+          autoComplete="off"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           size='small'
