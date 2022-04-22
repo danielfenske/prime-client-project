@@ -55,6 +55,8 @@ function AddPartnerModal({ open, setOpen }) {
         setCity('');
         setState('');
         setZip('');
+
+        setOpen(false);
     }
 
 

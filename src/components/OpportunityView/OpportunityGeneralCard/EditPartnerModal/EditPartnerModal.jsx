@@ -68,6 +68,8 @@ function EditPartnerModal({ open, setOpen }) {
         setCity('');
         setState('');
         setZip('');
+
+        setOpen(false);
     }
 
 
@@ -76,7 +78,7 @@ function EditPartnerModal({ open, setOpen }) {
             <Modal open={open}>
                 <div className="modal-container">
                     <div className="modal-icon"><PersonIcon style={{ fontSize: 100 }} /></div>
-                    <h2>Add New Partner</h2>
+                    <h2>Update Partner</h2>
                     <div className="modal-form-container">
                         <TextField
                             id='outlined-basic'
@@ -162,7 +164,7 @@ function EditPartnerModal({ open, setOpen }) {
                             Cancel
                         </Button>
                         <Button onClick={handleSubmit} variant='contained'>
-                            Add
+                            Update
                         </Button>
                     </div>
                 </div>
