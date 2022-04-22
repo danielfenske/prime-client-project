@@ -51,8 +51,6 @@ function ProposalGeneralCard() {
 
     setBuildingCode(proposal.building_code);
     setPartnerDiscount(proposal.partner_discount);
-    setSurcharge(proposal.surcharge);
-    setSurchargeDescription(proposal.surcharge_description);
     setMethod(proposal.method || 1);
     setMethodMessage(proposal.method_message);
     setDeliveryCharge(proposal.delivery_charge);
@@ -68,8 +66,6 @@ function ProposalGeneralCard() {
   const [plan_date, setPlanDate] = useState('');
   const [building_code, setBuildingCode] = useState('');
   const [partner_discount, setPartnerDiscount] = useState('');
-  const [surcharge, setSurcharge] = useState('');
-  const [surcharge_description, setSurchargeDescription] = useState('');
   const [method, setMethod] = useState(1);
   const [method_message, setMethodMessage] = useState('');
   const [delivery_charge, setDeliveryCharge] = useState('');
@@ -138,7 +134,7 @@ function ProposalGeneralCard() {
             />
             <TextField
               id='date'
-              label='Proposal Date'
+              label='Date Created'
               type='date'
               defaultValue='2022-04-15'
               value={date}
@@ -160,7 +156,7 @@ function ProposalGeneralCard() {
             />
             <TextField
               id='outlined-basic'
-              label='Partner Discount'
+              label='Partner Discount (%)'
               type='number'
               variant='outlined'
               value={partner_discount}
@@ -168,23 +164,6 @@ function ProposalGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-            {/* <TextField
-              id='outlined-basic'
-              label='Surcharge'
-              type='number'
-              variant='outlined'
-              value={surcharge}
-              onChange={(e) => setSurcharge(e.target.value)}
-              size='small'
-            />
-            <TextField
-              id='outlined-basic'
-              label='Surcharge Description'
-              variant='outlined'
-              value={surcharge_description}
-              onChange={(e) => setSurchargeDescription(e.target.value)}
-              size='small'
-            /> */}
             <TextField
               id='outlined-basic'
               label='House Type'
@@ -246,7 +225,7 @@ function ProposalGeneralCard() {
             />
             <TextField
               id='outlined-basic'
-              label='Delivery Charge'
+              label='Delivery Charge ($)'
               type='number'
               value={delivery_charge}
               variant='outlined'
@@ -267,7 +246,7 @@ function ProposalGeneralCard() {
             {/* delivery message goes here 👆🏼 ////////////////////////////////////////////////////////////////////////////////////////////////// */}
             <TextField
               id='outlined-basic'
-              label='Field Weld Charge'
+              label='Field Weld Charge ($)'
               type='number'
               variant='outlined'
               value={field_weld_charge}
@@ -284,17 +263,6 @@ function ProposalGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-            {/* <TextField
-              id='outlined-basic'
-              label='Description'
-              variant='outlined'
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              size='small'
-              style={{ width: 200 }}
-              multiline
-              rows={4}
-            /> */}
           </div>
         </div>
       </div>
