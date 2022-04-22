@@ -71,10 +71,6 @@ function CreateItemModal({ open, setOpen }) {
         },
       });
       setValues(initialValues);
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     } else if (values.unit_type_id === 8) {
       dispatch({
         type: 'POST_ITEM',
@@ -121,6 +117,8 @@ function CreateItemModal({ open, setOpen }) {
       });
       setValues(initialValues);
     }
+
+    setOpen(false);
   };
 
   //set all values to empty strings when the user clicks on the cancel button

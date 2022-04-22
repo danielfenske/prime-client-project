@@ -430,29 +430,10 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
-<<<<<<< HEAD
       <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} />
       <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
       <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen} />
       <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen} />
-=======
-      <AddPartnerModal
-        open={partnerAddModalOpen}
-        setOpen={setPartnerAddModalOpen}
-      />
-      <EditPartnerModal
-        open={partnerEditModalOpen}
-        setOpen={setPartnerEditModalOpen}
-      />
-      <AddContactModal
-        open={contactAddModalOpen}
-        setOpen={setContactAddModalOpen}
-      />
-      <EditContactModal
-        open={contactEditModalOpen}
-        setOpen={setContactEditModalOpen}
-      />
->>>>>>> master
     </>
   );
 }

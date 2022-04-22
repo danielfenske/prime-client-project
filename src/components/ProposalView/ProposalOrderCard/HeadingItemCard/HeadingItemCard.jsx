@@ -215,13 +215,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                     <>
                       <TextField
                         id='outlined-basic'
-<<<<<<< HEAD
                         type="number"
                         label="FT'"
-=======
-                        type='number'
-                        label='FT"'
->>>>>>> master
                         variant='outlined'
                         value={ft}
                         onChange={(e) => setFt(e.target.value)}
@@ -306,9 +301,6 @@ function HeadingItemCard({ lineItem, addNewItem }) {
             >
               <DeleteIcon />
             </IconButton>
-            <button onClick={updateLineItem}>
-              SAVE
-            </button>
           </div>
         </div>
         {/* <div className="item-arrows">
