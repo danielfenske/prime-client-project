@@ -61,7 +61,17 @@ router.get('/:proposalId', (req, res) => {
 
   let id = req.params.proposalId;
 
-  let queryText = `SELECT * FROM "proposal" WHERE "id" = $1;`;
+  let queryText = `
+    SELECT 
+      "proposal".*,
+      "partner"."partner_discount"
+    FROM "proposal"
+    FULL JOIN "opportunity"
+      ON "proposal"."opportunity_id" = "opportunity"."id"
+    FULL JOIN "partner"
+      ON "opportunity"."partner_id" = "partner"."id"
+    WHERE "proposal"."id" = $1;
+  `;
 
   if (req.isAuthenticated()) {
     pool.query(queryText, [id])
