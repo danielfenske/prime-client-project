@@ -152,7 +152,9 @@ function ProposalPreviewCard() {
                     return total;
                   }
                 }, [])
+                .sort((a, b) => a.id - b.id)
                 .map((heading, index) => {
+                  if (!heading) return;
                   return (
                     <section key={index} className='heading-section'>
                       <p className='title'>
@@ -163,6 +165,7 @@ function ProposalPreviewCard() {
                           .filter(
                             (line_item) => line_item?.heading_id === heading.id,
                           )
+                          .sort((a, b) => a.id - b.id)
                           .map((li, index) => {
                             const item = getItem(li.item_id);
                             return (
@@ -180,13 +183,15 @@ function ProposalPreviewCard() {
                                     </>
                                   ) : (
                                     <>
-                                      {li.measure_unit}
-                                      {item?.measurement_unit}
+                                      {li.measurement_per_unit}
+                                      {item?.measurement_unit === 'EA'
+                                        ? ''
+                                        : item?.measurement_unit.toLowerCase()}
                                     </>
                                   )}
                                 </span>
                                 <span className='item_description'>
-                                  {item?.description}
+                                  {li?.message}
                                 </span>
                               </p>
                             );
@@ -195,8 +200,8 @@ function ProposalPreviewCard() {
                       <div className='total-price'>
                         {calcHeadingTotal(
                           proposal?.line_items.reduce((total, item) => {
-                            if (item.heading_id === heading.id) {
-                              return total + Number(item.total_item_price);
+                            if (item?.heading_id === heading.id) {
+                              return total + Number(item.item_price_total);
                             }
                             return total;
                           }, 0),

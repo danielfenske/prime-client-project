@@ -11,6 +11,7 @@ import unitTypeReducer from './unit_type.reducer';
 import proposalReducer from './proposal.reducer';
 import opportunityReducer from './opportunity.reducer';
 import proposalEverything from './proposalEverything.reducer';
+import triggerSave from './trigger_save.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   opportunityReducer,
   unitTypeReducer,
   proposalEverything,
+  triggerSave,
 });
 
 export default rootReducer;

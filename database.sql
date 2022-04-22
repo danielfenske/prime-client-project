@@ -34,7 +34,7 @@ CREATE TABLE "partner" (
     "partner_code" VARCHAR(80),
     "partner_discount" DECIMAL (25, 2),
     "rounding_type" INT,
-    "phone_number" INT,
+    "phone_number" VARCHAR(20),
     "address_line_1" VARCHAR(250),
     "city" VARCHAR(80),
     "state" VARCHAR(2),
@@ -53,7 +53,7 @@ CREATE TABLE "opportunity" (
     "user_id" INT REFERENCES "user",
     "contact_id" INT REFERENCES "contact",
     "partner_id" INT REFERENCES "partner",
-    "due_date" TIMESTAMPTZ,
+    "due_date" TIMESTAMP,
     "type" VARCHAR(80),
     "community_name" VARCHAR(250),
     "development_type" VARCHAR(80),
@@ -70,12 +70,12 @@ CREATE TABLE "opportunity" (
 
 CREATE TABLE "proposal" (
     "id" SERIAL PRIMARY KEY,
-    "date" TIMESTAMPTZ,
+    "date" TIMESTAMP,
     "proposal_code" VARCHAR(80),
     "opportunity_id" INT REFERENCES "opportunity",
     "house_type" VARCHAR(80),
     "plan_identifier" VARCHAR(80),
-    "plan_date" TIMESTAMPTZ,
+    "plan_date" TIMESTAMP,
     "building_code" VARCHAR(80),
     "partner_discount" DECIMAL (25, 2),
     "method" INT, -- will be a dropdown, we will simply target the INT or id
@@ -100,11 +100,8 @@ CREATE TABLE "heading" (
 );
 
 
-INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "order", "taxable")
-VALUES ('frank', 'exterior staircase railing', 1, 3.33, 4, true );
-
-
-
+INSERT INTO "heading" ("name", "message", "proposal_id", "surcharge", "taxable")
+VALUES ('frank', 'exterior staircase railing', 1, 3.33, true );
 
 	
 CREATE TABLE "unit_type" (
@@ -129,29 +126,30 @@ CREATE TABLE "item" (
 	"id" SERIAL PRIMARY KEY,
 	"item_code" VARCHAR (20),
 	"name" VARCHAR(80),
-	"description" VARCHAR (200),
-	"price_per_price_unit" DECIMAL (25, 2),
+	"price_per_pricing_unit" DECIMAL (25, 2),
 	"unit_type_id" INT,
 	"unit_weight" DECIMAL (25, 2), -- unit weight is the relationship between the mesure_unit and price_unit
 	"disabled" BOOLEAN NOT NULL DEFAULT FALSE 
-
 );
 
+INSERT INTO "item" ("item_code", "name", "price_per_pricing_unit", "unit_type_id", "unit_weight")
+VALUES ('821WF', 'WF Beam 8x21', 100, 2, 1);
 
 CREATE TABLE "item_heading"(
 	"id" SERIAL PRIMARY KEY,
 	"heading_id" INT REFERENCES "heading",
 	"item_id" INT REFERENCES "item",
+	"message" VARCHAR (200),
 	"order" INT,
-	"price_per_price_unit" DECIMAL (25, 2),
-	"price_unit" DECIMAL (25, 2),
-	"single_unit_price" DECIMAL (25, 2),
+	"price_per_pricing_unit" DECIMAL (25, 2),
 	"ft" INT,
 	"inches" INT,
-	"measure_unit" DECIMAL (25, 2),
-	"rounded_measure_unit" DECIMAL (25, 2),
+	"measurement_per_unit" DECIMAL (25,2),
+	"rounded_measurement_per_unit" DECIMAL (25, 2),
+	"rounded_measurement_per_unit_unit_weight" DECIMAL (25, 2),
 	"qty" INT,
-	"total_item_price" DECIMAL (25, 2)
+	"single_item_price" DECIMAL (25, 2),
+	"item_price_total" DECIMAL (25,2)
 	); 
 	
 

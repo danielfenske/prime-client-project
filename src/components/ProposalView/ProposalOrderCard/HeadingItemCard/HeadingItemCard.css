@@ -1,0 +1,70 @@
+.heading-item-card {
+  border: 2px solid var(--grey-light);
+
+  border-radius: var(--border);
+
+  margin: var(--margin-large) var(--margin-large);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.item-card-top {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 90%;
+  padding: var(--padding) 5%;
+  background-color: var(--very-light-grey);
+}
+
+.item-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 90%;
+  padding: var(--padding-large) 5%;
+}
+
+.bottom-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-direction: column;
+  gap: var(--padding);
+}
+
+.bottom-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: var(--padding);
+  width: 500px;
+}
+
+.item-measurements {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.item-message {
+  width: 500px;
+}
+
+.add-item-btn {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.measurement-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5px;
+}

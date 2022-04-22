@@ -2,28 +2,40 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Button, Select, InputLabel } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
 
+import EditContactModal from './EditContactModal/EditContactModal';
+import AddContactModal from './AddContactModal/AddContactModal';
+import AddPartnerModal from './AddPartnerModal/AddPartnerModal';
+import EditPartnerModal from './EditPartnerModal/EditPartnerModal';
 // component imports
 import ContactCard from './ContactCard';
+import './OpportunityGeneralCard.css';
 
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
-  const contacts = useSelector((store) => store.contactReducer);
+  const editablePartner = useSelector(
+    (store) => store.partnerReducer.partnerEditReducer,
+  );
+  const contacts = useSelector((store) => store.contactReducer.contactReducer);
+  const editableContact = useSelector(
+    (store) => store.contactReducer.contactEditReducer,
+  );
   const { id } = useParams();
   const opportunity = useSelector(
     (store) => store.opportunityReducer.specificOpportunityReducer,
   );
 
   useEffect(() => {
-    dispatch({
-      type: 'FETCH_PARTNER_LIST',
-    });
+    // dispatch({
+    //   type: 'FETCH_PARTNER_LIST',
+    // });
     dispatch({
       type: 'FETCH_CONTACT_LIST',
     });
@@ -43,7 +55,7 @@ function OpportunityGeneralCard() {
       setDueDate(date);
     }
 
-    setStatus(opportunity.status);
+    setStatus(opportunity.status || 1);
     setType(opportunity.type);
     setCommunityName(opportunity.community_name);
     setDevelopmentType(opportunity.development_type);
@@ -52,7 +64,26 @@ function OpportunityGeneralCard() {
     setState(opportunity.state);
     setZip(opportunity.zip);
     setTaxRate(opportunity.tax_rate);
+
+    if (opportunity.partner_id) {
+      handleEditPartner(
+        partners.filter((p) => p.id === opportunity.partner_id)[0],
+      );
+      setPartnerId(opportunity.partner_id);
+      // handleEditPartner(editablePartner);
+    }
   }, [opportunity]);
+
+  useEffect(() => {
+    setPartnerType(editablePartner.type);
+    setPartnerPhoneNumber(editablePartner.phone_number);
+  }, [editablePartner]);
+
+  useEffect(() => {
+    setContactName(editableContact.name);
+    setContactPhoneNumber(editableContact.phone);
+    setContactEmail(editableContact.email);
+  }, [editableContact]);
 
   const [name, setName] = useState('');
   const [opportunity_code, setOpportunityCode] = useState('');
@@ -67,13 +98,54 @@ function OpportunityGeneralCard() {
   const [zip, setZip] = useState('');
   const [tax_rate, setTaxRate] = useState('');
 
+  // partner use states
+  const [partnerType, setPartnerType] = useState('');
+  const [partnerPhoneNumber, setPartnerPhoneNumber] = useState('');
+
+  // contact use states
+  const [contactName, setContactName] = useState('');
+  const [contactPhoneNumber, setContactPhoneNumber] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+
   const [partner_id, setPartnerId] = useState(1);
   const [contact_id, setContactId] = useState(1);
 
+  const [partnerAddModalOpen, setPartnerAddModalOpen] = useState(false);
+  const [partnerEditModalOpen, setPartnerEditModalOpen] = useState(false);
+
+  const [contactAddModalOpen, setContactAddModalOpen] = useState(false);
+  const [contactEditModalOpen, setContactEditModalOpen] = useState(false);
+
+  const handleEditContact = (thisContact) => {
+    dispatch({ type: 'SET_CLEAR_EDIT_CONTACT', payload: [] });
+    dispatch({ type: 'SET_EDIT_CONTACT', payload: thisContact });
+  };
+
+  const handleEditPartner = (thisPartner) => {
+    dispatch({ type: 'SET_CLEAR_EDIT_PARTNER', payload: [] });
+    dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
+  };
+  const handlePartnerAdd = () => {
+    setPartnerAddModalOpen(true);
+  };
+
+  const handlePartnerEdit = () => {
+    setPartnerEditModalOpen(true);
+  };
+  const handleContactAdd = () => {
+    setContactAddModalOpen(true);
+  };
+
+  const handleContactEdit = () => {
+    setContactEditModalOpen(true);
+  };
+
   const handleSubmit = () => {
     console.log('user submitted the form');
+    console.log('edit partner', editablePartner);
 
     let opportunitySubmission = {
+      partner_id: editablePartner.id,
       id: opportunity.id,
       name: name,
       opportunity_code: opportunity_code,
@@ -148,7 +220,7 @@ function OpportunityGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-            <TextField
+            {/* <TextField
               id='outlined-basic'
               label='Status'
               type='number'
@@ -158,7 +230,25 @@ function OpportunityGeneralCard() {
               onChange={(e) => setStatus(e.target.value)}
               size='small'
               style={{ width: 200 }}
-            />
+            /> */}
+
+            <FormControl>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                label='Status'
+                variant='outlined'
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                size='small'
+                style={{ width: 200 }}
+              >
+                <MenuItem value={1}>In Progress</MenuItem>
+                <MenuItem value={2}>Complete</MenuItem>
+                <MenuItem value={3}>Archived</MenuItem>
+              </Select>
+            </FormControl>
+
             <TextField
               id='date'
               label='Proposal Date'
@@ -203,42 +293,91 @@ function OpportunityGeneralCard() {
           </div>
         </div>
         <div className='card-section'>
-          <h2>Partner Information</h2>
-          <div className='form-container'>
-            {/* <PartnerCard partners={partners} />
-            <ContactCard contacts={contacts} /> */}
-            <FormControl>
-              <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                label='Method'
-                value={partner_id}
-                onChange={(e) => setPartnerId(e.target.value)}
-                size='small'
-                style={{ width: 200 }}
-              >
-                <MenuItem value={1}>Heather</MenuItem>
-                <MenuItem value={2}>Dan</MenuItem>
-                <MenuItem value={3}>Dave</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl>
-              <InputLabel id='demo-simple-select-label'>Contact</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                label='Contact'
-                value={contact_id}
-                onChange={(e) => setContactId(e.target.value)}
-                size='small'
-                style={{ width: 200 }}
-              >
-                <MenuItem value={1}>Mark</MenuItem>
-                <MenuItem value={2}>Dave</MenuItem>
-                <MenuItem value={3}>Cam</MenuItem>
-              </Select>
-            </FormControl>
+          <h2>Contact Information</h2>
+          <div className="form-container">
+            <div className='contact-container'>
+              <FormControl>
+                <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  label='Partner'
+                  value={partner_id}
+                  onChange={(e) => setPartnerId(e.target.value)}
+                  size='small'
+                  style={{ width: 200 }}
+                >
+                  {/* <MenuItem value={1}>none</MenuItem> */}
+                  {partners.map((thisPartner, i) => (
+                    <MenuItem onClick={() => handleEditPartner(thisPartner)} key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>
+                  ))}
+
+                </Select>
+              </FormControl>
+
+              <div>
+                <p><strong>Type:</strong></p>
+                <p>{partnerType ? partnerType : 'N/A'}</p>
+              </div>
+
+              <div>
+                <p><strong>Phone Number:</strong></p>
+                {partnerPhoneNumber ? partnerPhoneNumber : <p>N/A</p>}
+              </div>
+
+              <div className="icon-container">
+                <IconButton onClick={handlePartnerEdit}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={handlePartnerAdd}>
+                  <AddIcon />
+                </IconButton>
+              </div>
+            </div>
+
+            <div className='contact-container'>
+              <FormControl>
+                <InputLabel id='demo-simple-select-label'>Contact</InputLabel>
+                <Select
+                  labelId='demo-simple-select-label'
+                  id='demo-simple-select'
+                  label='Contact'
+                  value={contact_id}
+                  onChange={(e) => setContactId(e.target.value)}
+                  size='small'
+                  style={{ width: 200 }}
+                >
+                  {contacts.map((thisContact, i) => (
+                    <MenuItem onClick={() => handleEditContact(thisContact)} key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>
+                  ))}
+
+                </Select>
+              </FormControl>
+
+              <div>
+                <p><strong>Name:</strong></p>
+                <p>{contactName ? contactName : 'N/A'}</p>
+              </div>
+
+              <div>
+                <p><strong>Phone Number:</strong></p>
+                <p>{contactPhoneNumber ? contactPhoneNumber : 'N/A'}</p>
+              </div>
+
+              <div>
+                <p><strong>Email:</strong></p>
+                <p>{contactEmail ? contactEmail : 'N/A'}</p>
+              </div>
+
+              <div className="icon-container">
+                <IconButton onClick={handleContactEdit}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={handleContactAdd}>
+                  <AddIcon />
+                </IconButton>
+              </div>
+            </div>
           </div>
         </div>
         <div>
@@ -302,6 +441,10 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
+      <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} />
+      <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
+      <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen} />
+      <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen} />
     </>
   );
 }

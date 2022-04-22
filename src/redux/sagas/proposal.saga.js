@@ -2,31 +2,31 @@ import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
 // GETs list of all proposals
-function* getProposalList() {    
+function* getProposalList(action) {
   try {
-      const proposalResponse = yield axios.get(`/api/proposal`);
+    const proposalResponse = yield axios.get(`/api/proposal/list/${action.payload}`);
 
     // sends list to be stored in redux state
-    yield put ({type: 'SET_PROPOSAL_LIST', payload: proposalResponse.data});
+    yield put({ type: 'SET_PROPOSAL_LIST', payload: proposalResponse.data });
 
   } catch (error) {
-      console.log('Error GETTING contacts', error); 
+    console.log('Error GETTING contacts', error);
   }
 }
 
 // GETs specific proposal
 function* getProposal(action) {
-    const proposalId = action.payload;
+  const proposalId = action.payload;
 
-    try {
-      const proposalResponse = yield axios.get(`/api/proposal/${proposalId}`);
-  
-      // sends proposal to be stored in redux state
-      yield put ({type: 'SET_PROPOSAL', payload: proposalResponse.data});
-  
-    } catch (error) {
-        console.log('Error GETTING proposal', error); 
-    }
+  try {
+    const proposalResponse = yield axios.get(`/api/proposal/${proposalId}`);
+
+    // sends proposal to be stored in redux state
+    yield put({ type: 'SET_PROPOSAL', payload: proposalResponse.data });
+
+  } catch (error) {
+    console.log('Error GETTING proposal', error);
+  }
 }
 
 // POST new proposal to DB
@@ -37,11 +37,11 @@ function* postProposal(action) {
     const proposalResponse = yield axios.post(`api/proposal/${opportunity_id}`);
 
     const proposalId = proposalResponse.data.proposalId;
-    yield put({type: 'FETCH_PROPOSAL', payload: proposalId});
-    yield put({type: 'FETCH_PROPOSAL_LIST'});
+    yield put({ type: 'FETCH_PROPOSAL', payload: proposalId });
+    yield put({ type: 'FETCH_PROPOSAL_LIST', payload: opportunity_id });
 
   } catch (error) {
-    console.log('Error POSTING contact', error);   
+    console.log('Error POSTING contact', error);
   }
 }
 
@@ -54,7 +54,7 @@ function* updateProposal(action) {
   try {
     yield axios.put(`api/proposal/${proposalId}`, updatedProposal); //////////////////// Mark has a question /////////////////////////////////////////////////
 
-    yield put({type: 'FETCH_PROPOSAL', payload: proposalId});
+    yield put({ type: 'FETCH_PROPOSAL', payload: proposalId });
   } catch (error) {
     console.log('Error UPDATING proposal', error);
   }
@@ -62,15 +62,15 @@ function* updateProposal(action) {
 
 // DELETE (disable) existing proposal within DB
 function* deleteProposal(action) {
-  const id = action.payload;
+  const { id, opportunity_id } = action.payload;
 
   try {
     yield axios.delete(`api/proposal/${id}`);
 
-    yield put({type: 'FETCH_PROPOSAL_LIST'});
+    yield put({ type: 'FETCH_PROPOSAL_LIST', payload: opportunity_id });
   } catch (error) {
     console.log('Error DELETING proposal', error);
-    
+
   }
 }
 
