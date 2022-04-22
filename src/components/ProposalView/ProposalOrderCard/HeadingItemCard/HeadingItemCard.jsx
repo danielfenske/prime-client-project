@@ -218,6 +218,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                         type="number"
                         label="FT'"
                         variant='outlined'
+                        autoComplete="off"
                         value={ft}
                         onChange={(e) => setFt(e.target.value)}
                         size='small'
@@ -229,6 +230,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                           type="number"
                           label='IN"'
                           variant='outlined'
+                          autoComplete="off"
                           value={inches}
                           onChange={(e) => setInches(e.target.value)}
                           size='small'
@@ -245,6 +247,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                           type='number'
                           label={'LBS'}
                           variant='outlined'
+                          autoComplete="off"
                           value={measurement}
                           onChange={(e) => setMeasurement(e.target.value)}
                           size='small'
@@ -261,6 +264,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 label='Unit Price'
                 type='number'
                 variant='outlined'
+                autoComplete="off"
                 value={pricePerPricingUnit}
                 onChange={(e) => setPricePerPricingUnit(e.target.value)}
                 size='small'
@@ -271,6 +275,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 label='QTY'
                 type='number'
                 variant='outlined'
+                autoComplete="off"
                 value={qty}
                 onChange={(e) => setQty(e.target.value)}
                 onKeyPress={newItemEnter}
@@ -283,6 +288,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 id='outlined-basic'
                 label='Item Message'
                 variant='outlined'
+                autoComplete="off"
                 // value={description}
                 // onChange={(e) => setDescription(e.target.value)}
                 value={message}
