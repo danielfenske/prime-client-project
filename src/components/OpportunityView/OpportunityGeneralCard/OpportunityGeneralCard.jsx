@@ -28,6 +28,7 @@ function OpportunityGeneralCard() {
     (store) => store.contactReducer.contactEditReducer,
   );
   const { id } = useParams();
+  
   const opportunity = useSelector(
     (store) => store.opportunityReducer.specificOpportunityReducer,
   );
