@@ -309,7 +309,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
         {/* <TextField id="outlined-basic" label="description" variant="outlined" value={lineItem.description} /> */}
         {/* <p> Total line item price: {lineItem.total_item_price}</p> */}
         {/* <TextField id="outlined-basic" label="total price" variant="outlined" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} /> */}
-        {/* <button onClick={updateQtyMeasurementOrderPricePerPriceUnit}>
+        {/* <button onClick={updateQtyMeasurementOrderpricePerPricingUnit}>
           SAVE
         </button>*/}
       </div>
