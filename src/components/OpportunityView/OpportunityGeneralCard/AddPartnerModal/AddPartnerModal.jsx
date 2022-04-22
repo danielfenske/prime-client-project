@@ -141,6 +141,7 @@ function AddPartnerModal({ open, setOpen }) {
                     </div>
                     <div className="modal-btn-container">
                         <Button
+                            variant="outlined"
                             onClick={() => {
                                 setOpen(false);
                             }}

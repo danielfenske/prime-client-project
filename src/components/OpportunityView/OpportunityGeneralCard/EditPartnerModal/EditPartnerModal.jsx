@@ -153,7 +153,8 @@ function EditPartnerModal({ open, setOpen }) {
                         />
                     </div>
                     <div className="modal-btn-container">
-                        <Button
+                        <Button 
+                            variant="outlined"
                             onClick={() => {
                                 setOpen(false);
                             }}

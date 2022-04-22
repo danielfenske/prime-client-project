@@ -79,10 +79,10 @@ function AddContactModal({ open, setOpen }) {
         </div>
         <div className='modal-btn-container'>
           <Button
+            variant="outlined"
             onClick={() => {
               setOpen(false);
             }}
-            variant='outlined'
           >
             Cancel
           </Button>
