@@ -28,6 +28,7 @@ function OpportunityGeneralCard() {
     (store) => store.contactReducer.contactEditReducer,
   );
   const { id } = useParams();
+
   const opportunity = useSelector(
     (store) => store.opportunityReducer.specificOpportunityReducer,
   );
@@ -211,12 +212,14 @@ function OpportunityGeneralCard() {
               style={{ width: 200 }}
             />
             <TextField
-              id='outlined-basic'
-              label='Opportunity Name'
-              variant='outlined'
+              id='date'
+              label='Date Created'
+              type='date'
               autoComplete="off"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              defaultValue='2022-04-16'
+              value={due_date}
+              InputLabelProps={{ shrink: true }}
+              onChange={(e) => setDueDate(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
@@ -248,21 +251,18 @@ function OpportunityGeneralCard() {
                 <MenuItem value={3}>Archived</MenuItem>
               </Select>
             </FormControl>
-
             <TextField
-              id='date'
-              label='Proposal Date'
-              type='date'
-              defaultValue='2022-04-16'
-              value={due_date}
-              InputLabelProps={{ shrink: true }}
-              onChange={(e) => setDueDate(e.target.value)}
+              id='outlined-basic'
+              label='Opportunity Name'
+              variant='outlined'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               size='small'
               style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
-              label='Type'
+              label='Opportunity Type'
               variant='outlined'
               autoComplete="off"
               value={type}
@@ -382,11 +382,20 @@ function OpportunityGeneralCard() {
         </div>
         <div>
           <div className='card-section'>
-            <h2>Opportunity Type</h2>
+            <h2>Location Information</h2>
             <div className='form-container'>
               <TextField
                 id='outlined-basic'
-                label='Zip'
+                label='Address'
+                variant='outlined'
+                value={address_line_1}
+                onChange={(e) => setAddress(e.target.value)}
+                size='small'
+                style={{ width: 200 }}
+              />
+              <TextField
+                id='outlined-basic'
+                label='Zip (hit ENTER to autofill)'
                 type='number'
                 variant='outlined'
                 autoComplete="off"
@@ -413,16 +422,6 @@ function OpportunityGeneralCard() {
                 autoComplete="off"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                size='small'
-                style={{ width: 200 }}
-              />
-              <TextField
-                id='outlined-basic'
-                label='Address'
-                variant='outlined'
-                autoComplete="off"
-                value={address_line_1}
-                onChange={(e) => setAddress(e.target.value)}
                 size='small'
                 style={{ width: 200 }}
               />

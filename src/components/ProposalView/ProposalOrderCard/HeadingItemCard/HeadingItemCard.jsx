@@ -261,7 +261,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
               )}
               <TextField
                 id='outlined-basic'
-                label='Unit Price'
+                label='Unit Price ($)'
                 type='number'
                 variant='outlined'
                 autoComplete="off"
@@ -289,8 +289,6 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 label='Item Message'
                 variant='outlined'
                 autoComplete="off"
-                // value={description}
-                // onChange={(e) => setDescription(e.target.value)}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 size='small'
