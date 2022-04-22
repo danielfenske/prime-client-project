@@ -93,6 +93,18 @@ function ProposalPreviewCard() {
   console.log('Items:', items);
   return (
     <>
+      <div className='card-header'>
+        <h1>Proposal PDF</h1>
+        <Button
+          variant='contained'
+          size='small'
+          onClick={() => {
+            window.print();
+          }}
+        >
+          Print
+        </Button>
+      </div>
       {proposal && (
         <div className='proposal-preview'>
           <div className='pdf-container'>
@@ -220,14 +232,6 @@ function ProposalPreviewCard() {
               </section>
             </div>
           </div>
-          <Button
-            variant='contained'
-            onClick={() => {
-              window.print();
-            }}
-          >
-            Print
-          </Button>
         </div>
       )}
     </>
