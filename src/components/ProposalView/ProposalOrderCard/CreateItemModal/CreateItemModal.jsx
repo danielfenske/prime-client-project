@@ -134,25 +134,64 @@ function CreateItemModal({ open, setOpen }) {
   // console.log('unitWeight', unitWeight);
   return (
     <Modal open={open}>
-      <div className="modal-container">
-        <div className="modal-icon"><AddCircleOutlineIcon style={{ fontSize: 100 }} /></div>
+      <div className='modal-container'>
+        <div className='modal-icon'>
+          <AddCircleOutlineIcon style={{ fontSize: 100 }} />
+        </div>
         <h2>Create New Item</h2>
-        <div className="modal-form-container">
-          <TextField fullWidth id="outlined-basic" label="Item Code" variant="outlined" size='small' value={values.item_code} onChange={(e) => handleInputChange("item_code", e)} />
-          <TextField fullWidth id="outlined-basic" label="Name" variant="outlined" size='small' value={values.name} onChange={(e) => handleInputChange("name", e)} />
+        <div className='modal-form-container'>
+          <TextField
+            fullWidth
+            id='outlined-basic'
+            label='Item Code'
+            variant='outlined'
+            size='small'
+            value={values.item_code}
+            onChange={(e) => handleInputChange('item_code', e)}
+          />
+          <TextField
+            fullWidth
+            id='outlined-basic'
+            label='Name'
+            variant='outlined'
+            size='small'
+            value={values.name}
+            onChange={(e) => handleInputChange('name', e)}
+          />
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Measurement Unit & Pricing Unit</InputLabel>
+            <InputLabel id='demo-simple-select-label'>
+              Measurement Unit & Pricing Unit
+            </InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              label="Measurement Unit & Pricing Unit"
-              id="demo-simple-select" value={unitInput} onChange={handleTwoCalls}>
+              labelId='demo-simple-select-label'
+              label='Measurement Unit & Pricing Unit'
+              id='demo-simple-select'
+              value={unitInput}
+              onChange={handleTwoCalls}
+            >
               <MenuItem>
-                <ButtonGroup size="small" variant="text"><Button disabled style={{ color: 'var(--orange)' }}>Measuring Unit</Button><Button disabled style={{ color: 'var(--orange)' }}>Pricing Unit</Button></ButtonGroup>
+                <ButtonGroup size='small' variant='text'>
+                  <Button disabled style={{ color: 'var(--orange)' }}>
+                    Measuring Unit
+                  </Button>
+                  <Button disabled style={{ color: 'var(--orange)' }}>
+                    Pricing Unit
+                  </Button>
+                </ButtonGroup>
               </MenuItem>
               {unitTypeList.map((type, index) => {
+                if (!type.id) return;
+
                 return (
                   <MenuItem key={index} value={type.id}>
-                    <ButtonGroup variant="outlined"><Button disabled style={{ color: 'var(--orange)' }}>{type.measurement_unit}</Button><Button disabled style={{ color: 'var(--orange)' }}>{type.pricing_unit}</Button></ButtonGroup>
+                    <ButtonGroup variant='outlined'>
+                      <Button disabled style={{ color: 'var(--orange)' }}>
+                        {type.measurement_unit}
+                      </Button>
+                      <Button disabled style={{ color: 'var(--orange)' }}>
+                        {type.pricing_unit}
+                      </Button>
+                    </ButtonGroup>
                   </MenuItem>
                 );
               })}
@@ -160,27 +199,80 @@ function CreateItemModal({ open, setOpen }) {
           </FormControl>
 
           {/* render the unit weight input field if the unit_type_id is 3 or 4 or 8 or 9 */}
-          {unitInput === 3 &&
-            <TextField fullWidth id="outlined-basic" type="number" label="Unit Weight LBS" variant="outlined" size='small' value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
-          }
-          {unitInput === 4 &&
-            <TextField fullWidth id="outlined-basic" type="number" label="Unit Weight LBS" variant="outlined" size='small' value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
-          }
-          {unitInput === 8 &&
-            <TextField fullWidth id="outlined-basic" type="number" label="Unit Weight LBS" variant="outlined" size='small' value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
-          }
-          {unitInput === 9 &&
-            <TextField fullWidth id="outlined-basic" type="number" label="Unit Weight LBS" variant="outlined" size='small' value={unitWeight} onChange={(event) => { setUnitWeight(event.target.value) }} />
-          }
+          {unitInput === 3 && (
+            <TextField
+              fullWidth
+              id='outlined-basic'
+              type='number'
+              label='Unit Weight LBS'
+              variant='outlined'
+              size='small'
+              value={unitWeight}
+              onChange={(event) => {
+                setUnitWeight(event.target.value);
+              }}
+            />
+          )}
+          {unitInput === 4 && (
+            <TextField
+              fullWidth
+              id='outlined-basic'
+              type='number'
+              label='Unit Weight LBS'
+              variant='outlined'
+              size='small'
+              value={unitWeight}
+              onChange={(event) => {
+                setUnitWeight(event.target.value);
+              }}
+            />
+          )}
+          {unitInput === 8 && (
+            <TextField
+              fullWidth
+              id='outlined-basic'
+              type='number'
+              label='Unit Weight LBS'
+              variant='outlined'
+              size='small'
+              value={unitWeight}
+              onChange={(event) => {
+                setUnitWeight(event.target.value);
+              }}
+            />
+          )}
+          {unitInput === 9 && (
+            <TextField
+              fullWidth
+              id='outlined-basic'
+              type='number'
+              label='Unit Weight LBS'
+              variant='outlined'
+              size='small'
+              value={unitWeight}
+              onChange={(event) => {
+                setUnitWeight(event.target.value);
+              }}
+            />
+          )}
 
           {/* render the pice per pricing unit input field if the unit_type_id is selected from the dropdown */}
-          {unitInput !== "" &&
-            <TextField fullWidth id="outlined-basic" type="number" size='small' label={`Price Per ${unitTypeList[unitInput]?.pricing_unit}`} variant="outlined" value={values.price_per_pricing_unit} onChange={(e) => handleInputChange("price_per_pricing_unit", e)} />
-          }
+          {unitInput !== '' && (
+            <TextField
+              fullWidth
+              id='outlined-basic'
+              type='number'
+              size='small'
+              label={`Price Per ${unitTypeList[unitInput]?.pricing_unit}`}
+              variant='outlined'
+              value={values.price_per_pricing_unit}
+              onChange={(e) => handleInputChange('price_per_pricing_unit', e)}
+            />
+          )}
         </div>
         <div className='modal-btn-container'>
           <Button
-            variant="outlined"
+            variant='outlined'
             onClick={() => {
               setOpen(false);
             }}
