@@ -39,7 +39,7 @@ function OpportunityListView() {
           Create New
         </Button>
       </div>
-      <div className="filter-container">
+      <div className='filter-container'>
         <TextField
           id='outlined-basic'
           label='Search Opportunities'
@@ -86,14 +86,14 @@ function OpportunityListView() {
       <div>
         {opportunityList
           .filter((o) => {
-            if (o.name === null || o.partner_id === null || o.status === null) {
-              return true;
-            }
+            // if (o.name === null || o.partner_id === null || o.status === null) {
+            //   return true;
+            // }
 
             return (
               o.name.toUpperCase().includes(search.toUpperCase()) &&
-              o.partner_id == partner &&
-              o.status == status
+              (!o.partner_id || o.partner_id == partner) &&
+              (!o.status || o.status == status)
             );
           })
           .map((opportunity, i) => {

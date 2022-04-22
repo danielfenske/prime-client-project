@@ -1,6 +1,11 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
+
 const {
   default: axios
 } = require('axios');
@@ -8,54 +13,47 @@ const {
 // #region ==== PROPOSAL ROUTES ====
 
 // get all proposals
-router.get('/', (req, res) => {
-
+router.get('/list/:opportunity_id', rejectUnauthenticated, (req, res) => {
   let disabled = false;
   let userId = req.user.id;
   let access_level = req.user.access_level;
+  const { opportunity_id } = req.params;
 
   let queryText;
+  let queryOptions;
   let requestedProposals;
 
   console.log('userId', userId);
   console.log('access_level', access_level);
 
-  if (req.isAuthenticated()) {
-    if (access_level > 1) {
-      queryText = `SELECT * FROM "proposal" WHERE "disabled" = $1 ORDER BY "id" DESC;`
-
-      pool.query(queryText, [disabled])
-        .then((result) => {
-          let requestedProposals = result.rows;
-
-          res.send(requestedProposals);
-        })
-        .catch((error) => {
-          res.sendStatus(500);
-        })
-
-    } else {
-      queryText = `
-            SELECT "proposal".*
-            
-            FROM "opportunity"
-            JOIN "proposal" ON "proposal"."opportunity_id" = "opportunity"."id"
-            WHERE "opportunity"."user_id" = $1 AND "proposal"."disabled" = $2 ORDER BY "id" DESC;;`;
-
-      pool.query(queryText, [userId, disabled])
-        .then((result) => {
-          requestedProposals = result.rows;
-          res.send(requestedProposals);
-        })
-        .catch((error) => {
-          console.log('error in proposal GET', error);
-
-          res.sendStatus(500);
-        })
-    }
+  if (req.user.access_level > 1) {
+    queryText = `
+      SELECT "proposal".*
+      
+      FROM "opportunity"
+      JOIN "proposal" ON "proposal"."opportunity_id" = "opportunity"."id"
+      WHERE "proposal"."disabled" = $1 AND "proposal"."opportunity_id" = $2;`;
+    queryOptions = [disabled, opportunity_id]
   } else {
-    res.sendStatus(403);
+    queryText = `
+      SELECT "proposal".*
+      
+      FROM "opportunity"
+      JOIN "proposal" ON "proposal"."opportunity_id" = "opportunity"."id"
+      WHERE "opportunity"."user_id" = $1 AND "proposal"."disabled" = $2 AND "proposal"."opportunity_id" = $3;`;
+    queryOptions = [req.user.id, disabled, opportunity_id]
   }
+
+  pool.query(queryText, queryOptions)
+    .then((result) => {
+      requestedProposals = result.rows;
+      res.send(requestedProposals);
+    })
+    .catch((error) => {
+      console.log('error in proposal GET', error);
+
+      res.sendStatus(500);
+    })
 });
 
 // get single proposal

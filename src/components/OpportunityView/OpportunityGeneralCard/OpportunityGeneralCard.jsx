@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Button, Select, InputLabel } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
@@ -22,9 +20,13 @@ import './OpportunityGeneralCard.css';
 function OpportunityGeneralCard() {
   const dispatch = useDispatch();
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
-  const editablePartner = useSelector((store) => store.partnerReducer.partnerEditReducer);
+  const editablePartner = useSelector(
+    (store) => store.partnerReducer.partnerEditReducer,
+  );
   const contacts = useSelector((store) => store.contactReducer.contactReducer);
-  const editableContact = useSelector((store) => store.contactReducer.contactEditReducer);
+  const editableContact = useSelector(
+    (store) => store.contactReducer.contactEditReducer,
+  );
   const { id } = useParams();
   const opportunity = useSelector(
     (store) => store.opportunityReducer.specificOpportunityReducer,
@@ -53,7 +55,7 @@ function OpportunityGeneralCard() {
       setDueDate(date);
     }
 
-    setStatus(opportunity.status);
+    setStatus(opportunity.status || 1);
     setType(opportunity.type);
     setCommunityName(opportunity.community_name);
     setDevelopmentType(opportunity.development_type);
@@ -63,26 +65,25 @@ function OpportunityGeneralCard() {
     setZip(opportunity.zip);
     setTaxRate(opportunity.tax_rate);
 
-
     if (opportunity.partner_id) {
-      handleEditPartner(partners.filter(p => p.id === opportunity.partner_id)[0]);
+      handleEditPartner(
+        partners.filter((p) => p.id === opportunity.partner_id)[0],
+      );
       setPartnerId(opportunity.partner_id);
       // handleEditPartner(editablePartner);
     }
-
   }, [opportunity]);
 
   useEffect(() => {
     setPartnerType(editablePartner.type);
     setPartnerPhoneNumber(editablePartner.phone_number);
-  }, [editablePartner])
+  }, [editablePartner]);
 
   useEffect(() => {
     setContactName(editableContact.name);
     setContactPhoneNumber(editableContact.phone);
     setContactEmail(editableContact.email);
-  }, [editableContact])
-
+  }, [editableContact]);
 
   const [name, setName] = useState('');
   const [opportunity_code, setOpportunityCode] = useState('');
@@ -98,10 +99,10 @@ function OpportunityGeneralCard() {
   const [tax_rate, setTaxRate] = useState('');
 
   // partner use states
-  const [partnerType, setPartnerType] = useState("");
-  const [partnerPhoneNumber, setPartnerPhoneNumber] = useState("");
+  const [partnerType, setPartnerType] = useState('');
+  const [partnerPhoneNumber, setPartnerPhoneNumber] = useState('');
 
-  // contact use states 
+  // contact use states
   const [contactName, setContactName] = useState('');
   const [contactPhoneNumber, setContactPhoneNumber] = useState('');
   const [contactEmail, setContactEmail] = useState('');
@@ -118,26 +119,26 @@ function OpportunityGeneralCard() {
   const handleEditContact = (thisContact) => {
     dispatch({ type: 'SET_CLEAR_EDIT_CONTACT', payload: [] });
     dispatch({ type: 'SET_EDIT_CONTACT', payload: thisContact });
-  }
+  };
 
   const handleEditPartner = (thisPartner) => {
     dispatch({ type: 'SET_CLEAR_EDIT_PARTNER', payload: [] });
     dispatch({ type: 'SET_EDIT_PARTNER', payload: thisPartner });
-  }
+  };
   const handlePartnerAdd = () => {
     setPartnerAddModalOpen(true);
-  }
+  };
 
   const handlePartnerEdit = () => {
     setPartnerEditModalOpen(true);
-  }
+  };
   const handleContactAdd = () => {
     setContactAddModalOpen(true);
-  }
+  };
 
   const handleContactEdit = () => {
     setContactEditModalOpen(true);
-  }
+  };
 
   const handleSubmit = () => {
     console.log('user submitted the form');
@@ -217,7 +218,7 @@ function OpportunityGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-            <TextField
+            {/* <TextField
               id='outlined-basic'
               label='Status'
               type='number'
@@ -226,7 +227,25 @@ function OpportunityGeneralCard() {
               onChange={(e) => setStatus(e.target.value)}
               size='small'
               style={{ width: 200 }}
-            />
+            /> */}
+
+            <FormControl>
+              <InputLabel id='status-label'>Status</InputLabel>
+              <Select
+                labelId='status-label'
+                label='Status'
+                variant='outlined'
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                size='small'
+                style={{ width: 200 }}
+              >
+                <MenuItem value={1}>In Progress</MenuItem>
+                <MenuItem value={2}>Complete</MenuItem>
+                <MenuItem value={3}>Archived</MenuItem>
+              </Select>
+            </FormControl>
+
             <TextField
               id='date'
               label='Proposal Date'
@@ -411,10 +430,29 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} />
       <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
       <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen} />
       <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen} />
+=======
+      <AddPartnerModal
+        open={partnerAddModalOpen}
+        setOpen={setPartnerAddModalOpen}
+      />
+      <EditPartnerModal
+        open={partnerEditModalOpen}
+        setOpen={setPartnerEditModalOpen}
+      />
+      <AddContactModal
+        open={contactAddModalOpen}
+        setOpen={setContactAddModalOpen}
+      />
+      <EditContactModal
+        open={contactEditModalOpen}
+        setOpen={setContactEditModalOpen}
+      />
+>>>>>>> master
     </>
   );
 }

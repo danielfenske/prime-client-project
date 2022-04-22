@@ -14,49 +14,48 @@ function CreateItemModal({ open, setOpen }) {
   // const [open, setOpen] = useState(true);
   const dispatch = useDispatch();
   const store = useSelector((store) => store);
-  const [unitWeight, setUnitWeight] = useState("");
+  const [unitWeight, setUnitWeight] = useState('');
 
   useEffect(() => {
-    dispatch({ type: "FETCH_UNIT_TYPE_LIST" })
-  }, [])
-
+    dispatch({ type: 'FETCH_UNIT_TYPE_LIST' });
+  }, []);
 
   const unitTypeList = store.unitTypeReducer.unitTypeListReducer;
 
   //create an object to reflect multiple states onChange
   const initialValues = {
-    item_code: "",
-    name: "",
-    price_per_pricing_unit: "",
-    unit_type_id: ""
-  }
+    item_code: '',
+    name: '',
+    description: '',
+    price_per_price_unit: '',
+    unit_type_id: '',
+  };
 
   const [values, setValues] = useState(initialValues);
 
   //when a user enters input, the properties of the item object change
   const handleInputChange = (name, event) => {
-
     const { value } = event.target;
 
     setValues({
       ...values,
       [name]: value,
     });
-  }
+  };
 
-  //the unit_type_id property of the item object is set when a user selects one of the dropdown options 
-  const [unitInput, setUnitInput] = useState("1");
+  //the unit_type_id property of the item object is set when a user selects one of the dropdown options
+  const [unitInput, setUnitInput] = useState('1');
 
   const setUnitPair = (event) => {
-    setUnitInput(event.target.value)
-  }
+    setUnitInput(event.target.value);
+  };
 
   const handleTwoCalls = (event) => {
-    handleInputChange("unit_type_id", event);
+    handleInputChange('unit_type_id', event);
     setUnitPair(event);
-  }
+  };
 
-  //dispatch unit_weight data along with the item object if unit_weight has a value, 
+  //dispatch unit_weight data along with the item object if unit_weight has a value,
   //dispatch 0.01 for unit_weight if the measurement unit is LBS and the pricing unit is CWT,
   //dispatch 1 for unit_weight if the measurement unit and the pricing unit are the same
   //dispatch unit_weight * 0.01 if the pricing unit is CWT and the measurement unit is not LBS
@@ -68,64 +67,68 @@ function CreateItemModal({ open, setOpen }) {
         type: 'POST_ITEM',
         payload: {
           ...values,
-          unit_weight: unitWeight
-        }
-      })
+          unit_weight: unitWeight,
+        },
+      });
       setValues(initialValues);
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     } else if (values.unit_type_id === 8) {
       dispatch({
         type: 'POST_ITEM',
         payload: {
           ...values,
-          unit_weight: unitWeight
-        }
-      })
+          unit_weight: unitWeight,
+        },
+      });
       setValues(initialValues);
     } else if (values.unit_type_id === 6) {
       dispatch({
         type: 'POST_ITEM',
         payload: {
           ...values,
-          unit_weight: 0.01
-        }
-      })
+          unit_weight: 0.01,
+        },
+      });
       setValues(initialValues);
     } else if (values.unit_type_id === 4) {
       dispatch({
         type: 'POST_ITEM',
         payload: {
           ...values,
-          unit_weight: Number(unitWeight) * 0.01
-        }
-      })
+          unit_weight: Number(unitWeight) * 0.01,
+        },
+      });
       setValues(initialValues);
     } else if (values.unit_type_id === 9) {
       dispatch({
         type: 'POST_ITEM',
         payload: {
           ...values,
-          unit_weight: Number(unitWeight) * 0.01
-        }
-      })
+          unit_weight: Number(unitWeight) * 0.01,
+        },
+      });
       setValues(initialValues);
     } else {
       dispatch({
         type: 'POST_ITEM',
         payload: {
           ...values,
-          unit_weight: 1
-        }
-      })
+          unit_weight: 1,
+        },
+      });
       setValues(initialValues);
     }
-  }
+  };
 
   //set all values to empty strings when the user clicks on the cancel button
   const handleClick = () => {
     setValues(initialValues);
     setUnitWeight('');
-  }
+    setOpen(false);
+  };
 
   // console.log('unitTypeList is', unitTypeList);
   // console.log('unitInput is', unitInput);

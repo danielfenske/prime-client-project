@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
 import TextField from '@mui/material/TextField';
@@ -18,11 +18,13 @@ import './HeadingItemCard.css';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function HeadingItemCard({ lineItem, addNewItem }) {
+  console.log('Line Item is', lineItem);
   const items = useSelector((store) => store.itemReducer);
+  const saveTrigger = useSelector((store) => store.triggerSave);
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(lineItem.item_id);
   const [qty, setQty] = useState(lineItem.qty);
-  const [measurement, setMeasurement] = useState(lineItem.measure_unit);
+  const [measurement, setMeasurement] = useState(lineItem.measurement_per_unit);
   // const [order, setOrder] = useState(lineItem.order);
   const [ft, setFt] = useState(lineItem.ft);
   const [inches, setInches] = useState(lineItem.inches);
@@ -30,6 +32,18 @@ function HeadingItemCard({ lineItem, addNewItem }) {
   const [pricePerPricingUnit, setPricePerPricingUnit] = useState(
     lineItem.override_price || lineItem.default_price,
   );
+
+  const isInitialMount = useRef(true);
+  useEffect(() => {
+    // this will stop the hook from running on the initial mount
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    console.log('Saving item');
+    updateLineItem();
+  }, [saveTrigger]);
 
   const [open, setOpen] = useState(false);
 
@@ -43,8 +57,8 @@ function HeadingItemCard({ lineItem, addNewItem }) {
   };
 
   const updateLineItem = (e) => {
-    e.preventDefault();
-    console.log('in updateQtyAndMeasurement');
+    e?.preventDefault();
+    console.log('in updateLineItem', lineItem);
     if (lineItem.measurement_unit === 'EA') {
       //dispatch 1 as measurement_per_unit when the measurement_unit is EA
       dispatch({
@@ -54,7 +68,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           qty: Number(qty),
           measurement_per_unit: 1,
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
         },
       });
     } else if (lineItem.measurement_unit === 'FT') {
@@ -67,7 +81,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           ft: Number(ft),
           inches: Number(inches),
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
         },
       });
     } else {
@@ -78,7 +92,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           qty: Number(qty),
           measurement_per_unit: Number(measurement),
           price_per_pricing_unit: Number(pricePerPricingUnit),
-          message: message
+          message: message,
         },
       });
     }
@@ -107,7 +121,13 @@ function HeadingItemCard({ lineItem, addNewItem }) {
   //   });
   // };
 
+  const secondInitialMount = useRef(true);
   useEffect(() => {
+    if (secondInitialMount.current) {
+      secondInitialMount.current = false;
+      return;
+    }
+
     dispatch({
       type: 'UPDATE_HEADING_ITEM_ITEM_CODE',
       payload: { heading_item_id: lineItem.id, item_id: selectedItem },
@@ -134,19 +154,27 @@ function HeadingItemCard({ lineItem, addNewItem }) {
     }
   };
 
-
   return (
     <>
       <div className='heading-item-card'>
-        <div className="item-card-top">
-          <p><strong>Code:</strong> {lineItem.item_code}</p>
-          <p><strong>Name:</strong> {lineItem.name}</p>
-          <p> <strong>Price per item:</strong> ${lineItem.single_item_price}</p>
-          <p><strong>Total price:</strong> ${lineItem.item_price_total}</p>
+        <div className='item-card-top'>
+          <p>
+            <strong>Code:</strong> {lineItem.item_code}
+          </p>
+          <p>
+            <strong>Name:</strong> {lineItem.name}
+          </p>
+          <p>
+            {' '}
+            <strong>Price per item:</strong> ${lineItem.single_item_price || 0}
+          </p>
+          <p>
+            <strong>Total price:</strong> ${lineItem.item_price_total || 0}
+          </p>
         </div>
 
-        <div className="item-card-bottom">
-          <div className="bottom-left">
+        <div className='item-card-bottom'>
+          <div className='bottom-left'>
             <FormControl>
               <InputLabel id='demo-simple-select-label'>Item List</InputLabel>
               <Select
@@ -167,11 +195,18 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 })}
               </Select>
             </FormControl>
-            <Button variant="text" size='small' className="add-item-btn" onClick={addNewItem}>New Item <AddCircleOutlineIcon fontSize="small" /></Button>
+            <Button
+              variant='text'
+              size='small'
+              className='add-item-btn'
+              onClick={addNewItem}
+            >
+              New Item <AddCircleOutlineIcon fontSize='small' />
+            </Button>
           </div>
 
-          <div className="bottom-middle">
-            <div className="item-measurements">
+          <div className='bottom-middle'>
+            <div className='item-measurements'>
               {lineItem?.measurement_unit === 'EA' ? (
                 <></>
               ) : (
@@ -180,15 +215,20 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                     <>
                       <TextField
                         id='outlined-basic'
+<<<<<<< HEAD
                         type="number"
                         label="FT'"
+=======
+                        type='number'
+                        label='FT"'
+>>>>>>> master
                         variant='outlined'
                         value={ft}
                         onChange={(e) => setFt(e.target.value)}
                         size='small'
                         style={{ width: 75 }}
                       />
-                      <div className="measurement-container">
+                      <div className='measurement-container'>
                         <TextField
                           id='outlined-basic'
                           type="number"
@@ -204,10 +244,10 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                     </>
                   ) : (
                     <>
-                      <div className="measurement-container">
+                      <div className='measurement-container'>
                         <TextField
                           id='outlined-basic'
-                          type="number"
+                          type='number'
                           label={'LBS'}
                           variant='outlined'
                           value={measurement}
@@ -224,7 +264,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
               <TextField
                 id='outlined-basic'
                 label='Unit Price'
-                type="number"
+                type='number'
                 variant='outlined'
                 value={pricePerPricingUnit}
                 onChange={(e) => setPricePerPricingUnit(e.target.value)}
@@ -234,7 +274,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
               <TextField
                 id='outlined-basic'
                 label='QTY'
-                type="number"
+                type='number'
                 variant='outlined'
                 value={qty}
                 onChange={(e) => setQty(e.target.value)}
@@ -243,20 +283,22 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 style={{ width: 125 }}
               />
             </div>
-            <div className="item-message">
+            <div className='item-message'>
               <TextField
                 id='outlined-basic'
                 label='Item Message'
                 variant='outlined'
                 // value={description}
                 // onChange={(e) => setDescription(e.target.value)}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 size='small'
                 fullWidth
               />
             </div>
           </div>
 
-          <div className="bottom-right">
+          <div className='bottom-right'>
             <IconButton
               onClick={() => {
                 setOpen(true);
@@ -291,6 +333,9 @@ function HeadingItemCard({ lineItem, addNewItem }) {
         {/* <TextField id="outlined-basic" label="description" variant="outlined" value={lineItem.description} /> */}
         {/* <p> Total line item price: {lineItem.total_item_price}</p> */}
         {/* <TextField id="outlined-basic" label="total price" variant="outlined" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} /> */}
+        {/* <button onClick={updateQtyMeasurementOrderpricePerPricingUnit}>
+          SAVE
+        </button>*/}
       </div>
 
       <Modal open={open} className='modal-container'>
