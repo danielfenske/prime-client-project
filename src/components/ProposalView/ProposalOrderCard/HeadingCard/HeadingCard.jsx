@@ -10,6 +10,7 @@ import './HeadingCard.css';
 import CreateItemModal from '../CreateItemModal/CreateItemModal';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 
+
 function HeadingCard(props) {
   const dispatch = useDispatch();
   const store = useSelector((store) => store);
@@ -18,29 +19,33 @@ function HeadingCard(props) {
   const [surchargeInput, setSurchargeInput] = useState(props.surcharge);
   const [createItemModalOpen, setCreateItemModalOpen] = useState(false);
   const [checked, setChecked] = useState(props.taxable);
+  
 
   const allProposal = useSelector((store) => store.proposalEverything);
   const { id } = useParams();
+  // console.log('param id is', id);
 
-  // console.log('props', props);
-  console.log('props.id is', props.id);
-
+  console.log('props', props);
+  console.log('proposal id is', props.proposal_id);
+  console.log('heading id is',props.id);
   // const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
   const lineItemList = useSelector(
     (store) => store.headingItemReducer.headingItemWithItemCodeReducer,
   );
-  // console.log('lineItemList is', Number(lineItemList[0].total_item_price));
+  console.log('lineItemList is', lineItemList);
 
-  // const sumLineItem = () => {
-  //   let result = 0;
-  //   for (let i = 0; i < lineItemList.length; i++){
-  //     result += Number(lineItemList[i].item_price_total);
-  //   }
+  const sumLineItem = () => {
+    let result = 0;
+    for (let i = 0; i < lineItemList.length; i++){
+      if(props.id === lineItemList[i].heading_id){
+      result += Number(lineItemList[i].item_price_total)
+      };
+    }
+    return result;
+  }
 
-  //   return result;
-  // }
-
-  // console.log('result is', sumLineItem());
+  const [headingTotal, setHeadingTotal] = useState(sumLineItem()); 
+  console.log('result is', sumLineItem());
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
@@ -53,9 +58,9 @@ function HeadingCard(props) {
     // sumLineItem();
   }, []);
 
-  // useEffect(() => {
-  //  sumLineItem();
-  // }, [lineItemList])
+  useEffect(() => {
+  setHeadingTotal(sumLineItem());
+  }, [lineItemList])
 
   const handleCheckbox = (e) => {
     console.log('checked is', checked);
@@ -95,6 +100,8 @@ function HeadingCard(props) {
         heading_id: props.id,
       },
     });
+    
+   
   };
 
   const deleteHeading = () => {
@@ -173,8 +180,8 @@ function HeadingCard(props) {
             id='outlined-basic'
             label='Total Price ($)'
             variant='outlined'
-            value={surchargeInput}
-            onChange={(e) => setSurchargeInput(e.target.value)}
+            value={headingTotal}
+            // onChange={(e) => setSurchargeInput(e.target.value)}
             size='small'
           />
         </div>
