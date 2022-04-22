@@ -25,7 +25,11 @@ CREATE TABLE "contact" (
 );
 
  INSERT INTO "contact" ("name", "phone", "work_phone", "email", "disabled")
- VALUES('mark', '6515555555', '6515555555', 'fake@gmail.com', 'false');
+ VALUES('Mark Scranton', '2023756743', '2021190764', 'MarkS@gmail.com', 'false'), 
+('Phil Spencer', '2021791008', '2023469452', 'PhilS@gmail.com', 'false'),
+('Bill Henderson', '2021791009', '2023469471', 'BillH@gmail.com', 'false'),
+('Franklin Roosevelt', '2021791056', '2023469701', 'FranklinR@gmail.com', 'false'),
+('Steve Johnson', '2021791056', '2023469701', 'SteveJ@gmail.com', 'false');
 
 CREATE TABLE "partner" (
     "id" SERIAL PRIMARY KEY,
@@ -41,9 +45,12 @@ CREATE TABLE "partner" (
     "zip" VARCHAR,
     "disabled" BOOLEAN NOT NULL DEFAULT FALSE
 );
- INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "disabled")
- VALUES('Brookshire Construction', 'builder', 'BRK', '5.23', '3', false );
-
+ INSERT INTO "partner" ("name", "type", "partner_code", "partner_discount", "rounding_type", "phone_number", "address_line_1", "city", "state","zip", "disabled")
+ VALUES('Brookshire Construction', 'Builder', 'BRK', '5.23', 3, 2023764765, '1791 Dovetale Dr', 'Clinton', 'MD', '', false ),
+ ('Franklin Construction', 'Builder', 'FRK', '4', 3, 7526473726, '1791 Ridgedale Dr', 'Minneapolis', 'MN', '', false),
+ ('Benjamin Construction', 'Builder', 'BJM', '4', 3, 2023764765, '1791 Finchtail Ave', 'Baltimore', 'MD', '', false),
+ ('Constituional Housing', 'Builder', 'CTN', '4', 3, 2023764765, '1791 Apple Rd', 'Baltimore', 'MD', '', false),
+('Maryland Contracting', 'Builder', 'MYD', '4', 3, 2023764765, '1791 Cedar Ave', 'Baltimore', 'MD', '', false);
 
 CREATE TABLE "opportunity" (
     "id" SERIAL PRIMARY KEY,
