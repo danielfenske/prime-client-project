@@ -32,7 +32,7 @@ function OpportunityListView() {
   const partners = useSelector((store) => store.partnerReducer.partnerReducer);
 
   return (
-    <>
+    <div>
       <div className='card-header'>
         <h1>Opportunities</h1>
         <Button onClick={postOpportunity} variant='contained' size='small'>
@@ -60,9 +60,12 @@ function OpportunityListView() {
             size='small'
             style={{ width: 200 }}
           >
-            {partners.map((thisPartner, i) => (                        
-                        <MenuItem key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>                        
-                        ))}
+            {partners.map((thisPartner, i) => (
+              <MenuItem key={i} value={thisPartner.id}>
+                {' '}
+                <em>{thisPartner.name}</em>{' '}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
 
@@ -100,7 +103,7 @@ function OpportunityListView() {
             return <OpportunityCard key={i} opportunity={opportunity} />;
           })}
       </div>
-    </>
+    </div>
   );
 }
 
