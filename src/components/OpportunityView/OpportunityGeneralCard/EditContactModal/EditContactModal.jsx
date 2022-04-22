@@ -92,7 +92,6 @@ function EditContactModal({ open, setOpen }) {
             onClick={() => {
               setOpen(false);
             }}
-            variant='outlined'
           >
             Cancel
           </Button>
