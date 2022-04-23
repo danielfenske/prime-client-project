@@ -23,10 +23,12 @@ function SmallTabs({ tabLabels, tabContents, tab_extras = <></> }) {
     <>
       <div className='tab-container'>
         <div className='tab-label-container'>
-          <div
-            className='small-tab-background'
-            style={{ marginTop: selectedTab * 40 + 'px' }}
-          ></div>
+          {tabLabels.length > 0 && (
+            <div
+              className='small-tab-background'
+              style={{ marginTop: selectedTab * 40 + 'px' }}
+            ></div>
+          )}
           {tabLabels.map((tabLabel, index) => {
             // tabs set the selected tab on click
             return (
@@ -43,7 +45,7 @@ function SmallTabs({ tabLabels, tabContents, tab_extras = <></> }) {
                   paddingRight: '20px',
                 }}
               >
-                {tabLabel}
+                {tabLabel || 'Heading ' + (index + 1)}
               </Button>
             );
           })}

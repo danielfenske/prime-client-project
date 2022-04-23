@@ -147,10 +147,11 @@ function OpportunityGeneralCard() {
 
     let opportunitySubmission = {
       partner_id: editablePartner.id,
+      contact_id: editableContact.id,
       id: opportunity.id,
       name: name,
       opportunity_code: opportunity_code,
-      due_date: new Date(due_date).toISOString(),
+      due_date: due_date ? new Date(due_date).toISOString() : null,
       status: status,
       type: type,
       community_name: community_name,
@@ -184,6 +185,14 @@ function OpportunityGeneralCard() {
     }
   };
 
+  useEffect(() => {
+    setPartnerId(editablePartner.id);
+  }, [editablePartner]);
+
+  useEffect(() => {
+    setContactId(editableContact.id);
+  }, [editableContact]);
+
   return (
     <>
       <div className='card-header'>
@@ -205,7 +214,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Opportunity Code'
               variant='outlined'
-              autoComplete="off"
+              autoComplete='off'
               value={opportunity_code}
               onChange={(e) => setOpportunityCode(e.target.value)}
               size='small'
@@ -215,7 +224,7 @@ function OpportunityGeneralCard() {
               id='date'
               label='Date Created'
               type='date'
-              autoComplete="off"
+              autoComplete='off'
               defaultValue='2022-04-16'
               value={due_date}
               InputLabelProps={{ shrink: true }}
@@ -264,7 +273,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Opportunity Type'
               variant='outlined'
-              autoComplete="off"
+              autoComplete='off'
               value={type}
               onChange={(e) => setType(e.target.value)}
               size='small'
@@ -274,7 +283,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Community Name'
               variant='outlined'
-              autoComplete="off"
+              autoComplete='off'
               value={community_name ? community_name : name}
               onChange={(e) => setCommunityName(e.target.value)}
               size='small'
@@ -284,7 +293,7 @@ function OpportunityGeneralCard() {
               id='outlined-basic'
               label='Development Type'
               variant='outlined'
-              autoComplete="off"
+              autoComplete='off'
               value={development_type}
               onChange={(e) => setDevelopmentType(e.target.value)}
               size='small'
@@ -294,7 +303,7 @@ function OpportunityGeneralCard() {
         </div>
         <div className='card-section'>
           <h2>Contact Information</h2>
-          <div className="form-container">
+          <div className='form-container'>
             <div className='contact-container'>
               <FormControl>
                 <InputLabel id='demo-simple-select-label'>Partner</InputLabel>
@@ -309,23 +318,32 @@ function OpportunityGeneralCard() {
                 >
                   {/* <MenuItem value={1}>none</MenuItem> */}
                   {partners.map((thisPartner, i) => (
-                    <MenuItem onClick={() => handleEditPartner(thisPartner)} key={i} value={thisPartner.id}> <em>{thisPartner.name}</em> </MenuItem>
+                    <MenuItem
+                      onClick={() => handleEditPartner(thisPartner)}
+                      key={i}
+                      value={thisPartner.id}
+                    >
+                      {thisPartner.name}
+                    </MenuItem>
                   ))}
-
                 </Select>
               </FormControl>
 
               <div>
-                <p><strong>Type:</strong></p>
+                <p>
+                  <strong>Type:</strong>
+                </p>
                 <p>{partnerType ? partnerType : 'N/A'}</p>
               </div>
 
               <div>
-                <p><strong>Phone Number:</strong></p>
+                <p>
+                  <strong>Phone Number:</strong>
+                </p>
                 {partnerPhoneNumber ? partnerPhoneNumber : <p>N/A</p>}
               </div>
 
-              <div className="icon-container">
+              <div className='icon-container'>
                 <IconButton onClick={handlePartnerEdit}>
                   <EditIcon />
                 </IconButton>
@@ -348,28 +366,39 @@ function OpportunityGeneralCard() {
                   style={{ width: 200 }}
                 >
                   {contacts.map((thisContact, i) => (
-                    <MenuItem onClick={() => handleEditContact(thisContact)} key={i} value={thisContact.id}> <em>{thisContact.name}</em> </MenuItem>
+                    <MenuItem
+                      onClick={() => handleEditContact(thisContact)}
+                      key={i}
+                      value={thisContact.id}
+                    >
+                      {thisContact.name}
+                    </MenuItem>
                   ))}
-
                 </Select>
               </FormControl>
 
               <div>
-                <p><strong>Name:</strong></p>
+                <p>
+                  <strong>Name:</strong>
+                </p>
                 <p>{contactName ? contactName : 'N/A'}</p>
               </div>
 
               <div>
-                <p><strong>Phone Number:</strong></p>
+                <p>
+                  <strong>Phone Number:</strong>
+                </p>
                 <p>{contactPhoneNumber ? contactPhoneNumber : 'N/A'}</p>
               </div>
 
               <div>
-                <p><strong>Email:</strong></p>
+                <p>
+                  <strong>Email:</strong>
+                </p>
                 <p>{contactEmail ? contactEmail : 'N/A'}</p>
               </div>
 
-              <div className="icon-container">
+              <div className='icon-container'>
                 <IconButton onClick={handleContactEdit}>
                   <EditIcon />
                 </IconButton>
@@ -398,7 +427,7 @@ function OpportunityGeneralCard() {
                 label='Zip (hit ENTER to autofill)'
                 type='number'
                 variant='outlined'
-                autoComplete="off"
+                autoComplete='off'
                 value={zip}
                 onChange={(e) => setZip(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -409,7 +438,7 @@ function OpportunityGeneralCard() {
                 id='outlined-basic'
                 label='City'
                 variant='outlined'
-                autoComplete="off"
+                autoComplete='off'
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
                 size='small'
@@ -419,7 +448,7 @@ function OpportunityGeneralCard() {
                 id='outlined-basic'
                 label='State'
                 variant='outlined'
-                autoComplete="off"
+                autoComplete='off'
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 size='small'
@@ -430,7 +459,7 @@ function OpportunityGeneralCard() {
                 label='Tax Rate'
                 type='number'
                 variant='outlined'
-                autoComplete="off"
+                autoComplete='off'
                 value={tax_rate}
                 onChange={(e) => setTaxRate(e.target.value)}
                 size='small'
@@ -440,10 +469,22 @@ function OpportunityGeneralCard() {
           </div>
         </div>
       </div>
-      <AddPartnerModal open={partnerAddModalOpen} setOpen={setPartnerAddModalOpen} />
-      <EditPartnerModal open={partnerEditModalOpen} setOpen={setPartnerEditModalOpen} />
-      <AddContactModal open={contactAddModalOpen} setOpen={setContactAddModalOpen} />
-      <EditContactModal open={contactEditModalOpen} setOpen={setContactEditModalOpen} />
+      <AddPartnerModal
+        open={partnerAddModalOpen}
+        setOpen={setPartnerAddModalOpen}
+      />
+      <EditPartnerModal
+        open={partnerEditModalOpen}
+        setOpen={setPartnerEditModalOpen}
+      />
+      <AddContactModal
+        open={contactAddModalOpen}
+        setOpen={setContactAddModalOpen}
+      />
+      <EditContactModal
+        open={contactEditModalOpen}
+        setOpen={setContactEditModalOpen}
+      />
     </>
   );
 }

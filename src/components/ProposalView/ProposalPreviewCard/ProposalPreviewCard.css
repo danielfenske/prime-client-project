@@ -131,6 +131,10 @@
   .proposal-preview button {
     display: none;
   }
+
+  div.card-header {
+    display: none;
+  }
   
   .page {
     width: 100%;
