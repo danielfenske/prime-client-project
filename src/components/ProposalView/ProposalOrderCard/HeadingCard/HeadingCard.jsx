@@ -181,8 +181,7 @@ function HeadingCard(props) {
             label='Total Price ($)'
             variant='outlined'
             autoComplete="off"
-            value={surchargeInput}
-            onChange={(e) => setSurchargeInput(e.target.value)}
+            value={headingTotal}
             size='small'
           />
         </div>
