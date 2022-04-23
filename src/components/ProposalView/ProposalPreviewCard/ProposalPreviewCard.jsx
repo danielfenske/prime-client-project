@@ -56,24 +56,36 @@ function ProposalPreviewCard() {
       heading: finalTotal.toLocaleString('en-US'),
     };
 
+    numbers = {
+      ...numbers,
+      tax: (finalTotal * Number(proposal.tax_rate * 0.01)).toLocaleString(
+        'en-US',
+      ),
+      discount:
+        finalTotal *
+        Number(proposal.partner_discount * 0.01).toLocaleString('en-US'),
+    };
+
     // tax rate
     if (heading.taxable === true) {
-      finalTotal += headingTotal * Number(proposal.tax_rate * 0.01);
+      finalTotal += finalTotal * Number(proposal.tax_rate * 0.01);
     }
     console.log('finalTotal', finalTotal);
 
+    finalTotal -= finalTotal * Number(proposal.partner_discount * 0.01);
+
     numbers = {
       ...numbers,
-      tax: (headingTotal * Number(proposal.tax_rate * 0.01)).toLocaleString(
-        'en-US',
-      ),
       total: finalTotal.toLocaleString('en-US'),
     };
 
     return (
       <>
-        {/* <p>Heading: ${numbers.heading}</p>
-        <p>Tax: ${numbers.tax}</p> */}
+        <p>Sub Total: ${numbers.heading}</p>
+        {heading.taxable && <p>Tax: ${numbers.tax}</p>}
+        {Number(proposal.partner_discount) > 0 && (
+          <p>Discount: ${numbers.discount}</p>
+        )}
         <p>Total: ${numbers.total}</p>
       </>
     );
@@ -93,6 +105,18 @@ function ProposalPreviewCard() {
   console.log('Items:', items);
   return (
     <>
+      <div className='card-header'>
+        <h1>Proposal PDF</h1>
+        <Button
+          variant='contained'
+          size='small'
+          onClick={() => {
+            window.print();
+          }}
+        >
+          Print
+        </Button>
+      </div>
       {proposal && (
         <div className='proposal-preview'>
           <div className='pdf-container'>
@@ -220,14 +244,6 @@ function ProposalPreviewCard() {
               </section>
             </div>
           </div>
-          <Button
-            variant='contained'
-            onClick={() => {
-              window.print();
-            }}
-          >
-            Print
-          </Button>
         </div>
       )}
     </>

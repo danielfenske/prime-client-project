@@ -147,10 +147,11 @@ function OpportunityGeneralCard() {
 
     let opportunitySubmission = {
       partner_id: editablePartner.id,
+      contact_id: editableContact.id,
       id: opportunity.id,
       name: name,
       opportunity_code: opportunity_code,
-      due_date: new Date(due_date).toISOString(),
+      due_date: due_date ? new Date(due_date).toISOString() : null,
       status: status,
       type: type,
       community_name: community_name,
@@ -183,6 +184,14 @@ function OpportunityGeneralCard() {
       });
     }
   };
+
+  useEffect(() => {
+    setPartnerId(editablePartner.id);
+  }, [editablePartner]);
+
+  useEffect(() => {
+    setContactId(editableContact.id);
+  }, [editableContact]);
 
   return (
     <>
@@ -314,8 +323,7 @@ function OpportunityGeneralCard() {
                       key={i}
                       value={thisPartner.id}
                     >
-                      {' '}
-                      <em>{thisPartner.name}</em>{' '}
+                      {thisPartner.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -363,8 +371,7 @@ function OpportunityGeneralCard() {
                       key={i}
                       value={thisContact.id}
                     >
-                      {' '}
-                      <em>{thisContact.name}</em>{' '}
+                      {thisContact.name}
                     </MenuItem>
                   ))}
                 </Select>
