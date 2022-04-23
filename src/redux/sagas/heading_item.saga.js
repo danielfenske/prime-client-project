@@ -48,7 +48,7 @@ function* updateHeadingItem(action) {
 
     try {
         yield axios.put('/api/heading/item/update', action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: action.payload.heading_id });
     } catch (error) {
         console.log('Error UPDATing a heading_item_item_code', error);
     }
@@ -60,7 +60,7 @@ function* updateHeadingItemFtInches(action) {
 
     try {
         yield axios.put('/api/heading/item/update/ft_inches', action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: action.payload.heading_id });
     } catch (error) {
         console.log('Error UPDATing a heading_item_item_code', error);
     }
@@ -75,7 +75,7 @@ function* updateHeadingItemItemCode(action) {
 
     try {
         yield axios.put(`/api/heading/item/item_code`, action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
+        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE', payload: action.payload });
     } catch (error) {
         console.log('Error UPDATing a heading_item', error);
     }
@@ -92,31 +92,31 @@ function* deleteHeadingItem(action) {
     }
 }
 
-//move up line item order
-function* moveUpOrder(action) {
-    console.log('in headingItemSaga moveDownOrder', action.payload);
+// //move up line item order
+// function* moveUpOrder(action) {
+//     console.log('in headingItemSaga moveDownOrder', action.payload);
     
-    try {
-        yield axios.put(`/api/heading/item/order_up`, action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
-    } catch (error) {
-        console.log('Error moving up the order', error);
+//     try {
+//         yield axios.put(`/api/heading/item/order_up`, action.payload);
+//         yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
+//     } catch (error) {
+//         console.log('Error moving up the order', error);
         
-    }
-}
+//     }
+// }
 
-//move down line item order
-function* moveDownOrder(action) {
-    console.log('in headingItemSaga moveUpOrder', action.payload);
+// //move down line item order
+// function* moveDownOrder(action) {
+//     console.log('in headingItemSaga moveUpOrder', action.payload);
     
-    try {
-        yield axios.put(`/api/heading/item/order_down`, action.payload);
-        yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
-    } catch (error) {
-        console.log('Error moving down the order', error);
+//     try {
+//         yield axios.put(`/api/heading/item/order_down`, action.payload);
+//         yield put({ type: 'FETCH_HEADING_ITEMS_WITH_ITEM_CODE' });
+//     } catch (error) {
+//         console.log('Error moving down the order', error);
         
-    }
-}
+//     }
+// }
 
 
 
@@ -127,8 +127,8 @@ function* headingItemSaga() {
     yield takeLatest('UPDATE_HEADING_ITEM', updateHeadingItem);
     yield takeLatest('DELETE_HEADING_ITEM', deleteHeadingItem);
     yield takeLatest('FETCH_HEADING_ITEMS_WITH_ITEM_CODE', getHeadingItemWithItemCode);
-    yield takeLatest('MOVE_ORDER_UP', moveUpOrder);
-    yield takeLatest('MOVE_ORDER_DOWN', moveDownOrder);
+    // yield takeLatest('MOVE_ORDER_UP', moveUpOrder);
+    // yield takeLatest('MOVE_ORDER_DOWN', moveDownOrder);
     yield takeLatest('UPDATE_HEADING_ITEM_FT_INCHES', updateHeadingItemFtInches);
 }
 

@@ -22,25 +22,28 @@ function HeadingCard(props) {
   const allProposal = useSelector((store) => store.proposalEverything);
   const { id } = useParams();
 
-  // console.log('props', props);
-  console.log('props.id is', props.id);
 
-  // const lineItemList = store.headingItemReducer.headingItemWithItemCodeReducer;
+  // console.log('props', props);
+  // console.log('proposal id is', props.proposal_id);
+  // console.log('heading id is',props.id);
+ 
   const lineItemList = useSelector(
     (store) => store.headingItemReducer.headingItemWithItemCodeReducer,
   );
-  // console.log('lineItemList is', Number(lineItemList[0].total_item_price));
+  console.log('lineItemList is', lineItemList);
 
-  // const sumLineItem = () => {
-  //   let result = 0;
-  //   for (let i = 0; i < lineItemList.length; i++){
-  //     result += Number(lineItemList[i].total_item_price);
-  //   }
+  const sumLineItem = () => {
+    let result = 0;
+    for (let i = 0; i < lineItemList.length; i++){
+      if(props.id === lineItemList[i].heading_id){
+      result += Number(lineItemList[i].item_price_total)
+      };
+    }
+    return result;
+  }
 
-  //   return result;
-  // }
-
-  // console.log('result is', sumLineItem());
+  const [headingTotal, setHeadingTotal] = useState(sumLineItem()); 
+  console.log('result is', sumLineItem());
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ITEM_LIST' });
@@ -50,12 +53,11 @@ function HeadingCard(props) {
       type: 'GET_PROPOSAL_EVERYTHING',
       payload: id,
     });
-    // sumLineItem();
   }, []);
 
-  // useEffect(() => {
-  //  sumLineItem();
-  // }, [lineItemList])
+  useEffect(() => {
+  setHeadingTotal(sumLineItem());
+  }, [lineItemList])
 
   const handleCheckbox = (e) => {
     console.log('checked is', checked);
@@ -95,6 +97,8 @@ function HeadingCard(props) {
         heading_id: props.id,
       },
     });
+    
+   
   };
 
   const deleteHeading = () => {

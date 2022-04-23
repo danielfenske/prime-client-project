@@ -6,7 +6,7 @@ import { FormControl } from '@mui/material';
 import Select from '@mui/material/Select';
 import { InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import { SettingsPowerRounded } from '@mui/icons-material';
+import { PropaneSharp, SettingsPowerRounded } from '@mui/icons-material';
 import Modal from '../../../Miscellaneous/Modal/Modal';
 import DeleteModal from '../../../Miscellaneous/DeleteModal/DeleteModal';
 import Button from '@mui/material/Button';

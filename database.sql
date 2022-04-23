@@ -173,7 +173,7 @@ CREATE TABLE "item" (
 );
 
 INSERT INTO "item" ("item_code", "name", "price_per_pricing_unit", "unit_type_id", "unit_weight")
-VALUES ('821WF', 'WF Beam 8x21', 100, 2, 1);
+VALUES ('821WF', 'WF Beam 8x21', 100, 2, 1), ('SCR50', 'screw', 10, 1, 1), ('');
 
 CREATE TABLE "item_heading"(
 	"id" SERIAL PRIMARY KEY,
