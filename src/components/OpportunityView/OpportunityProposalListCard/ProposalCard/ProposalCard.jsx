@@ -13,9 +13,8 @@ import { useHistory, useParams } from 'react-router-dom';
 function ProposalCard({ proposal }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { opportunity_id } = useParams();
-
-  const id = proposal.id;
+  const { id } = useParams();
+  const proposal_id = proposal.id;
 
   const handleEdit = () => {
     console.log('in handleEdit', id);
@@ -25,7 +24,8 @@ function ProposalCard({ proposal }) {
 
   const handleDelete = () => {
     console.log('in handleDelete', id);
-    dispatch({ type: 'DELETE_PROPOSAL', payload: { id, opportunity_id } });
+    dispatch({ type: 'DELETE_PROPOSAL', payload: { id: proposal_id, opportunity_id: id } });
+    setOpen(false);
   };
 
   const [open, setOpen] = useState(false);

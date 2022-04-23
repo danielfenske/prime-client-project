@@ -42,6 +42,7 @@ function OpportunityListView() {
           id='outlined-basic'
           label='Search Opportunities'
           variant='outlined'
+          autoComplete="off"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           size='small'
