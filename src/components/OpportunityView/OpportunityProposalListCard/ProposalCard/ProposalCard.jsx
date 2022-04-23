@@ -19,12 +19,15 @@ function ProposalCard({ proposal }) {
   const handleEdit = () => {
     console.log('in handleEdit', id);
     dispatch({ type: 'FETCH_PROPOSAL', payload: id });
-    history.push(`/proposal/${id}`);
+    history.push(`/proposal/${proposal_id}`);
   };
 
   const handleDelete = () => {
     console.log('in handleDelete', id);
-    dispatch({ type: 'DELETE_PROPOSAL', payload: { id: proposal_id, opportunity_id: id } });
+    dispatch({
+      type: 'DELETE_PROPOSAL',
+      payload: { id: proposal_id, opportunity_id: id },
+    });
     setOpen(false);
   };
 
