@@ -3,20 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import SmallTabs from '../../Miscellaneous/SmallTabs/SmallTabs';
 import HeadingCard from './HeadingCard/HeadingCard';
 import { useParams } from 'react-router-dom';
-import { IconButton } from '@mui/material';
+import { IconButton, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function ProposalOrderCard() {
   const dispatch = useDispatch();
   const store = useSelector((store) => store);
   const headings = store.headingReducer;
+
   const { id } = useParams();
 
   const addHeading = () => {
     dispatch({
       type: 'POST_HEADING',
       payload: {
-        name: 'New Tab',
+        name: '',
         message: '',
         proposal_id: id,
         surcharge: 0.0,
@@ -46,11 +48,17 @@ function ProposalOrderCard() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              height: '40px',
             }}
           >
-            <IconButton onClick={addHeading}>
-              <AddIcon />
-            </IconButton>
+            <Button
+              variant='text'
+              size='small'
+              onClick={addHeading}
+              className='add-item-btn'
+            >
+              New Heading <AddCircleOutlineIcon fontSize='small' />
+            </Button>
           </div>
         }
       />

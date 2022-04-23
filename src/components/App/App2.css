@@ -162,7 +162,7 @@ h6 {
   flex-direction: row;
   flex-wrap: wrap;
   gap: var(--padding-large);
-  width: 95%;
+  /* width: 95%; */
   margin: auto;
 }
 
