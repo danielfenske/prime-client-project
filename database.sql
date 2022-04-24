@@ -188,7 +188,7 @@ CREATE TABLE "item" (
 );
 
 INSERT INTO "item" ("item_code", "name", "price_per_pricing_unit", "unit_type_id", "unit_weight")
-VALUES ('821WF', 'WF Beam 8x21', 100, 2, 1), ('HB1644', 'H Beam  6.00 x .114 x 1.844', 120, 2, 4.40), ('P316', 'Steel Plate 3/16', 29.88, 7, 1), 
+VALUES  ('HB1644', 'H Beam  6.00 x .114 x 1.844', 120, 2, 4.40), ('P316', 'Steel Plate 3/16', 29.88, 7, 1), 
         ('SCR24', 'Steel Cold Rolled Sheet 24g', 14.43, 8, 0.98), ('DST16', 'DOM steel tube', 16.44, 3, 3.69), ('BLT50','Bolt', 9.99, 1, 1),
         ('P466', 'Steel Plate 5/8', 89.95, 6, 0.01), ('HB1667', 'H Beam 16.33" x .395" x 10.24"', 225, 4, 0.67 ), ('RB58', 'Steel Rebar 5/8"', 1.47, 5, 1);        
 

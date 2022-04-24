@@ -26,8 +26,7 @@ function CreateItemModal({ open, setOpen }) {
   const initialValues = {
     item_code: '',
     name: '',
-    description: '',
-    price_per_price_unit: '',
+    price_per_pricing_unit: '',
     unit_type_id: '',
   };
 
@@ -71,6 +70,7 @@ function CreateItemModal({ open, setOpen }) {
         },
       });
       setValues(initialValues);
+      setUnitWeight('');
     } else if (values.unit_type_id === 8) {
       dispatch({
         type: 'POST_ITEM',
@@ -80,6 +80,7 @@ function CreateItemModal({ open, setOpen }) {
         },
       });
       setValues(initialValues);
+      setUnitWeight('');
     } else if (values.unit_type_id === 6) {
       dispatch({
         type: 'POST_ITEM',
@@ -98,6 +99,7 @@ function CreateItemModal({ open, setOpen }) {
         },
       });
       setValues(initialValues);
+      setUnitWeight('');
     } else if (values.unit_type_id === 9) {
       dispatch({
         type: 'POST_ITEM',
@@ -107,6 +109,7 @@ function CreateItemModal({ open, setOpen }) {
         },
       });
       setValues(initialValues);
+      setUnitWeight('');
     } else {
       dispatch({
         type: 'POST_ITEM',
@@ -274,6 +277,8 @@ function CreateItemModal({ open, setOpen }) {
           <Button
             variant='outlined'
             onClick={() => {
+              setValues(initialValues);
+              setUnitWeight('');
               setOpen(false);
             }}
           >
