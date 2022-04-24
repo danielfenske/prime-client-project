@@ -37,7 +37,7 @@ function ProposalCard({ proposal }) {
     <>
       <div className='list-card'>
         <div className='card-info-container'>
-          <h1>{proposal.proposal_code}</h1>
+          <h2>{proposal.proposal_code}</h2>
           <p>
             <strong>House type: </strong>
             {proposal.house_type}
