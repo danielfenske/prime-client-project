@@ -33,9 +33,9 @@ function OpportunityCard({ opportunity }) {
         <>
             <div className='list-card'>
                 <div className='card-info-container'>
-                    <h2>{opportunity.name}</h2>
-                    <p><strong>Description: </strong>{opportunity.community_name}</p>
-                    <p><strong>Due date: </strong>{new Date(opportunity.due_date).toLocaleDateString()}</p>
+                    <h2>{opportunity.opportunity_code}</h2>
+                    <p><strong>Name: </strong>{opportunity.name}</p>
+                    <p><strong>Date created: </strong>{new Date(opportunity.due_date).toLocaleDateString()}</p>
                 </div>
                 <div className='card-icon-container'>
                     <IconButton onClick={handleEdit}>

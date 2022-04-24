@@ -84,7 +84,7 @@ function ProposalPreviewCard() {
         <p>Sub Total: ${numbers.heading}</p>
         {heading.taxable && <p>Tax: ${numbers.tax}</p>}
         {Number(proposal.partner_discount) > 0 && (
-          <p>Discount: ${numbers.discount}</p>
+          <p>Discount: ${Number(Number(numbers.discount).toLocaleString('en-US')).toFixed(2)}</p>
         )}
         <p>Total: ${numbers.total}</p>
       </>

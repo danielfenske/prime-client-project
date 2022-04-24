@@ -166,10 +166,10 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           </p>
           <p>
             {' '}
-            <strong>Price per item:</strong> ${lineItem.single_item_price || 0}
+            <strong>Price per item:</strong> ${Number(lineItem.single_item_price).toLocaleString('en-US') || 0}
           </p>
           <p>
-            <strong>Total price:</strong> ${lineItem.item_price_total || 0}
+            <strong>Total price:</strong> ${Number(lineItem.item_price_total).toLocaleString('en-US') || 0}
           </p>
         </div>
 
