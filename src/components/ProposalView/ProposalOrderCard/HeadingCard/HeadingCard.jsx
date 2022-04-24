@@ -39,7 +39,7 @@ function HeadingCard(props) {
       result += Number(lineItemList[i].item_price_total)
       };
     }
-    return result;
+    return result.toLocaleString('en-US');
   }
 
   const [headingTotal, setHeadingTotal] = useState(sumLineItem()); 
@@ -174,7 +174,7 @@ function HeadingCard(props) {
               style={{ width: 100 }}
             />
           </div>
-          <TextField
+          {/* <TextField
             // fullWidth
             type='number'
             id='outlined-basic'
@@ -183,7 +183,10 @@ function HeadingCard(props) {
             autoComplete="off"
             value={headingTotal}
             size='small'
-          />
+          /> */}
+          <p style={{fontSize:20, fontWeight:'bold'}}>
+            Heading Total: {headingTotal}
+          </p>
         </div>
 
         <FormGroup className='checkbox'>
