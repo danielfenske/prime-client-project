@@ -39,11 +39,11 @@ function ProposalCard({ proposal }) {
         <div className='card-info-container'>
           <h1>{proposal.proposal_code}</h1>
           <p>
-            <strong>Description: </strong>
-            {proposal.description}
+            <strong>House type: </strong>
+            {proposal.house_type}
           </p>
           <p>
-            <strong>Due date: </strong>
+            <strong>Plan date: </strong>
             {new Date(proposal.date).toLocaleDateString()}
           </p>
         </div>
