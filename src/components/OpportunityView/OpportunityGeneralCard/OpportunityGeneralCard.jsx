@@ -141,6 +141,14 @@ function OpportunityGeneralCard() {
     setContactEditModalOpen(true);
   };
 
+  const handleAutoFill = () => {
+    setDueDate('2004/10/19');
+    setName('Brookshire Commons');
+    setType('Housing Development');
+    setDevelopmentType('Houses');
+    setAddress('1993 No Name Lane');
+  };
+
   const handleSubmit = () => {
     console.log('user submitted the form');
     console.log('edit partner', editablePartner);
@@ -208,7 +216,7 @@ function OpportunityGeneralCard() {
       </div>
       <div className='card-body'>
         <div className='card-section'>
-          <h2>General Information</h2>
+          <h2 onClick={handleAutoFill}>General Information</h2>
           <div className='form-container'>
             <TextField
               id='outlined-basic'
