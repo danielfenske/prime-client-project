@@ -142,11 +142,12 @@ function OpportunityGeneralCard() {
   };
 
   const handleAutoFill = () => {
-    setDueDate('2004/10/19');
+    setDueDate('2022-04-26');
     setName('Brookshire Commons');
     setType('Housing Development');
     setDevelopmentType('Houses');
     setAddress('1993 No Name Lane');
+    setZip(55119);
   };
 
   const handleSubmit = () => {
