@@ -101,6 +101,18 @@ function ProposalGeneralCard() {
     dispatch({ type: 'UPDATE_PROPOSAL', payload: proposalSubmission });
   };
 
+  const handleAutoFill = () => {
+    setHouseType('Duplex');
+    setPlanIdentifier('BRK-02');
+    setBuildingCode('BLD-045');
+    setMethod(2);
+    setMethodMessage('Handrail Installation');
+    setDeliveryCharge(100);
+    setDeliveryMessage('Concrete delivery');
+    setFieldWeldCharge(150);
+    setFieldWeldMessage('Handrail welding');
+  };
+
   useEffect(() => {
     dispatch({ type: 'FETCH_PARTNER_LIST' });
   }, []);
@@ -120,7 +132,7 @@ function ProposalGeneralCard() {
       </div>
       <div className='card-body'>
         <div className='card-section'>
-          <h2>General Info</h2>
+          <h2 onClick={handleAutoFill}>General Info</h2>
           {/* GENERAL INFORMATION */}
           <div className='form-container'>
             <TextField
