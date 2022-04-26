@@ -190,7 +190,7 @@ function HeadingCard(props) {
             size='small'
           /> */}
           <p style={{ fontSize: 20, fontWeight: 'bold' }}>
-            Heading Total: {headingTotal}
+            Heading total: ${headingTotal}
           </p>
         </div>
 
@@ -219,7 +219,7 @@ function HeadingCard(props) {
       <div className='card-body'>
         <div className='item-card-section'>
           <div className='item-header-container'>
-            <h1>Proposal Items</h1>
+            <h1>Items</h1>
             <Button variant='contained' size='small' onClick={addNewLineItem}>
               Add Line Item
             </Button>
