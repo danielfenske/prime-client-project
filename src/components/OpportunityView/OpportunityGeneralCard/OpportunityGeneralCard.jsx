@@ -44,6 +44,11 @@ function OpportunityGeneralCard() {
       type: 'FETCH_OPPORTUNITY',
       payload: id,
     });
+
+    dispatch({
+      type: 'FETCH_ONE_CONTACT',
+      payload: id,
+    });
   }, []);
 
   useEffect(() => {

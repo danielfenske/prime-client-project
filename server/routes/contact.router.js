@@ -26,6 +26,31 @@ router.get('/', (req, res) => {
     }
 });
 
+router.get('/one/:id', async (req, res) => {
+  if (req.isAuthenticated()) {
+    try {
+      const opportunityId = req.params.id;
+  
+      const sqlText = `
+        SELECT "contact".* FROM "contact"
+        FULL JOIN "opportunity"
+          ON "contact"."id" = "opportunity"."contact_id"
+        WHERE "opportunity"."id" = $1;
+      `
+      const sqlOptions = [opportunityId];
+  
+      let response = await pool.query(sqlText, sqlOptions);
+  
+      res.send(response.rows);
+    } catch (err) {
+      console.error('Error getting one contact', err);
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(403);
+  }
+})
+
 // post contact
 router.post('/', (req, res) => {
 

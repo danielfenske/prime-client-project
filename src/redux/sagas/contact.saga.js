@@ -14,6 +14,19 @@ function* getContactList() {
   }
 }
 
+function* getOneContact(action) {
+  try {
+    const res = yield axios.get(`/api/contact/one/${action.payload}`)
+
+    yield put({
+      type: 'SET_EDIT_CONTACT',
+      payload: res.data[0],
+    })
+  } catch (err) {
+    console.error('Error getting one contact', err);
+  }
+}
+
 // POST new contact to DB
 function* postContact(action) {
   const newContact = action.payload;
@@ -46,6 +59,7 @@ function* contactSaga() {
   yield takeLatest('FETCH_CONTACT_LIST', getContactList);
   yield takeLatest('POST_CONTACT', postContact);
   yield takeLatest('UPDATE_CONTACT', updateContact);
+  yield takeLatest('FETCH_ONE_CONTACT', getOneContact);
 }
 
 export default contactSaga;

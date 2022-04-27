@@ -25,7 +25,7 @@ router.get('/all', rejectUnauthenticated, async (req, res) => {
           "first_name",
           "last_name",
           "access_level"
-        FROM "user" WHERE "access_level" < 3 AND "disabled" != true;
+        FROM "user" WHERE "disabled" != true;
       `;
 
       const response = await pool.query(sqlText);
@@ -147,18 +147,18 @@ router.put('/update/user/account', async (req, res) => {
 
 router.put('/:id', (req, res) => {
   if (req.isAuthenticated()) {
-      let disabled = true;
-      let id = req.params.id;
-      let queryText = `UPDATE "user" SET "disabled" = $1 WHERE "id" = $2;`;
-      pool.query(queryText, [disabled, id])
-          .then((result) => {
-              res.sendStatus(200);
-          })
-          .catch((error) => {
-              res.sendStatus(500);
-          })
+    let disabled = true;
+    let id = req.params.id;
+    let queryText = `UPDATE "user" SET "disabled" = $1 WHERE "id" = $2;`;
+    pool.query(queryText, [disabled, id])
+      .then((result) => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        res.sendStatus(500);
+      })
   } else {
-      res.sendStatus(403);
+    res.sendStatus(403);
   }
 });
 
