@@ -132,7 +132,7 @@ function ProposalGeneralCard() {
       </div>
       <div className='card-body'>
         <div className='card-section'>
-          <h2 onClick={handleAutoFill}>General Info</h2>
+          <h2>General Info</h2>
           {/* GENERAL INFORMATION */}
           <div className='form-container'>
             <TextField

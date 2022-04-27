@@ -218,7 +218,7 @@ function OpportunityGeneralCard() {
       </div>
       <div className='card-body'>
         <div className='card-section'>
-          <h2 onClick={handleAutoFill}>General Information</h2>
+          <h2>General Information</h2>
           <div className='form-container'>
             <TextField
               id='outlined-basic'

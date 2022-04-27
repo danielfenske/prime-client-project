@@ -50,7 +50,7 @@ function AddContactModal({ open, setOpen }) {
         <div className='modal-icon'>
           <PersonAddIcon style={{ fontSize: 100 }} />
         </div>
-        <h2 onClick={handleAutoFill}>Add New Contact</h2>
+        <h2>Add New Contact</h2>
         <div className='modal-form-container'>
           <TextField
             id='outlined-basic'
