@@ -98,4 +98,4 @@ The developers of this application would love to connect with you if you have an
 - [Cameron Soudbash](https://github.com/csoudbash) -- csoudbash@gmail.com
 - [David Meuer](https://github.com/Davey-M) -- davey.meuer+res@gmail.com
 - [Heather Kim](https://github.com/heather-h-kim) -- heatherkim0405@gmail.com
-- [Mark Terry](hhttps://github.com/MarkTerry3) -- markterrydeveloper@gmail.com
+- [Mark Terry](https://github.com/MarkTerry3) -- markterrydeveloper@gmail.com
