@@ -129,8 +129,8 @@ function EditPartnerModal({ open, setOpen }) {
                 onChange={(e) => setRounding_type(e.target.value)}
               >
                 <MenuItem value={1}>None</MenuItem>
-                <MenuItem value={2}>Round up 1</MenuItem>
-                <MenuItem value={3}>Round up 5</MenuItem>
+                <MenuItem value={2}>Round up one</MenuItem>
+                <MenuItem value={3}>Round up five</MenuItem>
               </Select>
             </FormControl>
 
