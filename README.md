@@ -1,121 +1,101 @@
+# **R & F Metals | Sales Application**
 
-# Prime Solo Project Starting Repo
-This version uses React, Redux, Express, Passport, and PostgreSQL (a full list of dependencies can be found in `package.json`).
+*Project Duration: 2 Week Sprint*
 
-We **STRONGLY** recommend following these instructions carefully. It's a lot, and will take some time to set up, but your life will be much easier this way in the long run.
+This client project is a professional sales platform designed and developed for R & F Metals, a steel fabrication company located in Clinton, MD. Their sales team can use this application for managing their leads and creating proposals as projects arise. The smooth, easy-to-use workflow of the platform allows its users to easily create, update, and delete information within their network, as well as produce and generate PDF proposals to provide to their clients. 
 
-## Use the Template for This Repository (Don't Clone)
+### **What problem was solved?**
 
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account.
+Our application eliminated the need for the company's sales team to reference several different files to manage their clientele and generate proposal quotes. It also implemented R & F's unique, complex pricing structure for calculating the price of its offered products and materials. Users can simply focus on generating sales for the company.
 
+Live Version deployed on Heroku at: [https://r-f-metals.herokuapp.com/#/home](https://r-f-metals.herokuapp.com/#/home)
 
-## Prerequisites
+## **Wireframe**
 
-Before you get started, make sure you have the following software installed on your computer:
+![R & F Metals: Wireframe](./public/Images/application-wireframe.gif);
+
+## **Prerequisites**
+
+Before getting started launching this application, you should have the following software installed on your computer:
 
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 
-## Create database and table
+## **Database Setup**
 
-Create a new database called `prime_app` and create a `user` table:
+Make a new database called `r_f_metals` in PostgreSQL and use the **database.sql** file provided in the root of this project to set up all of your tables. Simply copy the code from the database.sql file and execute the selection once its pasted in the SQL Query view.
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
+## **Creating the .ENV**
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+* Create a `.env` file at the root of the project. This file will require several pieces of information that will each need to acquired separately. Further instructions on obtaining these keys are provided below:
 
-## Development Setup Instructions
+    ```
+    SERVER_SESSION_SECRET=*******************
+    API_KEY=********************
+    ```
 
-- Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
-  ```
-  SERVER_SESSION_SECRET=superDuperSecret
-  ```
-  While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm run server`
-- Run `npm run client`
-- Navigate to `localhost:3000`
+First you will need to establish a **SERVER_SESSION_SECRET** to keep your application secure. Here's a site that can help you generate a secret: [https://passwordsgenerator.net/](https://passwordsgenerator.net/).  **NOTE** This secret should be more than 8 characters.  Having a secret key that is less than 8 characters or leaving it as "superDuperSecret" will result in a warning from the app.
 
-## Debugging
+## **Installation**
 
-To debug, you will need to run the client-side separately from the server. Start the client by running the command `npm run client`. Start the debugging server by selecting the Debug button.
+1. Run `npm install`
+2. Start Postgres using `brew services start postgresql`
+    - only required if PG is not already running
+3. Run `npm run server`
+4. Run `npm run client`
+5. Navigate to `localhost:3000`
 
-![VSCode Toolbar](documentation/images/vscode-toolbar.png)
+## **How to Use the Application**
 
-Then make sure `Launch Program` is selected from the dropdown, then click the green play arrow.
+### **Functionality**
+There are `CREATE NEW` buttons located throughout the application. This allows users to create new Opportunities, Proposals, Headings, and more. 
 
-![VSCode Debug Bar](documentation/images/vscode-debug-bar.png)
+Entities can be edited and deleted by clicking on the `PENCIL` and `TRASHCAN` icons. Both buttons will prompt the user to a view where information can be updated or archived. 
 
-## Testing Routes with Postman
+Most views include a `SAVE PROGRESS` button, which is necessary for users to click on when anything on the page has been updated. 
 
-To use Postman with this repo, you will need to set up requests in Postman to register a user and login a user at a minimum.
+Users can navigate between views by clicking on tabs associated with the view they are on. For example, the Proposal view includes tabs for general information, headings, and the PDF preview.
 
-Keep in mind that once you using the login route, Postman will manage your session cookie for you just like a browser, ensuring it is sent with each subsequent request. If you delete the `localhost` cookie in Postman, it will effectively log you out.
+### **Access Levels**
+There are two access levels to this application:
 
-1. Start the server - `npm run server`
-2. Import the sample routes JSON file [v2](./PostmanPrimeSoloRoutesv2.json) by clicking `Import` in Postman. Select the file.
-3. Click `Collections` and `Send` the following three calls in order:
-   1. `POST /api/user/register` registers a new user, see body to change username/password
-   2. `POST /api/user/login` will login a user, see body to change username/password
-   3. `GET /api/user` will get user information, by default it's not very much
+**Admins & Sales Managers:**
+- Admins and Sales Managers have the ability to view all opportunities and proposals that exist across the entire platform. They are also allowed to create new users and edit the status of existing users (ex: change status from saleperson to sales manager).
 
-After running the login route above, you can try any other route you've created that requires a logged in user!
+**Salespeople:**
+- Salespeople are able to view everything that's connected to them as a user. They do not have access to other opportunities assigned to the rest of the sales team.
 
-## Production Build
+## **Built With**
 
-Before pushing to Heroku, run `npm run build` in terminal. This will create a build folder that contains the code Heroku will be pointed at. You can test this build by typing `npm start`. Keep in mind that `npm start` will let you preview the production build but will **not** auto update.
+This application uses the following technologies:
 
-- Start postgres if not running already by using `brew services start postgresql`
-- Run `npm start`
-- Navigate to `localhost:5000`
+- JavaScript
+- React
+- Redux
+- Sagas
+- HTML 5
+- CSS 3
+- Node
+- Express
+- Passport
+- PostgreSQL
+- Material-UI
+- ZipAPI
 
-## Lay of the Land
+## **Acknowledgements**
 
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
+We are extremely thankful to R & F Metals for allowing us to be involved in solving one of their businesses major needs. More specifically, we would like to thank Lee, Flynn, and Andy for the roles they played in bringing this project to life. 
 
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
+We couldn't have planned, designed, developed, and presented on this application without the curriculum and support provided by Prime Digital Academy. Our instructor, Liz Kerber, played an instrumental role in teaching us the necessary skills to become exceptional software engineers. 
 
-Directory Structure:
+And lastly, thank you to our classmates, family, and friends, for their ongoing support and encouragement throughout the duration of this project.
 
-- `src/` contains the React application
-- `public/` contains static assets for the client-side
-- `build/` after you build the project, contains the transpiled code from `src/` and `public/` that will be viewed on the production site
-- `server/` contains the Express App
+## **Support**
 
-This code is also heavily commented. We recommend reading through the comments, getting a lay of the land, and becoming comfortable with how the code works before you start making too many changes. If you're wondering where to start, consider reading through component file comments in the following order:
-
-- src/components
-  - App/App
-  - Footer/Footer
-  - Nav/Nav
-  - AboutPage/AboutPage
-  - InfoPage/InfoPage
-  - UserPage/UserPage
-  - LoginPage/LoginPage
-  - RegisterPage/RegisterPage
-  - LogOutButton/LogOutButton
-  - ProtectedRoute/ProtectedRoute
-
-## Deployment
-
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
-
-## Update Documentation
-
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+The developers of this application would love to connect with you if you have any questions regarding this project or feedback on how to improve its functionality. Their contact information can be found below:
+- [Dan Fenske](https://github.com/danielfenske) -- dlfenske.fenske@gmail.com
+- [Cameron Soudbash](https://github.com/csoudbash) -- csoudbash@gmail.com
+- [David Meuer](https://github.com/Davey-M) -- davey.meuer+res@gmail.com
+- [Heather Kim](https://github.com/heather-h-kim) -- heatherkim0405@gmail.com
+- [Mark Terry](hhttps://github.com/MarkTerry3) -- markterrydeveloper@gmail.com
