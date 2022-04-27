@@ -8,7 +8,6 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Button from '@mui/material/Button';
 
 function AddContactModal({ open, setOpen }) {
-
   // local state for text fields when adding new contacts
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,12 +37,21 @@ function AddContactModal({ open, setOpen }) {
     setOpen(false);
   };
 
+  const handleAutoFill = () => {
+    setName('Robert Anderson');
+    setEmail('rob.anderson@gmail.com');
+    setPhone('123-456-7890');
+    setWorkPhone('123-456-7890');
+  };
+
   return (
     <Modal open={open}>
-      <div className="modal-container">
-        <div className="modal-icon"><PersonAddIcon style={{ fontSize: 100 }} /></div>
+      <div className='modal-container'>
+        <div className='modal-icon'>
+          <PersonAddIcon style={{ fontSize: 100 }} />
+        </div>
         <h2>Add New Contact</h2>
-        <div className="modal-form-container">
+        <div className='modal-form-container'>
           <TextField
             id='outlined-basic'
             label='Name'
@@ -51,6 +59,7 @@ function AddContactModal({ open, setOpen }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             size='small'
+            fullWidth
           />
           <TextField
             id='outlined-basic'
@@ -59,6 +68,7 @@ function AddContactModal({ open, setOpen }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             size='small'
+            fullWidth
           />
           <TextField
             id='outlined-basic'
@@ -67,6 +77,7 @@ function AddContactModal({ open, setOpen }) {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             size='small'
+            fullWidth
           />
           <TextField
             id='outlined-basic'
@@ -75,11 +86,12 @@ function AddContactModal({ open, setOpen }) {
             value={work_phone}
             onChange={(e) => setWorkPhone(e.target.value)}
             size='small'
+            fullWidth
           />
         </div>
         <div className='modal-btn-container'>
           <Button
-            variant="outlined"
+            variant='outlined'
             onClick={() => {
               setOpen(false);
             }}

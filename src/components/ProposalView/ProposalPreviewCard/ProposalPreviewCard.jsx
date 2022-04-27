@@ -53,7 +53,7 @@ function ProposalPreviewCard() {
 
     numbers = {
       ...numbers,
-      heading: finalTotal.toLocaleString('en-US'),
+      heading: Number(finalTotal.toFixed(2)).toLocaleString('en-US'),
     };
 
     numbers = {
@@ -63,7 +63,9 @@ function ProposalPreviewCard() {
       ),
       discount:
         finalTotal *
-        Number(proposal.partner_discount * 0.01).toLocaleString('en-US'),
+        Number(
+          (Number(proposal.partner_discount) * 0.01).toFixed(2),
+        ).toLocaleString('en-US'),
     };
 
     // tax rate
@@ -76,7 +78,7 @@ function ProposalPreviewCard() {
 
     numbers = {
       ...numbers,
-      total: finalTotal.toLocaleString('en-US'),
+      total: Number(finalTotal.toFixed(2)).toLocaleString('en-US'),
     };
 
     return (
@@ -84,7 +86,12 @@ function ProposalPreviewCard() {
         <p>Sub Total: ${numbers.heading}</p>
         {heading.taxable && <p>Tax: ${numbers.tax}</p>}
         {Number(proposal.partner_discount) > 0 && (
-          <p>Discount: ${Number(Number(numbers.discount).toLocaleString('en-US')).toFixed(2)}</p>
+          <p>
+            Discount: $
+            {Number(Number(numbers.discount).toFixed(2)).toLocaleString(
+              'en-US',
+            )}
+          </p>
         )}
         <p>Total: ${numbers.total}</p>
       </>

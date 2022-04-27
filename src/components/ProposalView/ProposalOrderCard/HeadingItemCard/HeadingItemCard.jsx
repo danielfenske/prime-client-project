@@ -101,6 +101,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
   const deleteLineItem = () => {
     console.log('in deleteLineItem');
     dispatch({ type: 'DELETE_HEADING_ITEM', payload: lineItem.id });
+    setOpen(false);
   };
 
   //move a line item up
@@ -166,10 +167,12 @@ function HeadingItemCard({ lineItem, addNewItem }) {
           </p>
           <p>
             {' '}
-            <strong>Price per item:</strong> ${Number(lineItem.single_item_price).toLocaleString('en-US') || 0}
+            <strong>Price per item:</strong> $
+            {Number(lineItem.single_item_price).toLocaleString('en-US') || 0}
           </p>
           <p>
-            <strong>Total price:</strong> ${Number(lineItem.item_price_total).toLocaleString('en-US') || 0}
+            <strong>Total price:</strong> $
+            {Number(lineItem.item_price_total).toLocaleString('en-US') || 0}
           </p>
         </div>
 
@@ -218,7 +221,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                         type='number'
                         label="FT'"
                         variant='outlined'
-                        autoComplete="off"
+                        autoComplete='off'
                         value={ft}
                         onChange={(e) => setFt(e.target.value)}
                         size='small'
@@ -230,7 +233,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                           type='number'
                           label='IN"'
                           variant='outlined'
-                          autoComplete="off"
+                          autoComplete='off'
                           value={inches}
                           onChange={(e) => setInches(e.target.value)}
                           size='small'
@@ -247,7 +250,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                           type='number'
                           label={'LBS'}
                           variant='outlined'
-                          autoComplete="off"
+                          autoComplete='off'
                           value={measurement}
                           onChange={(e) => setMeasurement(e.target.value)}
                           size='small'
@@ -264,7 +267,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 label='Unit Price ($)'
                 type='number'
                 variant='outlined'
-                autoComplete="off"
+                autoComplete='off'
                 value={pricePerPricingUnit}
                 onChange={(e) => setPricePerPricingUnit(e.target.value)}
                 size='small'
@@ -275,7 +278,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 label='QTY'
                 type='number'
                 variant='outlined'
-                autoComplete="off"
+                autoComplete='off'
                 value={qty}
                 onChange={(e) => setQty(e.target.value)}
                 onKeyPress={newItemEnter}
@@ -288,7 +291,7 @@ function HeadingItemCard({ lineItem, addNewItem }) {
                 id='outlined-basic'
                 label='Item Message'
                 variant='outlined'
-                autoComplete="off"
+                autoComplete='off'
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 size='small'

@@ -57,14 +57,14 @@ function OpportunityGeneralCard() {
     }
 
     setStatus(opportunity.status || 1);
-    setType(opportunity.type);
-    setCommunityName(opportunity.community_name);
-    setDevelopmentType(opportunity.development_type);
-    setAddress(opportunity.address_line_1);
-    setCity(opportunity.city);
-    setState(opportunity.state);
-    setZip(opportunity.zip);
-    setTaxRate(opportunity.tax_rate);
+    setType(opportunity.type || '');
+    setCommunityName(opportunity.community_name || '');
+    setDevelopmentType(opportunity.development_type || '');
+    setAddress(opportunity.address_line_1 || '');
+    setCity(opportunity.city || '');
+    setState(opportunity.state || '');
+    setZip(opportunity.zip || 0);
+    setTaxRate(opportunity.tax_rate || 0);
 
     if (opportunity.partner_id) {
       handleEditPartner(
@@ -139,6 +139,16 @@ function OpportunityGeneralCard() {
 
   const handleContactEdit = () => {
     setContactEditModalOpen(true);
+  };
+
+  const handleAutoFill = () => {
+    setDueDate('2022-04-26');
+    setName('Brookshire Commons');
+    setType('Housing Development');
+    setDevelopmentType('Houses');
+    setAddress('1993 No Name Lane');
+    // setZip(20735);
+    setTaxRate(7.12);
   };
 
   const handleSubmit = () => {
