@@ -459,7 +459,7 @@ function OpportunityGeneralCard() {
               />
               <TextField
                 id='outlined-basic'
-                label='Tax Rate'
+                label='Tax Rate (%)'
                 type='number'
                 variant='outlined'
                 autoComplete='off'

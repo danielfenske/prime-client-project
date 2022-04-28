@@ -104,24 +104,6 @@ function HeadingItemCard({ lineItem, addNewItem }) {
     setOpen(false);
   };
 
-  //move a line item up
-  // const goUp = () => {
-  //   console.log('go Up');
-  //   dispatch({
-  //     type: 'MOVE_ORDER_UP',
-  //     payload: { heading_id: lineItem.heading_id, order: Number(order) },
-  //   });
-  // };
-
-  // //move a line item down
-  // const goDown = () => {
-  //   console.log('go Down');
-  //   dispatch({
-  //     type: 'MOVE_ORDER_DOWN',
-  //     payload: { heading_id: lineItem.heading_id, order: Number(order) },
-  //   });
-  // };
-
   const secondInitialMount = useRef(true);
   useEffect(() => {
     if (secondInitialMount.current) {
@@ -310,31 +292,6 @@ function HeadingItemCard({ lineItem, addNewItem }) {
             </IconButton>
           </div>
         </div>
-        {/* <div className="item-arrows">
-            <IconButton onClick={goUp}><ArrowCircleUpIcon/></IconButton>
-            <IconButton onClick={goDown}><ArrowCircleDownIcon/></IconButton>
-          </div> */}
-
-        {/* <TextField
-          id='outlined-basic'
-          label='order'
-          variant='outlined'
-          value={order}
-          onChange={(e) => setOrder(e.target.value)}
-        /> */}
-        {/* <TextField id="outlined-basic" label="item code" variant="outlined" value={lineItem.item_code} /> */}
-        {/* <p>Item Code: {lineItem.item_code}</p> */}
-        {/* <TextField id="outlined-basic" label="item name" variant="outlined" value={lineItem.name} /> */}
-        {/* <p>Item Name: {lineItem.name}</p>
-        <p>Item Description: {lineItem.description}</p> */}
-        {/* <p> Single line item price: {lineItem.single_unit_price}</p> */}
-        {/* <TextField id="outlined-basic" label="single item price" variant="outlined" value={singleUnitPrice} onChange={(e) => setSingleUnitPrice(e.target.value)} /> */}
-        {/* <TextField id="outlined-basic" label="description" variant="outlined" value={lineItem.description} /> */}
-        {/* <p> Total line item price: {lineItem.total_item_price}</p> */}
-        {/* <TextField id="outlined-basic" label="total price" variant="outlined" value={totalPrice} onChange={(e) => setTotalPrice(e.target.value)} /> */}
-        {/* <button onClick={updateQtyMeasurementOrderpricePerPricingUnit}>
-          SAVE
-        </button>*/}
       </div>
 
       <Modal open={open} className='modal-container'>
