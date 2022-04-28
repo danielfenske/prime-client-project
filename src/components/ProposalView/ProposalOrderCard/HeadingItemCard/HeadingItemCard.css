@@ -45,6 +45,12 @@
   width: 500px;
 }
 
+.bottom-right {
+  display: flex;
+  align-items: center;
+  height: 90px;
+}
+
 .item-measurements {
   display: flex;
   justify-content: space-between;

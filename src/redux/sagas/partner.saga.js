@@ -24,9 +24,13 @@ function* getPartnerRows() {
   }
 
   function* updatePartner(action) {
+
+    const opportunityId = action.payload.opportunityId;
+
     try {
       yield axios.put(`api/partner/${action.payload.editablePartnerID}`, action.payload);
       yield put({type: 'FETCH_PARTNER_LIST'});
+      yield put({type: 'FETCH_OPPORTUNITY', payload: opportunityId});
 
     } catch (error) {
       console.log('rut ro scoob!', error);

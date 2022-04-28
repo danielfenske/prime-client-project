@@ -13,7 +13,7 @@ function AddPartnerModal({ open, setOpen }) {
   const [type, setType] = useState('');
   const [partner_code, setPartner_code] = useState('');
   const [partner_discount, setPartner_discount] = useState('');
-  const [rounding_type, setRounding_type] = useState('');
+  const [rounding_type, setRounding_type] = useState(1);
   const [phone_number, setPhone_number] = useState('');
   const [address_line_1, setAddress_line_1] = useState('');
   const [city, setCity] = useState('');
@@ -74,6 +74,7 @@ function AddPartnerModal({ open, setOpen }) {
               value={name}
               onChange={(event) => setName(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -81,6 +82,7 @@ function AddPartnerModal({ open, setOpen }) {
               value={type}
               onChange={(event) => setType(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -88,8 +90,9 @@ function AddPartnerModal({ open, setOpen }) {
               value={partner_code}
               onChange={(event) => setPartner_code(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
-            <TextField // im confused as to what this is again, maybe i forgot
+            <TextField
               id='outlined-basic'
               type='number'
               required
@@ -97,13 +100,18 @@ function AddPartnerModal({ open, setOpen }) {
               value={partner_discount}
               onChange={(event) => setPartner_discount(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <FormControl>
               <InputLabel>Rounding Type</InputLabel>
               <Select
-                label='Rounding Type'
+                 labelId='status-label'
+                 label='Rounding Type'
+                 variant='outlined'
                 value={rounding_type}
                 onChange={(e) => setRounding_type(e.target.value)}
+                size='small'
+                style={{ width: 200 }}
               >
                 <MenuItem value={1}>None</MenuItem>
                 <MenuItem value={2}>Round up one</MenuItem>
@@ -116,6 +124,7 @@ function AddPartnerModal({ open, setOpen }) {
               value={phone_number}
               onChange={(event) => setPhone_number(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -123,6 +132,7 @@ function AddPartnerModal({ open, setOpen }) {
               value={address_line_1}
               onChange={(event) => setAddress_line_1(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -130,6 +140,7 @@ function AddPartnerModal({ open, setOpen }) {
               value={city}
               onChange={(event) => setCity(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField // should we just make a dropdown with a list of 2 letter states? or?
               id='outlined-basic'
@@ -137,6 +148,7 @@ function AddPartnerModal({ open, setOpen }) {
               value={state}
               onChange={(event) => setState(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
             <TextField
               id='outlined-basic'
@@ -144,6 +156,7 @@ function AddPartnerModal({ open, setOpen }) {
               value={zip}
               onChange={(event) => setZip(event.target.value)}
               size='small'
+              style={{ width: 200 }}
             />
           </div>
           <div className='modal-btn-container'>

@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import PersonIcon from '@mui/icons-material/Person';
 import Button from '@mui/material/Button';
 
-function EditContactModal({ open, setOpen }) {
+function EditContactModal({ open, setOpen, opportunityId }) {
   // const [open, setOpen] = useState(false);
   const editableContact = useSelector((store) => store.contactReducer.contactEditReducer);
   // local state for text fields when adding new contacts
@@ -27,6 +27,7 @@ function EditContactModal({ open, setOpen }) {
       phone: phone,
       work_phone: work_phone,
       id: editableContact.id,
+      opportunityId: opportunityId
     };
 
     dispatch({ type: 'UPDATE_CONTACT', payload: contactSubmission });
@@ -60,6 +61,7 @@ function EditContactModal({ open, setOpen }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             size='small'
+            fullWidth
           />
           <TextField
             id='outlined-basic'
@@ -68,6 +70,7 @@ function EditContactModal({ open, setOpen }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             size='small'
+            fullWidth
           />
           <TextField
             id='outlined-basic'
@@ -76,6 +79,7 @@ function EditContactModal({ open, setOpen }) {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             size='small'
+            fullWidth
           />
           <TextField
             id='outlined-basic'
@@ -84,6 +88,7 @@ function EditContactModal({ open, setOpen }) {
             value={work_phone}
             onChange={(e) => setWorkPhone(e.target.value)}
             size='small'
+            fullWidth
           />
         </div>
         <div className='modal-btn-container'>
