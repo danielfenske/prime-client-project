@@ -247,18 +247,6 @@ function OpportunityGeneralCard() {
               size='small'
               style={{ width: 200 }}
             />
-            {/* <TextField
-              id='outlined-basic'
-              label='Status'
-              type='number'
-              variant='outlined'
-              autoComplete="off"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-              size='small'
-              style={{ width: 200 }}
-            /> */}
-
             <FormControl>
               <InputLabel id='status-label'>Status</InputLabel>
               <Select
@@ -491,6 +479,7 @@ function OpportunityGeneralCard() {
       <EditPartnerModal
         open={partnerEditModalOpen}
         setOpen={setPartnerEditModalOpen}
+        opportunityId={id}
       />
       <AddContactModal
         open={contactAddModalOpen}
@@ -499,45 +488,10 @@ function OpportunityGeneralCard() {
       <EditContactModal
         open={contactEditModalOpen}
         setOpen={setContactEditModalOpen}
+        opportunityId={id}
       />
     </>
   );
 }
-
-// function PartnerCard({ partners }) {
-//   const [partnerSelect, setPartnerSelect] = useState(-1);
-//   const [partnerInfo, setPartnerInfo] = useState(null);
-
-//   useEffect(() => {
-//     console.log(partnerSelect);
-//     if (partnerSelect === -1) {
-//       setPartnerInfo(null);
-//     } else {
-//       setPartnerInfo(partners.filter((p) => p.id == partnerSelect)[0]);
-//     }
-//   }, [partnerSelect]);
-
-//   return (
-//     <>
-//       <div>
-//         <select
-//           value={partnerSelect}
-//           onChange={(e) => setPartnerSelect(e.target.value)}
-//         >
-//           <option value={-1}>none</option>
-//           {partners.map((partner, index) => {
-//             return (
-//               <option key={index} value={partner.id}>
-//                 {partner.name}
-//               </option>
-//             );
-//           })}
-//         </select>
-
-//         {partnerInfo && <span>{JSON.stringify(partnerInfo)}</span>}
-//       </div>
-//     </>
-//   );
-// }
 
 export default OpportunityGeneralCard;

@@ -45,11 +45,15 @@ function* updateContact(action) {
 
   const contactId = action.payload.id;
   const updatedContact = action.payload;
+  const opportunityId = action.payload.opportunityId;
 
   try {
     yield axios.put(`api/contact/${contactId}`, updatedContact);
 
     yield put({ type: 'FETCH_CONTACT_LIST' });
+    yield put({type: 'FETCH_ONE_CONTACT', payload: contactId});
+    yield put({type: 'FETCH_OPPORTUNITY', payload: opportunityId});
+
   } catch (error) {
     console.log('Error UPDATING contact', error);
   }
